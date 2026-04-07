@@ -17,11 +17,13 @@ export default function Navigation() {
   const isOpen = isPinned || isHovered || isMobileOpen;
 
   const handleMouseEnter = () => {
+    if (window.innerWidth < 768) return;
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
+    if (window.innerWidth < 768) return;
     timeoutRef.current = setTimeout(() => setIsHovered(false), 200);
   };
 

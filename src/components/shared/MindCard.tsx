@@ -31,6 +31,15 @@ export default function MindCard({ mind, index }: MindCardProps) {
     >
       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-gold/0 to-transparent group-hover:via-gold/50 transition-all duration-700" />
 
+      {/* Portrait / Avatar */}
+      <div className="relative w-16 h-16 md:w-20 md:h-20 mb-6 rounded-full overflow-hidden border border-border max-md:border-gold/50 md:group-hover:border-gold/50 transition-all duration-700 max-md:drop-shadow-[0_0_20px_rgba(255,215,0,0.4)] md:group-hover:drop-shadow-[0_0_20px_rgba(255,215,0,0.4)] z-10">
+        <img
+          src={mind.image}
+          alt={mind.name}
+          className="w-full h-full object-cover filter max-md:grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-all duration-700"
+        />
+      </div>
+
       <p className="text-gold text-xs tracking-[0.3em] lowercase mb-1">
         {mind.domain}
       </p>
