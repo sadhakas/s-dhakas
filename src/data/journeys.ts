@@ -1,4 +1,4 @@
-import type { JourneyData } from "../components/JourneyCard";
+import type { JourneyData } from "../components/shared/JourneyCard";
 
 export const journeysData: JourneyData[] = [
   {

@@ -74,6 +74,17 @@ export default function Registration() {
             </div>
             <div>
               <label className="block text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-2">
+                phone
+              </label>
+              <input
+                required
+                type="tel"
+                className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-lg focus:outline-none focus:border-gold transition-colors duration-300 placeholder:text-muted-foreground/30"
+                placeholder="+91 99999 99999"
+              />
+            </div>
+            <div>
+              <label className="block text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-2">
                 what calls you here?
               </label>
               <textarea

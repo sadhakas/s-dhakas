@@ -1,6 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -100,14 +100,12 @@
 /* Gold shimmer line */
 .gold-line {
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--color-gold-dim) 20%,
-    var(--color-gold) 50%,
-    var(--color-gold-dim) 80%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      transparent 0%,
+      var(--color-gold-dim) 20%,
+      var(--color-gold) 50%,
+      var(--color-gold-dim) 80%,
+      transparent 100%);
 }
 
 /* Memory mode for completed journeys */
@@ -136,18 +134,23 @@
 
 /* Floating particle animation */
 @keyframes float-particle {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0) translateX(0);
     opacity: var(--tw-opacity, 0.2);
   }
+
   25% {
     transform: translateY(-30px) translateX(10px);
     opacity: calc(var(--tw-opacity, 0.2) * 1.5);
   }
+
   50% {
     transform: translateY(-15px) translateX(-8px);
     opacity: var(--tw-opacity, 0.2);
   }
+
   75% {
     transform: translateY(-40px) translateX(5px);
     opacity: calc(var(--tw-opacity, 0.2) * 0.6);

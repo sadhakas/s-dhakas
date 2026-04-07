@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import type { MindData } from "../data/minds";
+import type { MindData } from "../../data/minds";
 
 interface MindCardProps {
   mind: MindData;

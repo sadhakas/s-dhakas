@@ -1,13 +1,11 @@
 import { motion } from "framer-motion";
-import { minds } from "../data/minds";
-import MindCard from "./MindCard";
-import ParticleField from "./ParticleField";
+import JourneyCard from "../shared/JourneyCard";
+import { journeysData } from "../../data/journeys";
 
-export default function Philosophy() {
+export default function Journeys() {
   return (
-    <section id="philosophy" className="relative py-32 px-6">
-      <ParticleField />
-      <div className="max-w-6xl mx-auto relative">
+    <section id="journeys" className="relative py-32 px-6">
+      <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -16,17 +14,17 @@ export default function Philosophy() {
           className="text-center mb-20"
         >
           <p className="text-gold-dim text-xs tracking-[0.4em] lowercase mb-4">
-            a gallery of minds
+            where we wander
           </p>
           <h2 className="font-serif text-4xl md:text-5xl font-light text-foreground">
-            Those Who Sought
+            The Journeys
           </h2>
           <div className="gold-line w-24 mx-auto mt-6" />
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {minds.map((mind, i) => (
-            <MindCard key={mind.name} mind={mind} index={i} />
+        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+          {journeysData.map((journey, i) => (
+            <JourneyCard key={journey.title} journey={journey} index={i} />
           ))}
         </div>
       </div>
