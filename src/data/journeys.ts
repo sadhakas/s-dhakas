@@ -3,7 +3,7 @@ import type { JourneyData } from "../components/shared/JourneyCard";
 export const journeysData: JourneyData[] = [
   {
     title: "ganga echoes",
-    location: "Varanasi · Rishikesh · Haridwar",
+    location: "Rishikesh · Ganga · Dehradun",
     description:
       "A contemplative passage along the Ganges, tracing the ancient dialogues between science and spirituality. Walking the ghats at dawn, meditating in ashrams where Einstein's letters to Tagore still echo.",
     status: "Completed",
@@ -12,7 +12,7 @@ export const journeysData: JourneyData[] = [
   },
   {
     title: "himalayan reset",
-    location: "Dharamsala · Spiti Valley · Ladakh",
+    location: "Badrinath · Vasudhara Falls · Joshimath",
     description:
       "An ascending journey through altitude and altitude of mind. From the Dalai Lama's residence to the stark moonscapes of Spiti, where the thin air strips away everything but the essential questions.",
     status: "Upcoming",

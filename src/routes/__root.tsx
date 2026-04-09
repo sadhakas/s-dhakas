@@ -1,6 +1,7 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import InteractiveBackground from "../components/layout/InteractiveBackground";
 
 function NotFoundComponent() {
   return (
@@ -61,7 +62,9 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        {children}
+        <InteractiveBackground>
+          {children}
+        </InteractiveBackground>
         <Scripts />
       </body>
     </html>
