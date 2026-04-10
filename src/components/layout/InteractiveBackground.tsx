@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
+import ParticleField from "../shared/ParticleField";
 
 interface InteractiveBackgroundProps {
   children?: React.ReactNode;
@@ -8,7 +9,7 @@ interface InteractiveBackgroundProps {
 export default function InteractiveBackground({ children }: InteractiveBackgroundProps) {
   // state for checking if it's a mobile device (based on screen width)
   const [isMobile, setIsMobile] = useState(false);
-  
+
   // Motion values to track mouse coordinates
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -22,10 +23,10 @@ export default function InteractiveBackground({ children }: InteractiveBackgroun
       // 768px is the standard Tailwind 'md' breakpoint
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     // Check on initial mount
     handleResize();
-    
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -47,8 +48,11 @@ export default function InteractiveBackground({ children }: InteractiveBackgroun
     <div className="relative min-h-screen w-full">
       {/* Background Container for Z-Index management and pointer isolation */}
       <div className="pointer-events-none fixed inset-0 -z-10 bg-[#0a0a0a] overflow-hidden">
+        {/* Particle Layer (Site wide) */}
+        <ParticleField count={108} />
+
         {/* Texture Layer */}
-        <div 
+        <div
           className="absolute inset-0 opacity-[0.03] mix-blend-overlay"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,

@@ -1,12 +1,10 @@
 import { motion } from "framer-motion";
 import { minds } from "../../data/minds";
 import MindCard from "../shared/MindCard";
-import ParticleField from "../shared/ParticleField";
 
 export default function Philosophy() {
   return (
     <section id="philosophy" className="relative py-32 px-6">
-      <ParticleField />
       <div className="max-w-6xl mx-auto relative">
         <motion.div
           initial={{ opacity: 0 }}
