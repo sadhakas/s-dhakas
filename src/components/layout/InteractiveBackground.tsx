@@ -49,7 +49,7 @@ export default function InteractiveBackground({ children }: InteractiveBackgroun
       {/* Background Container for Z-Index management and pointer isolation */}
       <div className="pointer-events-none fixed inset-0 -z-10 bg-[#0a0a0a] overflow-hidden">
         {/* Particle Layer (Site wide) */}
-        <ParticleField count={108} />
+        <ParticleField count={45} />
 
         {/* Texture Layer */}
         <div

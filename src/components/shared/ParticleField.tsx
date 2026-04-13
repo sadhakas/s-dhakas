@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useState, useEffect } from "react";
 
 interface Particle {
   id: number;
@@ -11,8 +11,10 @@ interface Particle {
 }
 
 export default function ParticleField({ count = 35 }: { count?: number }) {
-  const particles = useMemo<Particle[]>(() => {
-    return Array.from({ length: count }, (_, i) => ({
+  const [particles, setParticles] = useState<Particle[]>([]);
+
+  useEffect(() => {
+    const generated = Array.from({ length: count }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
@@ -21,7 +23,12 @@ export default function ParticleField({ count = 35 }: { count?: number }) {
       duration: 12 + Math.random() * 18,
       delay: Math.random() * -20,
     }));
+    setParticles(generated);
   }, [count]);
+
+  if (particles.length === 0) {
+    return <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden />;
+  }
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
@@ -37,6 +44,7 @@ export default function ParticleField({ count = 35 }: { count?: number }) {
             opacity: p.opacity,
             animationDuration: `${p.duration}s`,
             animationDelay: `${p.delay}s`,
+            willChange: "transform, opacity"
           }}
         />
       ))}

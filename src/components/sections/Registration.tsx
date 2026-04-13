@@ -1,12 +1,33 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Loader2 } from "lucide-react";
 
 export default function Registration() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+    
+    const scriptURL = import.meta.env.VITE_REGISTRATION_URL;
+
+    try {
+      await fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify(data),
+        mode: "no-cors"
+      });
+      setSubmitted(true);
+    } catch (error) {
+      console.error("Registration Script Error:", error);
+      alert("Failed to register. Please check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -34,11 +55,25 @@ export default function Registration() {
             animate={{ opacity: 1, scale: 1 }}
             className="text-center py-16"
           >
+            <div className="w-16 h-16 rounded-full bg-gold/10 mx-auto flex items-center justify-center mb-6">
+              <motion.svg
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                className="w-8 h-8 text-gold"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </motion.svg>
+            </div>
             <p className="font-serif text-2xl text-foreground mb-3">
               Welcome, Sādhaka.
             </p>
             <p className="text-muted-foreground text-sm">
-              We'll be in touch with the details of the next journey.
+              We'll be in touch with you soon! :D
             </p>
           </motion.div>
         ) : (
@@ -56,6 +91,7 @@ export default function Registration() {
               </label>
               <input
                 required
+                name="name"
                 type="text"
                 className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-lg focus:outline-none focus:border-gold transition-colors duration-300 placeholder:text-muted-foreground/30"
                 placeholder="Your name"
@@ -67,6 +103,7 @@ export default function Registration() {
               </label>
               <input
                 required
+                name="email"
                 type="email"
                 className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-lg focus:outline-none focus:border-gold transition-colors duration-300 placeholder:text-muted-foreground/30"
                 placeholder="your@email.com"
@@ -78,6 +115,7 @@ export default function Registration() {
               </label>
               <input
                 required
+                name="phone"
                 type="tel"
                 className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-lg focus:outline-none focus:border-gold transition-colors duration-300 placeholder:text-muted-foreground/30"
                 placeholder="+91 99999 99999"
@@ -88,6 +126,7 @@ export default function Registration() {
                 what calls you here?
               </label>
               <textarea
+                name="message"
                 rows={3}
                 className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-lg focus:outline-none focus:border-gold transition-colors duration-300 resize-none placeholder:text-muted-foreground/30"
                 placeholder="A few words..."
@@ -96,9 +135,17 @@ export default function Registration() {
             <div className="pt-4">
               <button
                 type="submit"
-                className="w-full border border-gold/40 text-gold py-4 text-xs tracking-[0.3em] lowercase rounded-lg hover:bg-gold/10 hover:border-gold/70 transition-all duration-500 cursor-pointer"
+                disabled={loading}
+                className="w-full flex items-center justify-center gap-2 border border-gold/40 text-gold py-4 text-xs tracking-[0.3em] lowercase rounded-lg hover:bg-gold/10 hover:border-gold/70 transition-all duration-500 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                begin the journey
+                {loading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-gold" />
+                    processing...
+                  </>
+                ) : (
+                  "begin the journey"
+                )}
               </button>
             </div>
           </motion.form>

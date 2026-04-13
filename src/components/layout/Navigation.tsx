@@ -2,9 +2,10 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { label: "journeys", href: "#journeys" },
   { label: "philosophy", href: "#philosophy" },
-  { label: "journal", href: "#problem" },
+  { label: "offerings", href: "#offerings" },
+  { label: "manual of life", href: "#manual" },
+  { label: "journeys", href: "#journeys" },
   { label: "register", href: "#register" },
 ];
 

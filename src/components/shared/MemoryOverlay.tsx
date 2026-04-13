@@ -20,8 +20,10 @@ export default function MemoryOverlay({ journey, onClose }: MemoryOverlayProps) 
   // Lock background scroll when modal is open
   useEffect(() => {
     document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "unset";
+      document.documentElement.style.overflow = "unset";
     };
   }, []);
 

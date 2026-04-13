@@ -4,6 +4,10 @@ import Navigation from "@/components/layout/Navigation";
 import Hero from "@/components/sections/Hero";
 import Philosophy from "@/components/sections/Philosophy";
 import Problem from "@/components/sections/Problem";
+import TheSadhakasWay from "@/components/sections/TheSadhakasWay";
+import Intro from "@/components/sections/Intro";
+import Offerings from "@/components/sections/Offerings";
+import ManualOfLife from "@/components/sections/ManualOfLife";
 import Journeys from "@/components/sections/Journeys";
 import Registration from "@/components/sections/Registration";
 import Footer from "@/components/layout/Footer";
@@ -20,6 +24,10 @@ function Index() {
         <Hero />
         <Philosophy />
         <Problem />
+        <TheSadhakasWay />
+        <Intro />
+        <Offerings />
+        <ManualOfLife />
         <Journeys />
         <Registration />
         <Footer />

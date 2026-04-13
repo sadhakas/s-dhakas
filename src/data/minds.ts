@@ -8,23 +8,23 @@ export interface MindData {
 
 export const minds: MindData[] = [
   {
-    name: "Einstein",
+    name: "Albert Einstein",
     domain: "Physics · Imagination",
-    quote: "Imagination is more important than knowledge. Knowledge is limited. Imagination encircles the world.",
+    quote: "There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.",
     years: "1879 – 1955",
     image: "/assets/images/minds/port_einstein.png",
   },
   {
-    name: "Tesla",
+    name: "Nikola Tesla",
     domain: "Engineering · Vision",
-    quote: "The scientists of today think deeply instead of clearly. One must be sane to think clearly, but one can think deeply and be quite insane.",
+    quote: "The Vedic conception of the universe is the most magnificent.",
     years: "1856 – 1943",
     image: "/assets/images/minds/port_tesla.png",
   },
   {
-    name: "Tagore",
+    name: "Rabindra Tagore",
     domain: "Poetry · Consciousness",
-    quote: "You can't cross the sea merely by standing and staring at the water.",
+    quote: "The Upanishads give what the world needs most—a knowledge of the Self.",
     years: "1861 – 1941",
     image: "/assets/images/minds/port_rabindra_tagore.png",
   },

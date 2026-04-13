@@ -48,6 +48,11 @@ export const Route = createRootRoute({
         rel: "stylesheet",
         href: appCss,
       },
+      {
+        rel: "icon",
+        type: "image/png",
+        href: "/assets/images/logo.png",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -71,6 +76,13 @@ function RootShell({ children }: { children: React.ReactNode }) {
   );
 }
 
+import Navbar from "../components/layout/Navbar";
+
 function RootComponent() {
-  return <Outlet />;
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+    </>
+  );
 }
