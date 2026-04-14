@@ -29,7 +29,7 @@ export default function Footer() {
           ))}
         </div>
         <p className="text-muted-foreground/20 text-[10px] tracking-[0.15em] lowercase">
-          © 2025 sādhakas. all rights reserved.
+          © {new Date().getFullYear()} sādhakas. all rights reserved.
         </p>
       </div>
     </footer>
