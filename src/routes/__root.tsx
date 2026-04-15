@@ -1,9 +1,28 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { Outlet, createRootRoute, HeadContent, Scripts, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
 import appCss from "../styles.css?url";
 import InteractiveBackground from "../components/layout/InteractiveBackground";
 
 function NotFoundComponent() {
+  const navigate = useNavigate();
+  const [countdown, setCountdown] = useState(3);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          navigate({ to: "/" });
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [navigate]);
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
@@ -12,15 +31,16 @@ function NotFoundComponent() {
           Page not found
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+          Redirecting you to home in{" "}
+          <span className="font-semibold text-foreground">{countdown}</span>...
         </p>
         <div className="mt-6">
-          <Link
-            to="/"
+          <button
+            onClick={() => navigate({ to: "/" })}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Go home
-          </Link>
+            Go home now
+          </button>
         </div>
       </div>
     </div>
