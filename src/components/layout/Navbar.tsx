@@ -46,13 +46,10 @@ export default function Navbar() {
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 3 }}
-              className="absolute -top-[18px] left-[3.2rem] md:left-[4rem] pointer-events-none select-none whitespace-nowrap"
+              className="absolute -top-[18px] left-[3.2rem] md:left-[4rem] pointer-events-none select-none whitespace-nowrap hidden sm:block"
             >
-              <span className="hidden md:inline text-gold-dim/40 text-[8px] tracking-[0.4em] uppercase">
+              <span className="text-gold-dim/40 text-[8px] tracking-[0.4em] uppercase">
                 hover & hold
-              </span>
-              <span className="md:hidden text-gold-dim/40 text-[8px] tracking-[0.4em] uppercase">
-                press & hold
               </span>
             </motion.div>
             
