@@ -98,7 +98,7 @@ export default function MemoryOverlay({ journey, onClose }: MemoryOverlayProps) 
         </button>
 
         {/* Left Side: Trip Details */}
-        <div className="w-full md:w-1/3 p-8 md:p-12 overflow-y-auto border-b md:border-b-0 md:border-r border-border custom-scrollbar flex flex-col justify-center">
+        <div data-lenis-prevent="true" className="w-full md:w-1/3 p-8 md:p-12 overflow-y-auto border-b md:border-b-0 md:border-r border-border custom-scrollbar flex flex-col justify-center">
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

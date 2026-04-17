@@ -1,16 +1,59 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-function AnimatedNumber({ value, suffix = "%" }: { value: number; suffix?: string }) {
+// ── The Echo: spawns ghost number ripples imperatively (no React state) ──────
+function spawnEcho(el: HTMLElement, text: string) {
+  const rect = el.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+
+  for (let i = 0; i < 3; i++) {
+    const ghost = document.createElement("span");
+    ghost.textContent = text;
+    const fontSize = Math.max(3, 7 - i * 1.2);
+    ghost.style.cssText = `
+      position: fixed;
+      left: ${cx}px;
+      top: ${cy}px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: ${fontSize}rem;
+      font-weight: 300;
+      color: rgba(212,175,55,${(0.4 - i * 0.1).toFixed(2)});
+      pointer-events: none;
+      z-index: 9985;
+      white-space: nowrap;
+      line-height: 1;
+      animation: echo-ripple ${0.75 + i * 0.22}s ease-out ${i * 0.13}s forwards;
+    `;
+    document.body.appendChild(ghost);
+    const lifespan = (0.75 + i * 0.22 + i * 0.13) * 1000 + 150;
+    setTimeout(() => ghost.remove(), lifespan);
+  }
+}
+
+function AnimatedNumber({
+  value,
+  suffix = "%",
+}: {
+  value: number;
+  suffix?: string;
+}) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+
+  const handleClick = () => {
+    if (ref.current) spawnEcho(ref.current, `${value}${suffix}`);
+  };
 
   return (
     <motion.span
       ref={ref}
       initial={{ opacity: 0 }}
       animate={inView ? { opacity: 1 } : {}}
-      className="font-serif text-7xl md:text-8xl font-light"
+      className="font-serif text-7xl md:text-8xl font-light cursor-pointer select-none"
+      onClick={handleClick}
+      title="Click to echo"
+      whileTap={{ scale: 0.96 }}
     >
       {inView ? (
         <motion.span
@@ -41,7 +84,7 @@ export default function Problem() {
         </motion.p>
 
         <div className="grid md:grid-cols-2 gap-0">
-          {/* The Age of Information */}
+          {/* 58% — The Age of Information */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -50,7 +93,10 @@ export default function Problem() {
             className="border-r-0 md:border-r border-border p-8 md:p-12 text-center md:text-right"
           >
             <AnimatedNumber value={58} />
-            <p className="font-serif text-lg md:text-xl text-foreground mt-4 mb-3">
+            <p className="font-serif text-xs text-muted-foreground/40 tracking-widest lowercase mt-1 mb-4">
+              tap to echo
+            </p>
+            <p className="font-serif text-lg md:text-xl text-foreground mb-3">
               The Age of Information
             </p>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-sm ml-auto">
@@ -58,7 +104,7 @@ export default function Problem() {
             </p>
           </motion.div>
 
-          {/* The Meaning Gap */}
+          {/* 51% — The Meaning Gap */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -67,7 +113,10 @@ export default function Problem() {
             className="p-8 md:p-12 text-center md:text-left"
           >
             <AnimatedNumber value={51} />
-            <p className="font-serif text-lg md:text-xl text-foreground mt-4 mb-3">
+            <p className="font-serif text-xs text-muted-foreground/40 tracking-widest lowercase mt-1 mb-4">
+              tap to echo
+            </p>
+            <p className="font-serif text-lg md:text-xl text-foreground mb-3">
               The Meaning Gap
             </p>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">

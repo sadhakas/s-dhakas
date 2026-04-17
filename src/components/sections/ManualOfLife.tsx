@@ -1,32 +1,13 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { BookOpen } from "lucide-react";
 
 const themes = [
-  {
-    title: "The Self",
-    subtitle: "Understanding Identity",
-    description: "Exploring what defines the individual beyond temporary roles and labels."
-  },
-  {
-    title: "The Mind",
-    subtitle: "Inner Clarity",
-    description: "Understanding how thoughts and emotions shape our experience of life."
-  },
-  {
-    title: "Action",
-    subtitle: "The Principle of Choices",
-    description: "How decisions influence character, consequences, and direction."
-  },
-  {
-    title: "Nature",
-    subtitle: "Human Tendencies",
-    description: "Understanding the forces that shape behavior and habits."
-  },
-  {
-    title: "Higher Wisdom",
-    subtitle: "Living with Purpose",
-    description: "Integrating insight to cultivate clarity, discipline, and meaning."
-  }
+  { title: "The Self",        subtitle: "Understanding Identity",    description: "Exploring what defines the individual beyond temporary roles and labels." },
+  { title: "The Mind",        subtitle: "Inner Clarity",             description: "Understanding how thoughts and emotions shape our experience of life." },
+  { title: "Action",          subtitle: "The Principle of Choices",  description: "How decisions influence character, consequences, and direction." },
+  { title: "Nature",          subtitle: "Human Tendencies",          description: "Understanding the forces that shape behavior and habits." },
+  { title: "Higher Wisdom",   subtitle: "Living with Purpose",       description: "Integrating insight to cultivate clarity, discipline, and meaning." },
 ];
 
 const deliverables = [
@@ -34,14 +15,16 @@ const deliverables = [
   "visual pocket maps",
   "reflection workbook",
   "life-design exercises",
-  "completion certificate"
+  "completion certificate",
 ];
 
 export default function ManualOfLife() {
+  const [activeNode, setActiveNode] = useState<number | null>(null);
+
   return (
     <section id="manual" className="relative py-32 px-6 overflow-hidden">
       <div className="max-w-5xl mx-auto">
-        
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -52,9 +35,7 @@ export default function ManualOfLife() {
         >
           <div className="flex items-center justify-center md:justify-start gap-4 mb-6">
             <BookOpen className="w-8 h-8 text-gold" />
-            <h2 className="font-serif text-4xl md:text-5xl text-gold">
-              The Manual of Life
-            </h2>
+            <h2 className="font-serif text-4xl md:text-5xl text-gold">The Manual of Life</h2>
           </div>
           <p className="text-muted-foreground text-lg md:text-xl font-light leading-relaxed mb-6">
             A modular program exploring the fundamental dimensions of life through philosophical inquiry and practical reflection.
@@ -64,18 +45,65 @@ export default function ManualOfLife() {
           </p>
         </motion.div>
 
-        {/* Staggered Vertical Theme Tree */}
+        {/* Theme Tree */}
         <div className="relative py-12 mb-24 max-w-4xl mx-auto">
-          {/* Faint connecting line down the middle */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-[1px] bg-gradient-to-b from-transparent via-gold/30 to-transparent hidden md:block" />
+
+          {/*
+            FIXED: Single SVG with proper viewBox spanning the full container.
+            No AnimatePresence inside SVG (unsupported — causes crashes).
+            Glow line uses opacity, circle uses r to animate in/out.
+          */}
+          <svg
+            className="absolute left-1/2 top-0 hidden md:block pointer-events-none"
+            style={{ transform: "translateX(-1px)", width: "2px", height: "100%" }}
+            viewBox="0 0 2 100"
+            preserveAspectRatio="none"
+          >
+            {/* Base spine — always visible */}
+            <line
+              x1="1" y1="0" x2="1" y2="100"
+              stroke="rgba(212,175,55,0.3)"
+              strokeWidth="2"
+              vectorEffect="non-scaling-stroke"
+            />
+            {/* Glow overlay — fades in on any node hover via opacity only */}
+            <motion.line
+              x1="1" y1="0" x2="1" y2="100"
+              strokeWidth="3"
+              vectorEffect="non-scaling-stroke"
+              animate={{
+                stroke: activeNode !== null ? "rgba(212,175,55,0.8)" : "rgba(212,175,55,0)",
+                filter: activeNode !== null
+                  ? "drop-shadow(0 0 5px rgba(212,175,55,0.9))"
+                  : "none",
+              }}
+              transition={{ duration: 0.4 }}
+            />
+            {/* One indicator per node — scale r 0→3 on hover */}
+            {themes.map((_, idx) => (
+              <motion.circle
+                key={idx}
+                cx="1"
+                cy={idx * 25}
+                fill="rgba(212,175,55,1)"
+                animate={{ r: activeNode === idx ? 4 : 0 }}
+                transition={{ duration: 0.3 }}
+                style={{ filter: "drop-shadow(0 0 4px rgba(212,175,55,0.9))" }}
+              />
+            ))}
+          </svg>
+
+          {/* Mobile static spine */}
+          <div className="absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-[1px] bg-gradient-to-b from-transparent via-gold/30 to-transparent md:hidden" />
 
           <div className="space-y-16">
             {themes.map((theme, idx) => {
               const isEven = idx % 2 === 0;
+              const isActive = activeNode === idx;
               return (
                 <div key={theme.title} className="relative flex flex-col md:flex-row items-center w-full">
-                  
-                  {/* Left Side Container */}
+
+                  {/* Left Side */}
                   <div className="w-full md:w-[calc(50%-1px)] flex justify-center md:justify-end md:pr-12 md:order-1 order-2">
                     {isEven && (
                       <motion.div
@@ -95,12 +123,28 @@ export default function ManualOfLife() {
                     )}
                   </div>
 
-                  {/* Center Node (visible on desktop) */}
-                  <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-surface border border-gold z-10 items-center justify-center">
-                    <div className="w-1 h-1 rounded-full bg-gold" />
-                  </div>
+                  {/* Center Node — hover triggers constellation */}
+                  <motion.div
+                    className="hidden md:flex absolute left-1/2 -translate-x-1/2 rounded-full bg-surface z-10 items-center justify-center cursor-pointer"
+                    style={{ width: 20, height: 20, border: "2px solid rgba(212,175,55,0.4)" }}
+                    animate={{
+                      borderColor: isActive ? "rgba(212,175,55,0.9)" : "rgba(212,175,55,0.4)",
+                      boxShadow: isActive
+                        ? "0 0 0 3px rgba(212,175,55,0.15), 0 0 14px 4px rgba(212,175,55,0.3)"
+                        : "0 0 0 0 transparent",
+                    }}
+                    transition={{ duration: 0.3 }}
+                    onHoverStart={() => setActiveNode(idx)}
+                    onHoverEnd={() => setActiveNode(null)}
+                  >
+                    <motion.div
+                      className="rounded-full bg-gold"
+                      animate={{ width: isActive ? 8 : 4, height: isActive ? 8 : 4 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </motion.div>
 
-                  {/* Right Side Container */}
+                  {/* Right Side */}
                   <div className="w-full md:w-[calc(50%-1px)] flex justify-center md:justify-start md:pl-12 md:order-3 order-2">
                     {!isEven && (
                       <motion.div
@@ -126,7 +170,7 @@ export default function ManualOfLife() {
           </div>
         </div>
 
-        {/* Deliverables Footer */}
+        {/* Deliverables */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

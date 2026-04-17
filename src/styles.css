@@ -83,7 +83,7 @@
   }
 }
 
-/* Grain texture overlay */
+/* ─── Grain texture overlay ─────────────────────────────────── */
 .grain-overlay::before {
   content: '';
   position: fixed;
@@ -97,7 +97,7 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
-/* Gold shimmer line */
+/* ─── Gold shimmer line ─────────────────────────────────────── */
 .gold-line {
   height: 1px;
   background: linear-gradient(90deg,
@@ -108,7 +108,7 @@
       transparent 100%);
 }
 
-/* Memory mode for completed journeys */
+/* ─── Memory mode ───────────────────────────────────────────── */
 .memory-mode {
   filter: grayscale(100%) brightness(0.7);
   transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -118,41 +118,187 @@
   filter: grayscale(0%) brightness(1) sepia(30%) saturate(1.5);
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 4px;
-}
+/* ─── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--color-background); }
+::-webkit-scrollbar-thumb { background: var(--color-gold-dim); border-radius: 2px; }
 
-::-webkit-scrollbar-track {
-  background: var(--color-background);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-gold-dim);
-  border-radius: 2px;
-}
-
-/* Floating particle animation */
+/* ─── Floating particle animation ──────────────────────────── */
 @keyframes float-particle {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: var(--tw-opacity, 0.2); }
+  25%  { transform: translateY(-30px) translateX(10px); opacity: calc(var(--tw-opacity, 0.2) * 1.5); }
+  50%  { transform: translateY(-15px) translateX(-8px); opacity: var(--tw-opacity, 0.2); }
+  75%  { transform: translateY(-40px) translateX(5px); opacity: calc(var(--tw-opacity, 0.2) * 0.6); }
+}
 
-  0%,
-  100% {
-    transform: translateY(0) translateX(0);
-    opacity: var(--tw-opacity, 0.2);
-  }
+/* ═══════════════════════════════════════════════════════════════
+   Perspective Shift
+   — Targets #site-content (InteractiveBackground root)
+   — Flash uses #perspective-overlay
+   ═══════════════════════════════════════════════════════════════ */
 
-  25% {
-    transform: translateY(-30px) translateX(10px);
-    opacity: calc(var(--tw-opacity, 0.2) * 1.5);
-  }
+/* The site content wrapper — affected by invert filter */
+#site-content {
+  transition: filter 1.0s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-  50% {
-    transform: translateY(-15px) translateX(-8px);
-    opacity: var(--tw-opacity, 0.2);
-  }
+/*
+  THE PARADIGM SHIFT:
+  invert(1) → entire dark site flips to a stark bright world
+  hue-rotate(20deg) → shifts the inverted cool-purple gold to a more electric blue
+  contrast(1.15) → crisper, more alien
+  "This is what the world looks like without warmth."
+  Then it fades back to the saffron-gold palette — that IS Sādhakas.
+*/
+#site-content.perspective-shifted {
+  filter: invert(1) hue-rotate(20deg) contrast(1.15);
+}
 
-  75% {
-    transform: translateY(-40px) translateX(5px);
-    opacity: calc(var(--tw-opacity, 0.2) * 0.6);
-  }
+/* Flash overlay — brief burst of white light at the moment of contact */
+@keyframes perspective-flash {
+  0%   { opacity: 0; }
+  25%  { opacity: 0.75; }
+  100% { opacity: 0; }
+}
+
+#perspective-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9993;
+  background: white;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+#perspective-overlay.flash {
+  animation: perspective-flash 0.65s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FEATURE: Sanskrit Whispers (Perspective Shift)
+   ═══════════════════════════════════════════════════════════════ */
+#sanskrit-whispers {
+  opacity: 0;
+  transition: filter 1.0s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-out;
+  /* Match the site invert so the gold text becomes the strong deep blue font */
+  filter: invert(1) hue-rotate(20deg) contrast(1.15);
+}
+#sanskrit-whispers.active {
+  opacity: 1;
+}
+
+.whisper {
+  opacity: 0;
+  transform: translateY(30px) rotate(var(--r, 0deg)) scale(0.95);
+  transition: opacity 1.2s cubic-bezier(0.2, 0, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+#sanskrit-whispers.active .whisper {
+  opacity: 1;
+  transform: translateY(0) rotate(var(--r, 0deg)) scale(1);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FEATURE: Divine Spark Glow
+   ═══════════════════════════════════════════════════════════════ */
+.divine-spark {
+  transition: box-shadow 0.4s ease, filter 0.4s ease;
+}
+.divine-spark:hover {
+  box-shadow: 0 0 18px 4px rgba(212, 175, 55, 0.25), 0 0 40px 8px rgba(212, 175, 55, 0.08);
+  filter: brightness(1.08);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FEATURE: Petal Drop
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes petal-fall {
+  0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.9; }
+  60%  { opacity: 0.7; }
+  100% { transform: translateY(110vh) rotate(720deg) scale(0.4); opacity: 0; }
+}
+@keyframes petal-drift {
+  0%   { margin-left: 0; }
+  25%  { margin-left: 30px; }
+  50%  { margin-left: -20px; }
+  75%  { margin-left: 15px; }
+  100% { margin-left: 0; }
+}
+.petal {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  border-radius: 50% 0 50% 0;
+  animation:
+    petal-fall var(--fall-duration, 2.5s) ease-in forwards,
+    petal-drift var(--drift-duration, 2s) ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FEATURE: Resonating Swan Ripple
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes swan-ripple {
+  0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
+}
+.swan-ripple {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(212, 175, 55, 0.6);
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  animation: swan-ripple 1.2s ease-out forwards;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FEATURE: Illuminated Path flare
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes path-flare {
+  0%   { width: 0; opacity: 0.9; }
+  60%  { width: 40px; opacity: 0.6; }
+  100% { width: 0; opacity: 0; }
+}
+.path-flare {
+  position: absolute;
+  height: 1px;
+  left: 3px;
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.8), transparent);
+  animation: path-flare 0.8s ease-out forwards;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FEATURE: Connection Wave rings
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes wave-expand {
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.4; }
+  100% { transform: translate(-50%, -50%) scale(8); opacity: 0; }
+}
+.connection-wave-ring {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  animation: wave-expand 1.8s cubic-bezier(0.2, 0, 0.8, 1) forwards;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FEATURE: The Echo (Problem section stat click ripple)
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes echo-ripple {
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.45; }
+  100% { transform: translate(-50%, -50%) scale(2.8); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FEATURE: Seeker's Trail sparkle particles
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes sparkle-fade {
+  0%   { transform: translate(-50%, -50%) scale(0) rotate(0deg);   opacity: 1; }
+  45%  { transform: translate(-50%, -50%) scale(1.2) rotate(40deg); opacity: 0.85; }
+  100% { transform: translate(-50%, -50%) scale(2.0) rotate(80deg); opacity: 0; }
 }

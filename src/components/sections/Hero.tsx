@@ -1,8 +1,11 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { usePerspectiveShift } from "../../hooks/usePerspectiveShift";
 
 export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
+  const { engage, disengage } = usePerspectiveShift();
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -25,7 +28,8 @@ export default function Hero() {
   return (
     <section ref={ref} className="relative h-[200vh]">
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-        {/* Concentric circles */}
+
+        {/* Concentric circle rings */}
         <div className="absolute inset-0 flex items-center justify-center">
           {circles.map((c, i) => (
             <motion.div
@@ -37,34 +41,52 @@ export default function Hero() {
               className="absolute rounded-full border border-gold/20"
               aria-hidden
             >
-              <div
-                style={{ width: c.size, height: c.size }}
-                className="rounded-full"
-              />
+              <div style={{ width: c.size, height: c.size }} className="rounded-full" />
             </motion.div>
           ))}
         </div>
 
-        {/* Title */}
+        {/* Main title — Perspective Shift trigger #1 */}
         <motion.div
           style={{ opacity: titleOpacity, y: titleY }}
           className="relative z-10 text-center px-4"
         >
+          {/* Perspective shift hint */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 2.2 }}
+            className="mb-4 select-none pt-2"
+          >
+            <span className="hidden md:inline text-gold-dim/40 text-[9px] tracking-[0.4em] uppercase">
+              hover & hold
+            </span>
+            <span className="md:hidden text-gold-dim/40 text-[9px] tracking-[0.4em] uppercase">
+              press & hold
+            </span>
+          </motion.div>
+
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1 }}
-            className="text-6xl md:text-8xl lg:text-9xl font-light tracking-[0.04em] text-foreground"
+            className="text-6xl md:text-8xl lg:text-9xl font-light tracking-[0.04em] text-foreground cursor-pointer select-none inline-block relative"
             style={{ fontFamily: "'Gencha', serif" }}
+            onMouseEnter={engage}
+            onMouseLeave={disengage}
+            onTouchStart={engage}
+            onTouchEnd={disengage}
           >
             Sādhakas
           </motion.h1>
+
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 0.8, delay: 1.5 }}
             className="gold-line w-32 md:w-48 mx-auto my-6"
           />
+
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

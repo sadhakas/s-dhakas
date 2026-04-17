@@ -50,7 +50,7 @@ export default function TripInterestOverlay({ journey, onClose }: TripInterestOv
         </button>
 
         {/* Left Side: Trip Details */}
-        <div className="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto border-b md:border-b-0 md:border-r border-border custom-scrollbar">
+        <div data-lenis-prevent="true" className="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto border-b md:border-b-0 md:border-r border-border custom-scrollbar">
           <p className="text-gold-dim text-[10px] tracking-[0.4em] lowercase mb-4">
             upcoming journey
           </p>
@@ -123,7 +123,7 @@ export default function TripInterestOverlay({ journey, onClose }: TripInterestOv
         </div>
 
         {/* Right Side: Interest Form */}
-        <div className="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto bg-background/50 custom-scrollbar flex flex-col justify-center">
+        <div data-lenis-prevent="true" className="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto bg-background/50 custom-scrollbar flex flex-col justify-center">
           <div className="max-w-md mx-auto w-full">
             <h3 className="font-serif text-2xl text-foreground mb-8">
               Register Your Interest

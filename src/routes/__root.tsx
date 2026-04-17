@@ -3,14 +3,15 @@ import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
 import InteractiveBackground from "../components/layout/InteractiveBackground";
+import PetalDrop from "../components/shared/PetalDrop";
+import IlluminatedPath from "../components/layout/IlluminatedPath";
+import SeekerTrail from "../components/shared/SeekerTrail";
+import AnnouncementBar from "../components/layout/AnnouncementBar";
+import SanskritWhispers from "../components/layout/SanskritWhispers";
 
 function NotFoundComponent() {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    navigate({ to: "/" });
-  }, [navigate]);
-
+  useEffect(() => { navigate({ to: "/" }); }, [navigate]);
   return null;
 }
 
@@ -31,15 +32,8 @@ export const Route = createRootRoute({
       { name: "twitter:image", content: "https://lovable.dev/opengraph-image-p98pqg.png" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-      {
-        rel: "icon",
-        type: "image/png",
-        href: "/assets/images/logo.png",
-      },
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", type: "image/png", href: "/assets/images/logo.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -54,6 +48,18 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        {/* ── Announcement bar — above everything, unaffected by perspective shift ── */}
+        <AnnouncementBar />
+
+        {/* ── Global overlays ── */}
+        <IlluminatedPath />
+        <PetalDrop />
+        <SeekerTrail />
+        <SanskritWhispers />
+
+        {/* Perspective Shift — flash overlay + #site-content filter */}
+        <div id="perspective-overlay" aria-hidden="true" />
+
         <InteractiveBackground>
           {children}
         </InteractiveBackground>

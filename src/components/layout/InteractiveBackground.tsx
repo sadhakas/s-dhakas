@@ -45,7 +45,7 @@ export default function InteractiveBackground({ children }: InteractiveBackgroun
   }, [isMobile, mouseX, mouseY]);
 
   return (
-    <div className="relative min-h-screen w-full">
+    <div id="site-content" className="relative min-h-screen w-full">
       {/* Background Container for Z-Index management and pointer isolation */}
       <div className="pointer-events-none fixed inset-0 -z-10 bg-[#0a0a0a] overflow-hidden">
         {/* Particle Layer (Site wide) */}
