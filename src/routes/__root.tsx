@@ -3,7 +3,6 @@ import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
 import InteractiveBackground from "../components/layout/InteractiveBackground";
-import PetalDrop from "../components/shared/PetalDrop";
 import IlluminatedPath from "../components/layout/IlluminatedPath";
 import SeekerTrail from "../components/shared/SeekerTrail";
 import AnnouncementBar from "../components/layout/AnnouncementBar";
@@ -55,7 +54,6 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
         {/* ── Global overlays ── */}
         <IlluminatedPath />
-        <PetalDrop />
         <SeekerTrail />
         <SanskritWhispers />
 
