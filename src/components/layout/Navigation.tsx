@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ConnectionWave from "../shared/ConnectionWave";
 
@@ -68,6 +68,32 @@ export default function Navigation() {
     }
   };
 
+  // Close menu on outside click
+  const navRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent | TouchEvent) => {
+      if (
+        isOpen && 
+        window.innerWidth < 768 && 
+        navRef.current && 
+        !navRef.current.contains(e.target as Node)
+      ) {
+        setIsMobileOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+      document.addEventListener("touchstart", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("touchstart", handleOutsideClick);
+    };
+  }, [isOpen]);
+
   // Feature 8 — Long-hover on "Sādhakas" brand text in nav panel
   const handleBrandMouseEnter = () => {
     waveHoldTimer.current = setTimeout(() => setShowWave(true), 1200);
@@ -79,6 +105,7 @@ export default function Navigation() {
   return (
     <>
       <div
+        ref={navRef}
         className="fixed top-6 right-6 z-50"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

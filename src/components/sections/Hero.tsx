@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { usePerspectiveShift } from "../../hooks/usePerspectiveShift";
+import { Link } from "@tanstack/react-router";
 
 export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -45,8 +46,45 @@ export default function Hero() {
             </motion.div>
           ))}
         </div>
+        {/* Drifting Mantra Card Portal */}
+        <motion.div
+          animate={{
+            y: [0, -40, 20, -20, 0],
+            x: [0, 30, -15, 25, 0],
+            rotate: [-5, 5, -2, 4, -5],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          style={{ opacity: titleOpacity }}
+          className="absolute z-20 top-[15%] right-[5%] md:right-[15%] lg:right-[20%] cursor-pointer group pointer-events-auto"
+        >
+          <Link to="/mantra-card" className="block relative">
+            {/* The Glassmorphic Drifting Card */}
+            <div className="w-16 h-24 md:w-20 md:h-32 lg:w-24 lg:h-36 rounded-xl border border-gold/30 bg-gradient-to-br from-white/10 to-transparent backdrop-blur-md shadow-[0_0_30px_rgba(212,175,55,0.15)] group-hover:shadow-[0_0_50px_rgba(212,175,55,0.4)] group-hover:border-gold/60 group-hover:scale-105 transition-all duration-700 flex flex-col items-center justify-center overflow-hidden">
+               
+               {/* Inner Border & Text */}
+               <div className="absolute inset-x-1.5 top-1.5 bottom-1.5 md:inset-x-2 md:top-2 md:bottom-2 border border-gold/20 rounded-lg flex flex-col items-center justify-center p-1">
+                  <div className="text-[6px] md:text-[8px] lg:text-[10px] uppercase tracking-widest text-gold/60 text-center font-serif leading-loose opacity-70 group-hover:opacity-100 transition-opacity">
+                    Mantra<br/>Card
+                  </div>
+                  <div className="mt-2 w-4 md:w-6 h-[1px] bg-gold/30" />
+               </div>
 
-        {/* Main title — Perspective Shift trigger #1 */}
+               {/* Subtle sweeping glare effect on hover */}
+               <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-1000 ease-out" />
+            </div>
+            
+            {/* Tooltip hint */}
+            <div className="absolute top-1/2 -left-4 -translate-x-full -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-500 whitespace-nowrap pointer-events-none flex items-center pr-2">
+              <span className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-gold/80 font-serif dropping-shadow">Fetch the card</span>
+              {/* Leader line pointing to the card */}
+              <div className="absolute right-0 top-1/2 w-4 h-[1px] bg-gold/40 translate-x-full" />
+            </div>
+          </Link>
+        </motion.div>
         <motion.div
           style={{ opacity: titleOpacity, y: titleY }}
           className="relative z-10 text-center px-4"

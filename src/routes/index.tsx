@@ -10,6 +10,7 @@ import Offerings from "@/components/sections/Offerings";
 import ManualOfLife from "@/components/sections/ManualOfLife";
 import Journeys from "@/components/sections/Journeys";
 import Registration from "@/components/sections/Registration";
+import FAQ from "@/components/sections/FAQ";
 import Footer from "@/components/layout/Footer";
 import { SectionErrorBoundary } from "@/components/shared/SectionErrorBoundary";
 
@@ -54,6 +55,10 @@ function Index() {
 
         <SectionErrorBoundary name="Journeys">
           <Journeys />
+        </SectionErrorBoundary>
+
+        <SectionErrorBoundary name="FAQ">
+          <FAQ />
         </SectionErrorBoundary>
 
         <SectionErrorBoundary name="Registration">
