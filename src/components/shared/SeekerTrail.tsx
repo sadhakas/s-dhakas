@@ -191,7 +191,7 @@ export default function SeekerTrail() {
           // Ethereal Infinity Loop (Lemniscate) Idle
           // When resting for >2.5s (approx 150 frames), form an elegant floating figure-8 around cursor
           if (idleFrames > 150) {
-            idleTime += 0.08; 
+            idleTime += 0.06; 
             const loopWidth = 140; 
             
             // Lemniscate equation
