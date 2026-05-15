@@ -33,9 +33,10 @@ export default function JourneyCard({
       onClick={onClick}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -10, scale: 1.02 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, delay: index * 0.15 }}
-      className={`group relative bg-surface border border-border rounded-lg overflow-hidden transition-colors duration-500 hover:border-gold/40 cursor-pointer ${
+      transition={{ duration: 0.7, delay: index * 0.15, ease: [0.76, 0, 0.24, 1] }}
+      className={`group relative bg-surface/40 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden transition-all duration-500 hover:border-primary/40 hover:bg-surface/80 hover:shadow-[0_0_40px_rgba(var(--color-primary),0.1)] cursor-pointer ${
         compact ? "flex-none w-[300px] md:w-[350px]" : ""
       }`}
     >
@@ -44,7 +45,7 @@ export default function JourneyCard({
         <img
           src={journey.image}
           alt={journey.title}
-          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105 memory-mode"
+          className="w-full h-full object-cover object-top transition-transform duration-1000 group-hover:scale-110 memory-mode"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent pointer-events-none" />
 
@@ -53,8 +54,8 @@ export default function JourneyCard({
           <span
             className={`text-[10px] tracking-[0.2em] lowercase px-3 py-1 rounded-full border ${
               isCompleted
-                ? "border-gold/30 text-gold-dim bg-background/60"
-                : "border-gold/50 text-gold bg-background/60"
+                ? "border-primary/30 text-primary/60 bg-background/60"
+                : "border-primary/50 text-primary bg-background/60"
             } backdrop-blur-sm shadow-lg`}
           >
             {isCompleted ? "memory" : "upcoming"}
@@ -64,7 +65,7 @@ export default function JourneyCard({
 
       {/* Content */}
       <div className={compact ? "p-4 md:p-6" : "p-6 md:p-8"}>
-        <p className="text-gold-dim text-[10px] tracking-[0.3em] lowercase mb-2">
+        <p className="text-primary text-[10px] tracking-[0.3em] lowercase mb-2">
           {journey.location}
         </p>
         <h3 className={`font-serif font-light text-foreground mb-3 lowercase ${compact ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"}`}>
@@ -76,7 +77,7 @@ export default function JourneyCard({
         <p className="text-muted-foreground/40 text-[10px] tracking-[0.15em]">
           {journey.date}
         </p>
-        <div className="gold-line mt-6 opacity-20 group-hover:opacity-50 transition-opacity duration-500" />
+        <div className="mt-6 w-12 h-[1px] bg-gradient-to-r from-primary/20 to-transparent group-hover:from-primary/60 transition-colors duration-500" />
       </div>
     </motion.div>
   );

@@ -84,17 +84,17 @@ export const journeysData: JourneyData[] = [
     ]
   },
   {
-    title: "Himalayan Reset",
-    location: "Rishikesh · Devprayag · Badrinath",
+    title: "The Manual of Life (TMOL)",
+    location: "Online / Offline Interactive Workshop",
     description:
-      "An ascending journey through altitude and altitude of mind. From the Dalai Lama's residence to the stark moonscapes of Spiti, where the thin air strips away everything but the essential questions.",
+      "A comprehensive 21-day curriculum designed to recalibrate your mind, habits, and perspective. Far beyond a typical workshop, TMOL is a sharp, immersive deep-dive into the fundamental mechanics of living with clarity and purpose. Date: 13th June - 5th July. Time: 30 mins/day. Perks: Certificate issue, Physical Self-Help Book sent to every member, Lifetime guidance and access to Sadhakas community resources. Special Perk: 'Detox and Discover' Trip to Jaipur, Udaipur, and Mount Abu (16-19 July). Normally ₹4500, but discounted to ₹1000 for trip attendees with code 'TMOL1000'.",
     status: "Upcoming",
-    date: "May 2026",
-    image: "/assets/images/journeys/himalayanreset2026/poster.png",
-    cost: "₹12,500 (Includes Stay, Food & Travel)",
-    startPoint: "Pilani -> Rishikesh -> Devprayag -> Badrinath",
-    endPoint: "Rishikesh",
-    duration: "7 Days, 7 Nights",
-    exactDates: "17 May - 24 May, 2026"
+    date: "13 June - 5 July 2026",
+    image: "/assets/images/journeys/tmol/poster.png",
+    cost: "₹300 (Registration)",
+    startPoint: "Global Access",
+    endPoint: "Your Reimagined Self",
+    duration: "21 Days",
+    exactDates: "13 June - 5 July 2026"
   },
 ];

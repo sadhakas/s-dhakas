@@ -110,60 +110,74 @@ export default function Navigation() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Menu Icon */}
-        <button
-          onClick={handleClick}
-          className="relative z-50 flex flex-col gap-1.5 p-2 group cursor-pointer"
-          aria-label="Menu"
-        >
-          <motion.span
-            animate={isOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
-            className="block w-6 h-[1px] bg-gold origin-center"
-          />
-          <motion.span
-            animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-            className="block w-4 h-[1px] bg-gold ml-auto"
-          />
-          <motion.span
-            animate={isOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
-            className="block w-6 h-[1px] bg-gold origin-center"
-          />
-        </button>
+        <div className="flex items-center gap-4">
+          {/* Menu Icon */}
+          <button
+            onClick={handleClick}
+            className="relative z-50 flex flex-col gap-1.5 p-2 group cursor-pointer"
+            aria-label="Menu"
+          >
+            <motion.span
+              animate={isOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+              className="block w-6 h-[1px] bg-white origin-center"
+            />
+            <motion.span
+              animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+              className="block w-4 h-[1px] bg-white ml-auto"
+            />
+            <motion.span
+              animate={isOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
+              className="block w-6 h-[1px] bg-white origin-center"
+            />
+          </button>
+        </div>
 
-        {/* Menu Panel */}
+        {/* Full Screen Menu Panel */}
         <AnimatePresence>
           {isOpen && (
             <motion.nav
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 40 }}
-              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-              className="absolute top-0 right-0 pt-14 pr-2"
+              initial={{ opacity: 0, y: "-100%" }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: "-100%" }}
+              transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+              className="fixed inset-0 z-40 bg-background/95 backdrop-blur-3xl flex flex-col items-center justify-center"
             >
-              <div className="bg-surface-elevated/95 backdrop-blur-xl border border-border rounded-lg p-6 min-w-[180px]">
-                <ul className="flex flex-col gap-4">
-                  {navLinks.map((link) => (
-                    <li key={link.label}>
-                      <button
-                        onClick={() => handleLinkClick(link.href)}
-                        className="text-muted-foreground hover:text-gold text-sm lowercase tracking-[0.2em] transition-colors duration-300 cursor-pointer"
-                      >
-                        {link.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-                <div className="gold-line mt-5 mb-3 opacity-30" />
+              <ul className="flex flex-col items-center gap-8">
+                {navLinks.map((link, i) => (
+                  <motion.li 
+                    key={link.label}
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 40 }}
+                    transition={{ delay: 0.2 + i * 0.1, duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+                  >
+                    <button
+                      onClick={() => handleLinkClick(link.href)}
+                      className="text-foreground hover:text-primary text-5xl md:text-7xl font-serif tracking-tight transition-colors duration-500 cursor-pointer"
+                    >
+                      {link.label}
+                    </button>
+                  </motion.li>
+                ))}
+              </ul>
+              
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                className="absolute bottom-12 text-center"
+              >
+                <div className="w-px h-12 bg-gradient-to-b from-primary to-transparent mx-auto mb-6" />
                 {/* Feature 8 trigger — long hover on brand text */}
                 <p
-                  className="text-muted-foreground/40 text-[10px] lowercase tracking-[0.15em] cursor-default select-none transition-colors duration-300 hover:text-gold/30"
+                  className="text-muted-foreground/40 text-xs uppercase tracking-[0.4em] cursor-default select-none transition-colors duration-300 hover:text-primary"
                   onMouseEnter={handleBrandMouseEnter}
                   onMouseLeave={handleBrandMouseLeave}
                   title="Hold to feel the connection..."
                 >
                   sādhakas
                 </p>
-              </div>
+              </motion.div>
             </motion.nav>
           )}
         </AnimatePresence>

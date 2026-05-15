@@ -35,7 +35,7 @@ export default function ParticleField({ count = 35 }: { count?: number }) {
       {particles.map((p) => (
         <span
           key={p.id}
-          className="absolute rounded-full bg-gold animate-float-particle"
+          className="absolute rounded-full bg-primary animate-float-particle"
           style={{
             left: `${p.x}%`,
             top: `${p.y}%`,

@@ -41,13 +41,13 @@ function JourneyCarousel({
           <div className="absolute right-0 flex gap-2">
             <button 
               onClick={() => scroll("left")} 
-              className="p-2 rounded-full bg-surface border border-border hover:border-gold/50 transition-colors cursor-pointer text-muted-foreground hover:text-foreground"
+              className="p-2 rounded-full bg-surface border border-white/10 hover:border-primary/50 hover:bg-surface/80 transition-all duration-300 cursor-pointer text-muted-foreground hover:text-primary"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button 
               onClick={() => scroll("right")} 
-              className="p-2 rounded-full bg-surface border border-border hover:border-gold/50 transition-colors cursor-pointer text-muted-foreground hover:text-foreground"
+              className="p-2 rounded-full bg-surface border border-white/10 hover:border-primary/50 hover:bg-surface/80 transition-all duration-300 cursor-pointer text-muted-foreground hover:text-primary"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -99,19 +99,19 @@ export default function Journeys() {
             transition={{ duration: 0.8 }}
             className="text-center mb-20"
           >
-            <p className="text-gold-dim text-xs tracking-[0.4em] lowercase mb-4">
+            <p className="text-primary text-xs tracking-[0.4em] lowercase mb-4">
               where we wander
             </p>
-            <h2 className="font-serif text-4xl md:text-5xl font-light text-foreground">
+            <h2 className="font-serif text-5xl md:text-6xl font-light text-foreground">
               The Journeys
             </h2>
-            <div className="gold-line w-24 mx-auto mt-6" />
+            <div className="w-24 mx-auto mt-6 h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
           </motion.div>
 
           {/* Side-by-Side Dual Carousel Layout */}
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
             <JourneyCarousel 
-              title="Upcoming Trips" 
+              title="Upcoming Events" 
               journeys={upcomingJourneys} 
               onSelect={setSelectedJourney} 
             />

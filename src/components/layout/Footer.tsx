@@ -16,12 +16,12 @@ export default function Footer() {
   return (
     <>
       <footer className="relative py-16 px-6">
-        <div className="gold-line max-w-xs mx-auto mb-12 opacity-30" />
+        <div className="w-24 mx-auto mb-12 h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
         <div className="max-w-5xl mx-auto text-center">
 
           {/* Feature 8 — Long-hover triggers Connection Wave */}
           <p
-            className="font-serif text-2xl text-foreground font-light mb-2 cursor-default select-none transition-colors duration-500 hover:text-gold/80"
+            className="font-serif text-2xl text-foreground font-light mb-2 cursor-default select-none transition-colors duration-500 hover:text-primary/80"
             onMouseEnter={handleBrandEnter}
             onMouseLeave={handleBrandLeave}
             title="Hold to feel the connection..."
@@ -45,7 +45,7 @@ export default function Footer() {
                 onClick={() =>
                   document.querySelector(link.href)?.scrollIntoView({ behavior: "smooth" })
                 }
-                className="text-muted-foreground/40 text-[10px] tracking-[0.2em] lowercase hover:text-gold transition-colors duration-300 cursor-pointer"
+                className="text-muted-foreground/40 text-[10px] tracking-[0.2em] lowercase hover:text-primary transition-colors duration-300 cursor-pointer"
               >
                 {link.label}
               </button>

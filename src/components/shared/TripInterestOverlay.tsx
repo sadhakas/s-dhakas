@@ -39,7 +39,7 @@ export default function TripInterestOverlay({ journey, onClose }: TripInterestOv
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.95, y: 20, opacity: 0 }}
         transition={{ type: "spring", damping: 25, stiffness: 200 }}
-        className="relative w-full max-w-6xl max-h-[90vh] bg-surface border border-gold/20 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row shadow-gold/5"
+        className="relative w-full max-w-6xl max-h-[90vh] bg-surface border border-primary/20 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row shadow-primary/5"
       >
         {/* Close Button */}
         <button
@@ -51,7 +51,7 @@ export default function TripInterestOverlay({ journey, onClose }: TripInterestOv
 
         {/* Left Side: Trip Details */}
         <div data-lenis-prevent="true" className="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto border-b md:border-b-0 md:border-r border-border custom-scrollbar">
-          <p className="text-gold-dim text-[10px] tracking-[0.4em] lowercase mb-4">
+          <p className="text-primary text-[10px] tracking-[0.4em] lowercase mb-4">
             upcoming journey
           </p>
           <h2 className="font-serif text-3xl md:text-5xl font-light text-foreground mb-6">
@@ -64,7 +64,7 @@ export default function TripInterestOverlay({ journey, onClose }: TripInterestOv
 
           {/* Embedded Poster for easy metadata/QR viewing */}
           {journey.image && (
-            <div className="mb-10 rounded-xl overflow-hidden border border-gold/10 shadow-lg shadow-black/20 bg-black/40 flex items-center justify-center">
+            <div className="mb-10 rounded-xl overflow-hidden border border-primary/10 shadow-lg shadow-black/20 bg-black/40 flex items-center justify-center">
               <img 
                 src={journey.image} 
                 alt={`${journey.title} Poster`} 
@@ -76,7 +76,7 @@ export default function TripInterestOverlay({ journey, onClose }: TripInterestOv
           <div className="space-y-6">
             {/* Dates */}
             <div className="flex items-start gap-4">
-              <div className="p-2 rounded-full bg-gold/10 text-gold">
+              <div className="p-2 rounded-full bg-primary/10 text-primary">
                 <Calendar className="w-4 h-4" />
               </div>
               <div>
@@ -87,7 +87,7 @@ export default function TripInterestOverlay({ journey, onClose }: TripInterestOv
 
             {/* Duration */}
             <div className="flex items-start gap-4">
-              <div className="p-2 rounded-full bg-gold/10 text-gold">
+              <div className="p-2 rounded-full bg-primary/10 text-primary">
                 <Clock className="w-4 h-4" />
               </div>
               <div>
@@ -98,7 +98,7 @@ export default function TripInterestOverlay({ journey, onClose }: TripInterestOv
 
             {/* Route */}
             <div className="flex items-start gap-4">
-              <div className="p-2 rounded-full bg-gold/10 text-gold">
+              <div className="p-2 rounded-full bg-primary/10 text-primary">
                 <MapPin className="w-4 h-4" />
               </div>
               <div>
@@ -111,7 +111,7 @@ export default function TripInterestOverlay({ journey, onClose }: TripInterestOv
 
             {/* Cost */}
             <div className="flex items-start gap-4">
-              <div className="p-2 rounded-full bg-gold/10 text-gold">
+              <div className="p-2 rounded-full bg-primary/10 text-primary">
                 <CreditCard className="w-4 h-4" />
               </div>
               <div>

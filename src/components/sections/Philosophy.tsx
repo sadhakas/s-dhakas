@@ -11,15 +11,15 @@ export default function Philosophy() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          className="text-center mb-24"
         >
-          <p className="text-gold-dim text-xs tracking-[0.4em] lowercase mb-4">
+          <p className="text-primary text-xs tracking-[0.4em] lowercase mb-4">
             a gallery of minds
           </p>
-          <h2 className="font-serif text-4xl md:text-5xl font-light text-foreground">
+          <h2 className="font-serif text-5xl md:text-6xl font-light text-foreground">
             Those Who Sought
           </h2>
-          <div className="gold-line w-24 mx-auto mt-6" />
+          <div className="w-24 mx-auto mt-6 h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">

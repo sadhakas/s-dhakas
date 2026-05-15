@@ -42,7 +42,7 @@ export default function SeekerTrail() {
         position: absolute;
         border-radius: 50%;
         background: #FFF;
-        box-shadow: 0 0 6px 1px rgba(255, 220, 80, 0.9), 0 0 12px 2px rgba(212, 175, 55, 0.5);
+        box-shadow: 0 0 6px 1px rgba(220, 220, 255, 0.9), 0 0 12px 2px rgba(180, 150, 255, 0.5);
         pointer-events: none;
         mix-blend-mode: screen;
         animation: stardust-fade var(--dur) ease-out forwards;
@@ -100,8 +100,8 @@ export default function SeekerTrail() {
         el.style.width = `${size}px`;
         el.style.height = `${size}px`;
         
-        el.style.background = Math.random() > 0.5 ? "#FFF" : "#FFD700";
-        el.style.boxShadow = "0 0 10px 2px rgba(255, 210, 80, 1)";
+        el.style.background = Math.random() > 0.5 ? "#FFF" : "#E0D0FF";
+        el.style.boxShadow = "0 0 10px 2px rgba(200, 180, 255, 1)";
         
         el.style.setProperty("--tx", `${tx}px`);
         el.style.setProperty("--ty", `${ty}px`);
@@ -142,7 +142,7 @@ export default function SeekerTrail() {
           spawnFireworksBurst(mouseX, mouseY, 80);
           
           // Epic Petal Outward Blast
-          const PETAL_COLORS = ["#F97316", "#EF4444", "#FBBF24", "#FDE68A", "#FCA5A5", "#FDBA74"];
+          const PETAL_COLORS = ["#C084FC", "#A855F7", "#818CF8", "#E0D0FF", "#C7D2FE", "#DDD6FE"];
           const petalCount = 120; // Massive explosion
 
           for (let i = 0; i < petalCount; i++) {
@@ -189,8 +189,8 @@ export default function SeekerTrail() {
           idleFrames++;
           
           // Ethereal Infinity Loop (Lemniscate) Idle
-          // When resting for >2.5s (approx 150 frames), form an elegant floating figure-8 around cursor
-          if (idleFrames > 150) {
+          // When resting for >10s (approx 600 frames), form an elegant floating figure-8 around cursor
+          if (idleFrames > 600) {
             idleTime += 0.06; 
             const loopWidth = 140; 
             

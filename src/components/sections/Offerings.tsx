@@ -1,184 +1,243 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import { BookOpen, Users, Compass, Music, Map, Target } from "lucide-react";
 
 const offerings = [
   {
-    title: "Manual of Life",
-    description: "Our flagship modular program exploring the fundamental dimensions of existence.",
-    icon: <BookOpen className="w-5 h-5 md:w-6 md:h-6" />,
+    id: "manual",
+    title: "Manual\nof Life",
+    label: "01 — Flagship",
+    description: "Our modular deep-dive into the fundamental dimensions of existence. Philosophy, science, and practice unified into one lived experience.",
+    icon: BookOpen,
+    bg: "oklch(0.13 0.04 280)",     // Deep Indigo
+    accent: "oklch(0.72 0.18 300)", // Radiant Amethyst
+    textCol: "oklch(0.95 0.02 280)"
   },
   {
+    id: "community",
     title: "Community",
-    description: "A gathering of genuine seekers engaging in transformative, unpretentious dialogue.",
-    icon: <Users className="w-5 h-5 md:w-6 md:h-6" />,
+    label: "02 — Belonging",
+    description: "A gathering of genuine seekers. Deep, unpretentious dialogue in intentional spaces where vulnerability is a strength, not a risk.",
+    icon: Users,
+    bg: "oklch(0.11 0.06 260)",     // Midnight Blue
+    accent: "oklch(0.70 0.15 260)", // Mystic Periwinkle
+    textCol: "oklch(0.95 0.02 260)"
   },
   {
+    id: "workshops",
     title: "Workshops",
-    description: "Intensive deep-dives into specific philosophy, practical application, and integration.",
-    icon: <Target className="w-5 h-5 md:w-6 md:h-6" />,
+    label: "03 — Practice",
+    description: "Intensive deep-dives into philosophy and practical application. One day. One idea. Permanently altered.",
+    icon: Target,
+    bg: "oklch(0.14 0.07 310)",     // Deep Violet
+    accent: "oklch(0.75 0.18 320)", // Fuchsia
+    textCol: "oklch(0.96 0.02 310)"
   },
   {
-    title: "Music & Culture",
-    description: "Immersive experiences bridging the gap between art, sound, and consciousness.",
-    icon: <Music className="w-5 h-5 md:w-6 md:h-6" />,
+    id: "music",
+    title: "Music &\nCulture",
+    label: "04 — Experience",
+    description: "Immersive events bridging art, sound, and consciousness. Where a playlist becomes a philosophy and a gathering becomes a ritual.",
+    icon: Music,
+    bg: "oklch(0.13 0.05 290)",     // Deep Plum
+    accent: "oklch(0.72 0.16 290)", // Violet
+    textCol: "oklch(0.96 0.02 290)"
   },
   {
+    id: "mentoring",
     title: "Mentoring",
-    description: "1-on-1 guidance to cultivate clarity, discipline, and profound existential meaning.",
-    icon: <Compass className="w-5 h-5 md:w-6 md:h-6" />,
+    label: "05 — Clarity",
+    description: "1-on-1 guidance to cultivate clarity, discipline, and profound existential meaning. The one conversation you have been avoiding.",
+    icon: Compass,
+    bg: "oklch(0.12 0.04 270)",     // Cobalt Night
+    accent: "oklch(0.68 0.14 270)", // Steel Blue
+    textCol: "oklch(0.96 0.02 270)"
   },
   {
+    id: "retreats",
     title: "Retreats",
-    description: "Expansive journeys moving from theory into rugged, transformative experience.",
-    icon: <Map className="w-5 h-5 md:w-6 md:h-6" />,
-  },
+    label: "06 — The Journey",
+    description: "Moving from theory into rugged, transformative experience. We step into landscapes that strip away the familiar and force an inward pivot.",
+    icon: Map,
+    bg: "oklch(0.12 0.03 280)",     // Back to Indigo
+    accent: "oklch(0.70 0.18 300)", // Amethyst
+    textCol: "oklch(0.96 0.02 280)"
+  }
 ];
 
-export default function Offerings() {
-  const [activeIdx, setActiveIdx] = useState<number>(0);
-  const activeItem = offerings[activeIdx];
+// ── Each panel must be its own component (Rules of Hooks: no hooks in .map) ──
+function OfferingPanel({
+  item,
+  i,
+  total,
+  scrollYProgress
+}: {
+  item: typeof offerings[0];
+  i: number;
+  total: number;
+  scrollYProgress: MotionValue<number>;
+}) {
+  const sectionSize = 1 / total;
+  const start = i * sectionSize;
+  const peak = start + sectionSize * 0.15;
+  const holdEnd = start + sectionSize * 0.85;
+  const end = (i + 1) * sectionSize;
+
+  // Clip-path reveal: each panel slides up to reveal, then slides up to exit
+  const clipTopEntry = useTransform(scrollYProgress, [start, peak], ["100%", "0%"]);
+  const clipTopExit = useTransform(scrollYProgress, [holdEnd, end], ["0%", "100%"]);
+
+  // Merge: entry drives from bottom, exit drives out top
+  const clipInset = useTransform(
+    scrollYProgress,
+    [start, peak, holdEnd, end],
+    ["inset(100% 0% 0% 0%)", "inset(0% 0% 0% 0%)", "inset(0% 0% 0% 0%)", "inset(0% 0% 100% 0%)"]
+  );
+
+  // Content entrance — slightly delayed after panel reveals
+  const contentOpacity = useTransform(scrollYProgress, [start, peak, holdEnd, end], [0, 1, 1, 0]);
+  const contentY = useTransform(scrollYProgress, [start, peak], [60, 0]);
+  const contentExitY = useTransform(scrollYProgress, [holdEnd, end], [0, -40]);
+  const contentRightY = useTransform(scrollYProgress, [start, peak], [80, 0]);
+
+  const Icon = item.icon;
 
   return (
-    <section id="offerings" className="relative py-24 md:py-32 px-6">
-      <div className="max-w-6xl mx-auto flex flex-col items-center">
-
-        {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16 md:mb-20 w-full"
+    <motion.div
+      style={{ clipPath: clipInset }}
+      className="absolute inset-0 w-full h-full"
+    >
+      {/* Full-screen colored panel */}
+      <div
+        style={{ backgroundColor: item.bg }}
+        className="w-full h-full flex items-center justify-center relative overflow-hidden"
+      >
+        {/* Giant background number watermark */}
+        <div
+          className="absolute select-none pointer-events-none font-serif font-light leading-none"
+          style={{
+            fontSize: "clamp(200px, 40vw, 500px)",
+            color: `color-mix(in oklch, ${item.accent} 8%, transparent)`,
+            right: "-5%",
+            bottom: "-10%",
+          }}
         >
-          <p className="text-gold-dim text-xs tracking-[0.4em] lowercase mb-4">
-            the path forward
-          </p>
-          <h2 className="font-serif text-4xl md:text-5xl font-light text-foreground">
-            Our Offerings
-          </h2>
-          <div className="gold-line w-24 mx-auto mt-6" />
+          {String(i + 1).padStart(2, "0")}
+        </div>
+
+        {/* Main content */}
+        <motion.div
+          style={{ opacity: contentOpacity, y: contentY }}
+          className="relative z-10 w-full max-w-6xl mx-auto px-8 md:px-16 flex flex-col md:flex-row items-center md:items-end justify-between gap-12"
+        >
+          {/* Left: Label + Big Title */}
+          <div className="flex-1">
+            <p
+              className="text-[10px] tracking-[0.5em] uppercase mb-8 font-light"
+              style={{ color: `color-mix(in oklch, ${item.accent} 70%, white)` }}
+            >
+              {item.label}
+            </p>
+            <h3
+              className="font-serif font-light leading-[0.88] tracking-tight"
+              style={{
+                fontSize: "clamp(56px, 10vw, 130px)",
+                color: item.textCol,
+                whiteSpace: "pre-line"
+              }}
+            >
+              {item.title}
+            </h3>
+          </div>
+
+          {/* Right: Icon + Description */}
+          <motion.div
+            style={{ opacity: contentOpacity, y: contentRightY }}
+            className="md:max-w-sm w-full"
+          >
+            <div
+              className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6"
+              style={{
+                backgroundColor: `color-mix(in oklch, ${item.accent} 15%, transparent)`,
+                border: `1px solid color-mix(in oklch, ${item.accent} 30%, transparent)`,
+                color: item.accent
+              }}
+            >
+              <Icon className="w-6 h-6" />
+            </div>
+            <p
+              className="text-lg md:text-xl font-light leading-relaxed"
+              style={{ color: `color-mix(in oklch, ${item.textCol} 60%, transparent)` }}
+            >
+              {item.description}
+            </p>
+            <div
+              className="mt-8 h-[1px] w-16"
+              style={{ background: `linear-gradient(to right, ${item.accent}, transparent)` }}
+            />
+          </motion.div>
         </motion.div>
 
-        {/* ── Mobile layout: pill strip + card ── */}
-        <div className="md:hidden w-full flex flex-col gap-5">
+        {/* Bottom progress tick */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+          {offerings.map((_, idx) => (
+            <div
+              key={idx}
+              className="rounded-full transition-all duration-300"
+              style={{
+                width: idx === i ? "24px" : "6px",
+                height: "6px",
+                backgroundColor: idx === i
+                  ? item.accent
+                  : `color-mix(in oklch, ${item.accent} 25%, transparent)`
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
-          {/* Horizontally scrollable pill selector */}
-          <div
-            className="flex gap-2 overflow-x-auto pb-2 -mx-6 px-6"
-            style={{ scrollbarWidth: "none" }}
-          >
-            {offerings.map((item, idx) => {
-              const isActive = activeIdx === idx;
-              return (
-                <button
-                  key={item.title}
-                  onClick={() => setActiveIdx(idx)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-full border whitespace-nowrap text-sm font-medium transition-all duration-300 flex-shrink-0
-                    ${isActive
-                      ? "bg-gold/15 border-gold/40 text-gold shadow-[0_0_16px_rgba(212,175,55,0.15)]"
-                      : "bg-surface-elevated/20 border-white/10 text-muted-foreground"
-                    }
-                  `}
-                >
-                  <span className={`transition-colors duration-300 ${isActive ? "text-gold" : "text-white/40"}`}>
-                    {item.icon}
-                  </span>
-                  {item.title}
-                </button>
-              );
-            })}
+export default function Offerings() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  return (
+    <section
+      id="offerings"
+      ref={containerRef}
+      className="relative h-[700vh] w-full"
+    >
+      {/* Sticky viewport */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+
+        {/* Section header — visible only at the very start before first panel covers */}
+        <div className="absolute inset-0 flex items-center justify-center z-0 bg-background pointer-events-none">
+          <div className="text-center">
+            <p className="text-primary text-[10px] tracking-[0.5em] uppercase mb-4 opacity-60">
+              the path forward
+            </p>
+            <h2 className="font-serif text-5xl md:text-7xl font-light text-foreground/80">
+              Our Offerings
+            </h2>
           </div>
-
-          {/* Content card */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeItem.title}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full rounded-3xl bg-surface/40 backdrop-blur-xl border border-gold/10 p-8 shadow-[0_0_50px_rgba(212,175,55,0.05)] flex flex-col items-center text-center"
-            >
-              <div className="w-16 h-16 rounded-full bg-gold/10 border border-gold/30 text-gold flex items-center justify-center mb-6 shadow-[0_0_24px_rgba(212,175,55,0.15)]">
-                <div className="scale-150">{activeItem.icon}</div>
-              </div>
-              <h3 className="font-serif text-3xl text-foreground mb-4">
-                {activeItem.title}
-              </h3>
-              <div className="gold-line w-12 mb-6 opacity-50 mx-auto" />
-              <p className="text-muted-foreground font-light text-base leading-relaxed">
-                {activeItem.description}
-              </p>
-            </motion.div>
-          </AnimatePresence>
         </div>
 
-        {/* ── Desktop layout: original split view ── */}
-        <div className="hidden md:flex flex-row gap-16 items-start w-full max-w-5xl">
-
-          {/* Left: Navigation list */}
-          <div className="w-[40%] flex flex-col space-y-3">
-            {offerings.map((item, idx) => {
-              const isActive = activeIdx === idx;
-              return (
-                <button
-                  key={item.title}
-                  onClick={() => setActiveIdx(idx)}
-                  className={`group flex items-center justify-between px-6 py-5 w-full text-left rounded-2xl transition-all duration-500 border cursor-pointer
-                    ${isActive
-                      ? "bg-gold/10 border-gold/30 text-gold shadow-[0_0_30px_rgba(212,175,55,0.05)]"
-                      : "bg-surface-elevated/20 border-white/5 text-muted-foreground hover:border-gold/20 hover:text-white"
-                    }
-                  `}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className={`transition-colors duration-500 ${isActive ? "text-gold" : "text-white/40 group-hover:text-gold/50"}`}>
-                      {item.icon}
-                    </div>
-                    <span className="font-serif text-xl sm:text-2xl">{item.title}</span>
-                  </div>
-
-                  <motion.div
-                    animate={{ x: isActive ? 5 : 0, opacity: isActive ? 1 : 0 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  >
-                    {isActive && <div className="w-2 h-2 rounded-full bg-gold" />}
-                  </motion.div>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Right: Active display card */}
-          <div className="w-[60%]">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeItem.title}
-                initial={{ opacity: 0, scale: 0.98, x: 20 }}
-                animate={{ opacity: 1, scale: 1, x: 0 }}
-                exit={{ opacity: 0, scale: 0.98, x: -20 }}
-                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="w-full min-h-[450px] rounded-3xl bg-surface/40 backdrop-blur-xl border border-gold/10 p-12 shadow-[0_0_50px_rgba(212,175,55,0.05)] flex flex-col items-start justify-center"
-              >
-                <div className="w-20 h-20 rounded-full bg-gold/10 border border-gold/30 text-gold flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(212,175,55,0.15)]">
-                  <div className="scale-150">{activeItem.icon}</div>
-                </div>
-
-                <h3 className="font-serif text-4xl lg:text-5xl text-foreground mb-6">
-                  {activeItem.title}
-                </h3>
-
-                <div className="gold-line w-16 mb-8 opacity-50" />
-
-                <p className="text-muted-foreground font-light text-xl leading-relaxed">
-                  {activeItem.description}
-                </p>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-        </div>
+        {/* Stacked offering panels — each clips in from bottom and exits to top */}
+        {offerings.map((item, i) => (
+          <OfferingPanel
+            key={item.id}
+            item={item}
+            i={i}
+            total={offerings.length}
+            scrollYProgress={scrollYProgress}
+          />
+        ))}
       </div>
     </section>
   );

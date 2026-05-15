@@ -60,13 +60,13 @@ export default function ConnectionWave({ onClose }: Props) {
         exit={{ opacity: 0, scale: 0.92, y: 20 }}
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
         onClick={(e) => e.stopPropagation()}
-        className="relative z-10 max-w-sm w-full mx-4 rounded-3xl border border-gold/20 bg-surface/80 backdrop-blur-2xl p-10 text-center shadow-[0_0_80px_rgba(212,175,55,0.12)]"
+        className="relative z-10 max-w-sm w-full mx-4 rounded-3xl border border-primary/20 bg-surface/80 backdrop-blur-2xl p-10 text-center shadow-[0_0_80px_rgba(var(--color-primary),0.15)]"
       >
-        {/* Decorative gold circle */}
-        <div className="w-16 h-16 rounded-full border border-gold/30 bg-gold/10 flex items-center justify-center mx-auto mb-6">
+        {/* Decorative amethyst circle */}
+        <div className="w-16 h-16 rounded-full border border-primary/30 bg-primary/10 flex items-center justify-center mx-auto mb-6">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-7 h-7 text-gold"
+            className="w-7 h-7 text-primary"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -80,7 +80,7 @@ export default function ConnectionWave({ onClose }: Props) {
           </svg>
         </div>
 
-        <p className="text-gold-dim text-xs tracking-[0.35em] lowercase mb-3">
+        <p className="text-primary/60 text-xs tracking-[0.35em] lowercase mb-3">
           you've lingered
         </p>
         <h2 className="font-serif text-3xl text-foreground font-light mb-3 leading-snug">
@@ -95,18 +95,18 @@ export default function ConnectionWave({ onClose }: Props) {
           {/* Primary — Register */}
           <button
             onClick={handleRegister}
-            className="w-full py-3 px-6 rounded-full bg-gold text-black text-sm font-medium tracking-wide hover:bg-gold-bright transition-colors duration-300"
+            className="w-full py-3 px-6 rounded-full bg-primary text-primary-foreground text-sm font-medium tracking-wide hover:opacity-90 transition-opacity duration-300"
           >
             Register →
           </button>
 
-          {/* Secondary — WhatsApp */}
+          {/* Secondary — WhatsApp Community */}
           <a
             href="https://chat.whatsapp.com/EjTFqNEk2dEKySTooqr2Ak?mode=gi_t"
             target="_blank"
             rel="noopener noreferrer"
             onClick={onClose}
-            className="w-full py-3 px-6 rounded-full border border-gold/30 text-gold text-sm font-medium tracking-wide hover:border-gold/70 hover:bg-gold/5 transition-all duration-300"
+            className="w-full py-3 px-6 rounded-full border border-primary/30 text-primary text-sm font-medium tracking-wide hover:border-primary/70 hover:bg-primary/5 transition-all duration-300"
           >
             Join the Community
           </a>

@@ -27,12 +27,12 @@ export default function MindCard({ mind, index }: MindCardProps) {
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.7, delay: index * 0.15 }}
       whileHover={{ y: -6 }}
-      className="group relative bg-surface border border-border rounded-lg p-8 transition-colors duration-500 hover:border-gold/40"
+      className="group relative bg-surface/50 backdrop-blur-xl border border-white/5 rounded-2xl p-8 transition-all duration-500 hover:border-primary/40 hover:bg-surface/80 hover:shadow-[0_0_40px_rgba(var(--color-primary),0.1)]"
     >
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-gold/0 to-transparent group-hover:via-gold/50 transition-all duration-700" />
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/0 to-transparent group-hover:via-primary/50 transition-all duration-700" />
 
       {/* Portrait / Avatar */}
-      <div className="relative w-16 h-16 md:w-20 md:h-20 mb-6 rounded-full overflow-hidden border border-border max-md:border-gold/50 md:group-hover:border-gold/50 transition-all duration-700 max-md:drop-shadow-[0_0_20px_rgba(255,215,0,0.4)] md:group-hover:drop-shadow-[0_0_20px_rgba(255,215,0,0.4)] z-10">
+      <div className="relative w-16 h-16 md:w-20 md:h-20 mb-6 rounded-full overflow-hidden border border-white/10 max-md:border-primary/50 md:group-hover:border-primary/50 transition-all duration-700 max-md:drop-shadow-[0_0_20px_rgba(var(--color-primary),0.4)] md:group-hover:drop-shadow-[0_0_20px_rgba(var(--color-primary),0.6)] z-10">
         <img
           src={mind.image}
           alt={mind.name}
@@ -40,7 +40,7 @@ export default function MindCard({ mind, index }: MindCardProps) {
         />
       </div>
 
-      <p className="text-gold text-xs tracking-[0.3em] lowercase mb-1">
+      <p className="text-primary text-xs tracking-[0.3em] lowercase mb-1">
         {mind.domain}
       </p>
       <h3 className="font-serif text-3xl font-light text-foreground mb-4">
@@ -53,7 +53,7 @@ export default function MindCard({ mind, index }: MindCardProps) {
         "{mind.quote}"
       </blockquote>
 
-      <div className="gold-line mt-8 opacity-20 group-hover:opacity-60 transition-opacity duration-500" />
+      <div className="mt-8 w-12 h-[1px] bg-gradient-to-r from-primary/20 to-transparent group-hover:from-primary/60 transition-colors duration-500" />
     </motion.div>
   );
 }
