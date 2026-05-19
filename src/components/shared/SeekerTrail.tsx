@@ -17,8 +17,9 @@ export default function SeekerTrail() {
     let lastY = -300;
     let rafId: number;
     let isMoving = false;
-    let idleFrames = 0;
     let idleTime = 0;
+    let lastFrameTime = performance.now();
+    let idleDurationMs = 0;
 
     // --- Hold Mechanic State ---
     let isHolding = false;
@@ -113,6 +114,10 @@ export default function SeekerTrail() {
     };
 
     const animate = () => {
+      const now = performance.now();
+      const dt = Math.min(now - lastFrameTime, 50); // cap dt to avoid huge jumps
+      lastFrameTime = now;
+
       // Only detect if the PHYSICAL mouse has moved since last frame
       const realDist = Math.hypot(mouseX - prevMouseX, mouseY - prevMouseY);
       isMoving = realDist > 0;
@@ -177,7 +182,7 @@ export default function SeekerTrail() {
       } else {
         // Standard cursor idle/movement FX
         if (isMoving) {
-          idleFrames = 0;
+          idleDurationMs = 0;
           idleTime = Math.PI / 2; // When idle starts, the loop must begin EXACTLY at the center (crossover) point
           const count = Math.min(4, Math.ceil(drawDist / 8));
           spawnStardust(mouseX, mouseY, count);
@@ -186,12 +191,13 @@ export default function SeekerTrail() {
           lastX += (mouseX - lastX) * 0.4;
           lastY += (mouseY - lastY) * 0.4;
         } else {
-          idleFrames++;
+          idleDurationMs += dt;
           
           // Ethereal Infinity Loop (Lemniscate) Idle
-          // When resting for >2.5s (approx 150 frames), form an elegant floating figure-8 around cursor
-          if (idleFrames > 150) {
-            idleTime += 0.06; 
+          // When resting for >10s, form an elegant floating figure-8 around cursor
+          if (idleDurationMs > 10000) {
+            // Speed is now time-based: 0.0036 radians per millisecond (equivalent to 0.06 at 60Hz)
+            idleTime += 0.0036 * dt; 
             const loopWidth = 140; 
             
             // Lemniscate equation

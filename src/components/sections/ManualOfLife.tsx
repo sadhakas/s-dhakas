@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookOpen } from "lucide-react";
+import { BookOpen, Calendar, Clock, CreditCard } from "lucide-react";
+import TmolRegistrationOverlay from "../shared/TmolRegistrationOverlay";
 
 const themes = [
   { title: "The Self",        subtitle: "Understanding Identity",    description: "Exploring what defines the individual beyond temporary roles and labels." },
@@ -16,10 +17,14 @@ const deliverables = [
   "reflection workbook",
   "life-design exercises",
   "completion certificate",
+  "physical self-help book",
+  "lifetime community access",
+  "detox & discover trip perk",
 ];
 
 export default function ManualOfLife() {
   const [activeNode, setActiveNode] = useState<number | null>(null);
+  const [showRegistration, setShowRegistration] = useState(false);
 
   return (
     <section id="manual" className="relative py-32 px-6 overflow-hidden">
@@ -38,11 +43,27 @@ export default function ManualOfLife() {
             <h2 className="font-serif text-4xl md:text-5xl text-gold">The Manual of Life</h2>
           </div>
           <p className="text-muted-foreground text-lg md:text-xl font-light leading-relaxed mb-6">
-            A modular program exploring the fundamental dimensions of life through philosophical inquiry and practical reflection.
+            A 21-day live program exploring the fundamental dimensions of life through philosophical inquiry and practical reflection.
           </p>
-          <p className="text-muted-foreground/70 leading-relaxed max-w-2xl">
-            Participants examine timeless ideas and apply them to modern life through guided discussions, concept maps, and reflective exercises.
+          <p className="text-muted-foreground/70 leading-relaxed max-w-2xl mb-8">
+            Participants examine timeless ideas and apply them to modern life through guided discussions, concept maps, and reflective exercises — 30 minutes a day, 21 consecutive days.
           </p>
+
+          {/* TMOL Quick Facts */}
+          <div className="flex flex-wrap gap-4 mb-8">
+            <div className="flex items-center gap-2 bg-gold/8 border border-gold/15 rounded-full px-4 py-2">
+              <Calendar className="w-3.5 h-3.5 text-gold" />
+              <span className="text-gold text-xs tracking-wide">13 June – 5 July, 2026</span>
+            </div>
+            <div className="flex items-center gap-2 bg-gold/8 border border-gold/15 rounded-full px-4 py-2">
+              <Clock className="w-3.5 h-3.5 text-gold" />
+              <span className="text-gold text-xs tracking-wide">30 min/day · 21 days</span>
+            </div>
+            <div className="flex items-center gap-2 bg-gold/8 border border-gold/15 rounded-full px-4 py-2">
+              <CreditCard className="w-3.5 h-3.5 text-gold" />
+              <span className="text-gold text-xs tracking-wide">₹300 registration</span>
+            </div>
+          </div>
         </motion.div>
 
         {/* Theme Tree */}
@@ -179,7 +200,7 @@ export default function ManualOfLife() {
           className="text-center bg-black/40 border border-gold/10 rounded-3xl p-8 shadow-2xl backdrop-blur-sm"
         >
           <h3 className="text-gold text-lg font-serif mb-8">Participants receive:</h3>
-          <div className="flex flex-wrap justify-center gap-4 md:gap-x-8 gap-y-4">
+          <div className="flex flex-wrap justify-center gap-4 md:gap-x-8 gap-y-4 mb-10">
             {deliverables.map((item, i) => (
               <div key={i} className="flex items-center gap-2">
                 <div className="w-1 h-1 rounded-full bg-gold/50" />
@@ -187,9 +208,33 @@ export default function ManualOfLife() {
               </div>
             ))}
           </div>
+
+          {/* CTA */}
+          <motion.button
+            onClick={() => setShowRegistration(true)}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="inline-flex items-center gap-3 bg-gold text-black font-medium text-sm px-8 py-4 rounded-full shadow-[0_0_30px_rgba(212,175,55,0.25)] hover:shadow-[0_0_40px_rgba(212,175,55,0.4)] transition-all duration-500 cursor-pointer"
+          >
+            <BookOpen className="w-4 h-4" />
+            Register Now — ₹300
+          </motion.button>
+          <p className="text-muted-foreground/40 text-xs mt-4 tracking-wide">
+            Pay via UPI · Upload screenshot · Done
+          </p>
         </motion.div>
 
       </div>
+
+      {/* TMOL Registration Overlay */}
+      <AnimatePresence>
+        {showRegistration && (
+          <TmolRegistrationOverlay
+            key="tmol-overlay"
+            onClose={() => setShowRegistration(false)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }

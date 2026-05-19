@@ -22,10 +22,13 @@ export default function InterestForm({ journeyTitle }: InterestFormProps) {
     const scriptURL = import.meta.env.VITE_INTEREST_URL;
 
     try {
-      await fetch(scriptURL, {
+      fetch(scriptURL, {
         method: "POST",
         body: JSON.stringify(data),
-        mode: "no-cors" // Crucial for client-side GAS connections
+        mode: "no-cors", // Crucial for client-side GAS connections
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
       });
       // no-cors obscures response.ok, so if fetch resolves, we assume success
       setSubmitted(true);

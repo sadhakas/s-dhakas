@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { journeysData } from "../../data/journeys";
 import TripInterestOverlay from "../shared/TripInterestOverlay";
+import TmolRegistrationOverlay from "../shared/TmolRegistrationOverlay";
 
 // Pull all upcoming trips directly from journeys data
 const UPCOMING = journeysData.filter((j) => j.status === "Upcoming");
@@ -10,6 +11,7 @@ export default function AnnouncementBar() {
   const [isExpanded, setIsExpanded] = useState(true);
   const [idx, setIdx] = useState(0);
   const [showOverlay, setShowOverlay] = useState(false);
+  const [showTmolOverlay, setShowTmolOverlay] = useState(false);
   const [isAlarming, setIsAlarming] = useState(false);
 
   // Collapse after 7s (reduced threshold)
@@ -36,7 +38,11 @@ export default function AnnouncementBar() {
   const trip = UPCOMING[idx % UPCOMING.length];
 
   const handleRegisterClick = () => {
-    setShowOverlay(true);
+    if (trip.type === "event") {
+      setShowTmolOverlay(true);
+    } else {
+      setShowOverlay(true);
+    }
   };
 
   const next = () => setIdx((i) => (i + 1) % UPCOMING.length);
@@ -70,7 +76,7 @@ export default function AnnouncementBar() {
 
               {/* Label */}
               <span className="text-gold text-[10px] tracking-[0.35em] uppercase shrink-0 hidden sm:block">
-                Upcoming Journey
+                {trip.type === "event" ? "Upcoming Event" : "Upcoming Journey"}
               </span>
 
               <div className="w-[1px] h-3 bg-gold/20 hidden sm:block" />
@@ -155,6 +161,12 @@ export default function AnnouncementBar() {
           key="announcement-interest-overlay"
           journey={trip}
           onClose={() => setShowOverlay(false)}
+        />
+      )}
+      {showTmolOverlay && (
+        <TmolRegistrationOverlay
+          key="announcement-tmol-overlay"
+          onClose={() => setShowTmolOverlay(false)}
         />
       )}
     </>

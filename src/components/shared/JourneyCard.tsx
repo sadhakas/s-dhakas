@@ -6,13 +6,14 @@ export interface JourneyData {
   description: string;
   status: "Completed" | "Upcoming";
   date: string;
-  image: string;
+  image?: string;
   gallery?: string[];
   cost?: string;
   startPoint?: string;
   endPoint?: string;
   duration?: string;
   exactDates?: string;
+  type?: "trip" | "event";
 }
 
 export default function JourneyCard({ 
@@ -41,14 +42,25 @@ export default function JourneyCard({
     >
       {/* Image / Poster */}
       <div className={`relative overflow-hidden ${compact ? "h-40 md:h-44" : "h-56 md:h-64"}`}>
-        <img
-          src={journey.image}
-          alt={journey.title}
-          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105 memory-mode"
-        />
+        {journey.image ? (
+          <img
+            src={journey.image}
+            alt={journey.title}
+            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105 memory-mode"
+          />
+        ) : (
+          <div
+            className="w-full h-full flex items-center justify-center"
+            style={{ background: "linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(10,8,6,0.95) 100%)" }}
+          >
+            <span className="font-serif text-gold/30 text-4xl tracking-widest select-none">
+              {journey.type === "event" ? "✦" : "◎"}
+            </span>
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent pointer-events-none" />
 
-        {/* Status badge */}
+        {/* Status / type badge */}
         <div className="absolute top-4 right-4 z-10">
           <span
             className={`text-[10px] tracking-[0.2em] lowercase px-3 py-1 rounded-full border ${
@@ -57,7 +69,7 @@ export default function JourneyCard({
                 : "border-gold/50 text-gold bg-background/60"
             } backdrop-blur-sm shadow-lg`}
           >
-            {isCompleted ? "memory" : "upcoming"}
+            {isCompleted ? "memory" : journey.type === "event" ? "event" : "upcoming"}
           </span>
         </div>
       </div>

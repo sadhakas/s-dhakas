@@ -9,8 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterTmol2k26RouteImport } from './routes/register-tmol-2k26'
 import { Route as IndexRouteImport } from './routes/index'
 
+const RegisterTmol2k26Route = RegisterTmol2k26RouteImport.update({
+  id: '/register-tmol-2k26',
+  path: '/register-tmol-2k26',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +25,39 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/register-tmol-2k26': typeof RegisterTmol2k26Route
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/register-tmol-2k26': typeof RegisterTmol2k26Route
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/register-tmol-2k26': typeof RegisterTmol2k26Route
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/register-tmol-2k26'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/register-tmol-2k26'
+  id: '__root__' | '/' | '/register-tmol-2k26'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RegisterTmol2k26Route: typeof RegisterTmol2k26Route
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/register-tmol-2k26': {
+      id: '/register-tmol-2k26'
+      path: '/register-tmol-2k26'
+      fullPath: '/register-tmol-2k26'
+      preLoaderRoute: typeof RegisterTmol2k26RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +70,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RegisterTmol2k26Route: RegisterTmol2k26Route,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

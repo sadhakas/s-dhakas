@@ -6,6 +6,7 @@ import type { JourneyData } from "../shared/JourneyCard";
 import { journeysData } from "../../data/journeys";
 import MemoryOverlay from "../shared/MemoryOverlay";
 import TripInterestOverlay from "../shared/TripInterestOverlay";
+import TmolRegistrationOverlay from "../shared/TmolRegistrationOverlay";
 
 // Custom inner Carousel component 
 function JourneyCarousel({ 
@@ -80,6 +81,15 @@ function JourneyCarousel({
 
 export default function Journeys() {
   const [selectedJourney, setSelectedJourney] = useState<JourneyData | null>(null);
+  const [showTmolOverlay, setShowTmolOverlay] = useState(false);
+
+  const handleSelect = (j: JourneyData) => {
+    if (j.type === "event") {
+      setShowTmolOverlay(true);
+    } else {
+      setSelectedJourney(j);
+    }
+  };
 
   const handleCloseOverlay = () => {
     setSelectedJourney(null);
@@ -111,15 +121,15 @@ export default function Journeys() {
           {/* Side-by-Side Dual Carousel Layout */}
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
             <JourneyCarousel 
-              title="Upcoming Trips" 
+              title="Upcoming Events" 
               journeys={upcomingJourneys} 
-              onSelect={setSelectedJourney} 
+              onSelect={handleSelect} 
             />
             
             <JourneyCarousel 
               title="Past Memories" 
               journeys={completedJourneys} 
-              onSelect={setSelectedJourney} 
+              onSelect={handleSelect} 
             />
           </div>
         </div>
@@ -135,11 +145,18 @@ export default function Journeys() {
           />
         )}
         
-        {selectedJourney && selectedJourney.status === "Upcoming" && (
+        {selectedJourney && selectedJourney.status === "Upcoming" && selectedJourney.type !== "event" && (
           <TripInterestOverlay 
             key="interest-overlay" 
             journey={selectedJourney} 
             onClose={handleCloseOverlay} 
+          />
+        )}
+
+        {showTmolOverlay && (
+          <TmolRegistrationOverlay
+            key="journeys-tmol-overlay"
+            onClose={() => setShowTmolOverlay(false)}
           />
         )}
       </AnimatePresence>
