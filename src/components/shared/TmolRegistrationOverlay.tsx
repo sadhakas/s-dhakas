@@ -390,9 +390,9 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
               <p className="text-muted-foreground/60 text-xs mt-4 mb-5 leading-relaxed">
                 Secure your spot. Pay securely via DodoPayments, then upload your receipt below.
               </p>
-              <a 
-                href="#" 
-                target="_blank" 
+              <a
+                href="#"
+                target="_blank"
                 rel="noreferrer"
                 className="inline-flex w-full items-center justify-center gap-2 bg-gold text-black font-medium py-3 px-4 text-xs tracking-widest uppercase rounded-lg hover:bg-gold/90 transition-all duration-300 mb-2"
               >
