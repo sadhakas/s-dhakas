@@ -419,7 +419,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
                 success screen, and upload it in the form →
               </p>
               {/* Pay Now UPI Options for mobile/all users */}
-              <div className="mt-4 space-y-3">
+              <div className="mt-4 space-y-3 md:hidden">
                 <p className="text-muted-foreground/40 text-[9px] tracking-[0.25em] uppercase">
                   Pay directly via UPI App
                 </p>
