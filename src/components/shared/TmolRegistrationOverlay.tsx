@@ -1,7 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Calendar, Clock, BookOpen, Award, Users, Ticket, Upload, CheckCircle2, AlertCircle, Video, Smartphone } from "lucide-react";
+import { X, Calendar, Clock, BookOpen, Award, Users, Ticket, Upload, CheckCircle2, AlertCircle, Video } from "lucide-react";
 import { Loader2 } from "lucide-react";
+
+const GPAY_URL = "gpay://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
+const PHONEPE_URL = "phonepe://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
+const PAYTM_URL = "paytmmp://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
+const GENERIC_UPI_URL = "upi://pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
 
 export const isInternationalUser = () => {
   try {
@@ -427,25 +432,25 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
                 {/* Grid of Apps */}
                 <div className="grid grid-cols-2 gap-2 max-w-xs mx-auto">
                   <a
-                    href="gpay://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration"
+                    href={GPAY_URL}
                     className="group relative flex items-center justify-center gap-1.5 rounded-lg border border-gold/25 bg-gold/5 px-2 py-2.5 text-[10px] font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
                   >
                     Google Pay
                   </a>
                   <a
-                    href="phonepe://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration"
+                    href={PHONEPE_URL}
                     className="group relative flex items-center justify-center gap-1.5 rounded-lg border border-gold/25 bg-gold/5 px-2 py-2.5 text-[10px] font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
                   >
                     PhonePe
                   </a>
                   <a
-                    href="paytmmp://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration"
+                    href={PAYTM_URL}
                     className="group relative flex items-center justify-center gap-1.5 rounded-lg border border-gold/25 bg-gold/5 px-2 py-2.5 text-[10px] font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
                   >
                     Paytm
                   </a>
                   <a
-                    href="upi://pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration"
+                    href={GENERIC_UPI_URL}
                     className="group relative flex items-center justify-center gap-1.5 rounded-lg border border-gold/25 bg-gold/5 px-2 py-2.5 text-[10px] font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
                   >
                     Other App
