@@ -41,10 +41,9 @@ export default function SeekerTrail() {
       .stardust-particle {
         position: absolute;
         border-radius: 50%;
-        background: #FFF;
-        box-shadow: 0 0 6px 1px rgba(220, 220, 255, 0.9), 0 0 12px 2px rgba(180, 150, 255, 0.5);
+        background: rgba(255, 200, 50, 1);
+        box-shadow: 0 0 6px 1px rgba(255, 200, 50, 0.9), 0 0 12px 2px rgba(255, 150, 0, 0.5);
         pointer-events: none;
-        mix-blend-mode: screen;
         animation: stardust-fade var(--dur) ease-out forwards;
       }
       .petal-blast-particle {
@@ -142,7 +141,7 @@ export default function SeekerTrail() {
           spawnFireworksBurst(mouseX, mouseY, 80);
           
           // Epic Petal Outward Blast
-          const PETAL_COLORS = ["#C084FC", "#A855F7", "#818CF8", "#E0D0FF", "#C7D2FE", "#DDD6FE"];
+          const PETAL_COLORS = ["#FFB347", "#FFD166", "#F4A261", "#E76F51", "#FF9F1C", "#FFBF69"];
           const petalCount = 120; // Massive explosion
 
           for (let i = 0; i < petalCount; i++) {

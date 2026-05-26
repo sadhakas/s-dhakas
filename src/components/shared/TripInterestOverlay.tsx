@@ -64,7 +64,7 @@ export default function TripInterestOverlay({ journey, onClose }: TripInterestOv
 
           {/* Embedded Poster for easy metadata/QR viewing */}
           {journey.image && (
-            <div className="mb-10 rounded-xl overflow-hidden border border-primary/10 shadow-lg shadow-black/20 bg-black/40 flex items-center justify-center">
+            <div className="mb-10 rounded-xl overflow-hidden border border-border shadow-lg bg-surface flex items-center justify-center">
               <img 
                 src={journey.image} 
                 alt={`${journey.title} Poster`} 

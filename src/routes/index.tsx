@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import LenisProvider from "@/components/layout/LenisProvider";
+
 import Navigation from "@/components/layout/Navigation";
 import Hero from "@/components/sections/Hero";
 import Philosophy from "@/components/sections/Philosophy";
@@ -19,51 +19,49 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <LenisProvider>
-      <div className="grain-overlay">
-        {/* Navigation is outside error boundaries — it must always be visible */}
-        <Navigation />
+    <div>
+      {/* Navigation is outside error boundaries — it must always be visible */}
+      <Navigation />
 
-        <SectionErrorBoundary name="Hero">
-          <Hero />
-        </SectionErrorBoundary>
+      <SectionErrorBoundary name="Hero">
+        <Hero />
+      </SectionErrorBoundary>
 
-        <SectionErrorBoundary name="Philosophy">
-          <Philosophy />
-        </SectionErrorBoundary>
+      <SectionErrorBoundary name="Philosophy">
+        <Philosophy />
+      </SectionErrorBoundary>
 
-        <SectionErrorBoundary name="Problem">
-          <Problem />
-        </SectionErrorBoundary>
+      <SectionErrorBoundary name="Problem">
+        <Problem />
+      </SectionErrorBoundary>
 
-        <SectionErrorBoundary name="The Sādhakas Way">
-          <TheSadhakasWay />
-        </SectionErrorBoundary>
+      <SectionErrorBoundary name="The Sādhakas Way">
+        <TheSadhakasWay />
+      </SectionErrorBoundary>
 
-        <SectionErrorBoundary name="Intro">
-          <Intro />
-        </SectionErrorBoundary>
+      <SectionErrorBoundary name="Intro">
+        <Intro />
+      </SectionErrorBoundary>
 
-        <SectionErrorBoundary name="Offerings">
-          <Offerings />
-        </SectionErrorBoundary>
+      <SectionErrorBoundary name="Offerings">
+        <Offerings />
+      </SectionErrorBoundary>
 
-        <SectionErrorBoundary name="Manual of Life">
-          <ManualOfLife />
-        </SectionErrorBoundary>
+      <SectionErrorBoundary name="Manual of Life">
+        <ManualOfLife />
+      </SectionErrorBoundary>
 
-        <SectionErrorBoundary name="Journeys">
-          <Journeys />
-        </SectionErrorBoundary>
+      <SectionErrorBoundary name="Journeys">
+        <Journeys />
+      </SectionErrorBoundary>
 
-        <SectionErrorBoundary name="Registration">
-          <Registration />
-        </SectionErrorBoundary>
+      <SectionErrorBoundary name="Registration">
+        <Registration />
+      </SectionErrorBoundary>
 
-        <SectionErrorBoundary name="Footer">
-          <Footer />
-        </SectionErrorBoundary>
-      </div>
-    </LenisProvider>
+      <SectionErrorBoundary name="Footer">
+        <Footer />
+      </SectionErrorBoundary>
+    </div>
   );
 }

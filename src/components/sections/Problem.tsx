@@ -96,7 +96,7 @@ export default function Problem() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7 }}
-            className="md:border-r border-white/5 p-8 md:p-12 text-center md:text-right relative"
+            className="md:border-r border-border p-8 md:p-12 text-center md:text-right relative"
           >
             <AnimatedNumber value={58} />
             <p className="font-serif text-[10px] text-primary/60 tracking-[0.3em] uppercase mt-4 mb-6">

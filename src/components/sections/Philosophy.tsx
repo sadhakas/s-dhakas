@@ -4,8 +4,8 @@ import MindCard from "../shared/MindCard";
 
 export default function Philosophy() {
   return (
-    <section id="philosophy" className="relative py-32 px-6">
-      <div className="max-w-6xl mx-auto relative">
+    <section id="philosophy" className="relative py-32 px-6 overflow-hidden">
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

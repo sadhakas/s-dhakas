@@ -31,8 +31,8 @@ export default function Registration() {
   };
 
   return (
-    <section id="register" className="relative py-32 px-6">
-      <div className="max-w-lg mx-auto">
+    <section id="register" className="relative py-32 px-6 overflow-hidden">
+      <div className="max-w-lg mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -40,13 +40,13 @@ export default function Registration() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <p className="text-gold-dim text-xs tracking-[0.4em] lowercase mb-4">
+          <p className="text-primary text-xs tracking-[0.4em] lowercase mb-4">
             begin the inquiry
           </p>
           <h2 className="font-serif text-4xl md:text-5xl font-light text-foreground">
             Join the Circle
           </h2>
-          <div className="gold-line w-24 mx-auto mt-6" />
+          <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent mx-auto mt-6" />
         </motion.div>
 
         {submitted ? (
@@ -55,12 +55,12 @@ export default function Registration() {
             animate={{ opacity: 1, scale: 1 }}
             className="text-center py-16"
           >
-            <div className="w-16 h-16 rounded-full bg-gold/10 mx-auto flex items-center justify-center mb-6">
+            <div className="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-6">
               <motion.svg
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
                 transition={{ duration: 1, ease: "easeOut" }}
-                className="w-8 h-8 text-gold"
+                className="w-8 h-8 text-primary"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -93,7 +93,7 @@ export default function Registration() {
                 required
                 name="name"
                 type="text"
-                className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-lg focus:outline-none focus:border-gold transition-colors duration-300 placeholder:text-muted-foreground/30"
+                className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-lg focus:outline-none focus:border-primary transition-colors duration-300 placeholder:text-muted-foreground/30"
                 placeholder="Your name"
               />
             </div>
@@ -105,7 +105,7 @@ export default function Registration() {
                 required
                 name="email"
                 type="email"
-                className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-lg focus:outline-none focus:border-gold transition-colors duration-300 placeholder:text-muted-foreground/30"
+                className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-lg focus:outline-none focus:border-primary transition-colors duration-300 placeholder:text-muted-foreground/30"
                 placeholder="your@email.com"
               />
             </div>
@@ -117,7 +117,7 @@ export default function Registration() {
                 required
                 name="phone"
                 type="tel"
-                className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-lg focus:outline-none focus:border-gold transition-colors duration-300 placeholder:text-muted-foreground/30"
+                className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-lg focus:outline-none focus:border-primary transition-colors duration-300 placeholder:text-muted-foreground/30"
                 placeholder="+91 99999 99999"
               />
             </div>
@@ -128,7 +128,7 @@ export default function Registration() {
               <textarea
                 name="message"
                 rows={3}
-                className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-lg focus:outline-none focus:border-gold transition-colors duration-300 resize-none placeholder:text-muted-foreground/30"
+                className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-lg focus:outline-none focus:border-primary transition-colors duration-300 resize-none placeholder:text-muted-foreground/30"
                 placeholder="A few words..."
               />
             </div>
@@ -136,11 +136,11 @@ export default function Registration() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 border border-gold/40 text-gold py-4 text-xs tracking-[0.3em] lowercase rounded-lg hover:bg-gold/10 hover:border-gold/70 transition-all duration-500 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 border border-primary/40 text-primary py-4 text-xs tracking-[0.3em] lowercase rounded-lg hover:bg-primary/10 hover:border-primary/70 transition-all duration-500 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin text-gold" />
+                    <Loader2 className="w-4 h-4 animate-spin text-primary" />
                     processing...
                   </>
                 ) : (

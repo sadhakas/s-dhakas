@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import appCss from "../styles.css?url";
 import InteractiveBackground from "../components/layout/InteractiveBackground";
 import IlluminatedPath from "../components/layout/IlluminatedPath";
-import SeekerTrail from "../components/shared/SeekerTrail";
 import AnnouncementBar from "../components/layout/AnnouncementBar";
 import SanskritWhispers from "../components/layout/SanskritWhispers";
 
@@ -54,7 +53,6 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
         {/* ── Global overlays ── */}
         <IlluminatedPath />
-        <SeekerTrail />
         <SanskritWhispers />
 
         {/* Perspective Shift — flash overlay + #site-content filter */}

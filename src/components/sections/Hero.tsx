@@ -14,13 +14,7 @@ export default function Hero() {
   const y = useTransform(scrollYProgress, [0, 0.5], [0, -100]);
 
   return (
-    <section ref={ref} className="relative min-h-screen bg-background overflow-hidden flex items-center">
-      {/* Background ambient glow */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-secondary/15 rounded-full blur-[150px]" />
-      </div>
-
+    <section ref={ref} className="relative min-h-screen bg-transparent overflow-hidden flex items-center">
       <motion.div 
         style={{ opacity, y }}
         className="w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-16 relative z-10"

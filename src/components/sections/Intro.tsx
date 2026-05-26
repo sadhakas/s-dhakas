@@ -14,8 +14,6 @@ export default function Intro() {
           className="w-full md:w-1/2 flex justify-center"
         >
           <div className="relative">
-            {/* Background ambient glow behind logo */}
-            <div className="absolute inset-0 bg-gold/5 blur-[100px] rounded-full point-events-none" />
             <img
               src="/assets/images/logo.png"
               alt="Sādhakas Emblem"
@@ -32,7 +30,7 @@ export default function Intro() {
           transition={{ duration: 1, delay: 0.3 }}
           className="w-full md:w-1/2 text-center md:text-left"
         >
-          <p className="text-gold-dim text-xs tracking-[0.4em] lowercase mb-6">
+          <p className="text-primary text-xs tracking-[0.4em] lowercase mb-6">
             the genesis
           </p>
           <h2 className="font-serif text-4xl md:text-5xl font-light text-foreground mb-8 leading-tight">
@@ -49,7 +47,7 @@ export default function Intro() {
             </p>
           </div>
 
-          <div className="gold-line w-24 mx-auto md:mx-0 mt-12" />
+          <div className="w-24 h-[1px] mx-auto md:mx-0 mt-12 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
         </motion.div>
 
       </div>

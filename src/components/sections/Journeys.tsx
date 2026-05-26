@@ -41,13 +41,13 @@ function JourneyCarousel({
           <div className="absolute right-0 flex gap-2">
             <button 
               onClick={() => scroll("left")} 
-              className="p-2 rounded-full bg-surface border border-white/10 hover:border-primary/50 hover:bg-surface/80 transition-all duration-300 cursor-pointer text-muted-foreground hover:text-primary"
+              className="p-2 rounded-full bg-surface border border-border hover:border-primary/50 hover:bg-surface/80 transition-all duration-300 cursor-pointer text-muted-foreground hover:text-primary"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button 
               onClick={() => scroll("right")} 
-              className="p-2 rounded-full bg-surface border border-white/10 hover:border-primary/50 hover:bg-surface/80 transition-all duration-300 cursor-pointer text-muted-foreground hover:text-primary"
+              className="p-2 rounded-full bg-surface border border-border hover:border-primary/50 hover:bg-surface/80 transition-all duration-300 cursor-pointer text-muted-foreground hover:text-primary"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -90,8 +90,8 @@ export default function Journeys() {
 
   return (
     <>
-      <section id="journeys" className="relative py-32 px-6">
-        <div className="max-w-[90rem] mx-auto 2xl:px-8">
+      <section id="journeys" className="relative py-32 px-6 overflow-hidden">
+        <div className="max-w-[90rem] mx-auto 2xl:px-8 relative z-10">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}

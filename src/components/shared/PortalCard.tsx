@@ -68,15 +68,15 @@ export default function PortalCard() {
             transition={{ delay: 0.8, duration: 0.8 }}
             className="space-y-4 text-sm font-light text-muted-foreground"
           >
-            <div className="flex justify-between items-center pb-3 border-b border-white/10">
+            <div className="flex justify-between items-center pb-3 border-b border-border">
               <span>Date</span>
               <span className="text-foreground">13th June - 5th July</span>
             </div>
-            <div className="flex justify-between items-center pb-3 border-b border-white/10">
+            <div className="flex justify-between items-center pb-3 border-b border-border">
               <span>Commitment</span>
               <span className="text-foreground">30 mins / day</span>
             </div>
-            <div className="flex justify-between items-center pb-3 border-b border-white/10">
+            <div className="flex justify-between items-center pb-3 border-b border-border">
               <span>Cost</span>
               <span className="text-foreground">₹300</span>
             </div>
@@ -86,7 +86,7 @@ export default function PortalCard() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 0.8 }}
-            className="mt-6 p-4 rounded-xl bg-black/20 border border-white/5"
+            className="mt-6 p-4 rounded-xl bg-surface border border-border"
           >
             <p className="text-xs text-primary mb-1 uppercase tracking-widest font-medium">Included Perks</p>
             <p className="text-xs text-muted-foreground leading-relaxed">

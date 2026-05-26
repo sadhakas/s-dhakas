@@ -34,7 +34,7 @@ export default function Navbar() {
         animate={{ y: 0, x: "-50%", opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
         style={{ left: "50%" }}
-        className="fixed bottom-6 z-40 bg-surface-elevated/80 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl shadow-black/80"
+        className="fixed bottom-6 z-40 bg-surface-elevated/80 backdrop-blur-xl border border-border/50 rounded-full shadow-2xl shadow-black/10"
       >
         <div className="px-4 py-2.5 flex items-center justify-between gap-6 md:gap-12 min-w-max">
 

@@ -36,7 +36,7 @@ export default function JourneyCard({
       whileHover={{ y: -10, scale: 1.02 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.7, delay: index * 0.15, ease: [0.76, 0, 0.24, 1] }}
-      className={`group relative bg-surface/40 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden transition-all duration-500 hover:border-primary/40 hover:bg-surface/80 hover:shadow-[0_0_40px_rgba(var(--color-primary),0.1)] cursor-pointer ${
+      className={`group relative bg-surface/40 backdrop-blur-md border border-border rounded-2xl overflow-hidden transition-all duration-500 hover:border-primary/40 hover:bg-surface/80 hover:shadow-[0_0_40px_rgba(var(--color-primary),0.1)] cursor-pointer ${
         compact ? "flex-none w-[300px] md:w-[350px]" : ""
       }`}
     >

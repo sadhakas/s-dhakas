@@ -34,8 +34,8 @@ export default function ManualOfLife() {
           className="text-center md:text-left mb-20 max-w-3xl"
         >
           <div className="flex items-center justify-center md:justify-start gap-4 mb-6">
-            <BookOpen className="w-8 h-8 text-gold" />
-            <h2 className="font-serif text-4xl md:text-5xl text-gold">The Manual of Life</h2>
+            <BookOpen className="w-8 h-8 text-primary" />
+            <h2 className="font-serif text-4xl md:text-5xl text-primary">The Manual of Life</h2>
           </div>
           <p className="text-muted-foreground text-lg md:text-xl font-light leading-relaxed mb-6">
             A modular program exploring the fundamental dimensions of life through philosophical inquiry and practical reflection.
@@ -62,7 +62,7 @@ export default function ManualOfLife() {
             {/* Base spine — always visible */}
             <line
               x1="1" y1="0" x2="1" y2="100"
-              stroke="rgba(212,175,55,0.3)"
+              className="stroke-primary/30"
               strokeWidth="2"
               vectorEffect="non-scaling-stroke"
             />
@@ -71,10 +71,11 @@ export default function ManualOfLife() {
               x1="1" y1="0" x2="1" y2="100"
               strokeWidth="3"
               vectorEffect="non-scaling-stroke"
+              className="stroke-primary"
               animate={{
-                stroke: activeNode !== null ? "rgba(212,175,55,0.8)" : "rgba(212,175,55,0)",
+                opacity: activeNode !== null ? 0.8 : 0,
                 filter: activeNode !== null
-                  ? "drop-shadow(0 0 5px rgba(212,175,55,0.9))"
+                  ? "drop-shadow(0 0 5px var(--color-primary))"
                   : "none",
               }}
               transition={{ duration: 0.4 }}
@@ -85,16 +86,16 @@ export default function ManualOfLife() {
                 key={idx}
                 cx="1"
                 cy={idx * 25}
-                fill="rgba(212,175,55,1)"
+                className="fill-primary"
                 animate={{ r: activeNode === idx ? 4 : 0 }}
                 transition={{ duration: 0.3 }}
-                style={{ filter: "drop-shadow(0 0 4px rgba(212,175,55,0.9))" }}
+                style={{ filter: "drop-shadow(0 0 4px var(--color-primary))" }}
               />
             ))}
           </svg>
 
           {/* Mobile static spine */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-[1px] bg-gradient-to-b from-transparent via-gold/30 to-transparent md:hidden" />
+          <div className="absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-[1px] bg-gradient-to-b from-transparent via-primary/30 to-transparent md:hidden" />
 
           <div className="space-y-16">
             {themes.map((theme, idx) => {
@@ -113,10 +114,10 @@ export default function ManualOfLife() {
                         transition={{ duration: 0.6, delay: idx * 0.1 }}
                         className="text-center md:text-right"
                       >
-                        <div className="inline-block bg-gradient-to-r from-gold/80 to-gold text-black rounded-full px-6 py-2 mb-3 shadow-[0_0_15px_rgba(212,175,55,0.2)]">
+                        <div className="inline-block bg-gradient-to-r from-primary/80 to-primary text-primary-foreground rounded-full px-6 py-2 mb-3 shadow-[0_0_15px_rgba(var(--color-primary),0.2)]">
                           <span className="font-semibold">{theme.title}</span> — {theme.subtitle}
                         </div>
-                        <p className="text-muted-foreground/80 text-sm max-w-xs ml-auto mr-auto md:mr-0 pl-4 border-l-2 md:border-l-0 md:border-r-2 border-gold/30">
+                        <p className="text-muted-foreground/80 text-sm max-w-xs ml-auto mr-auto md:mr-0 pl-4 border-l-2 md:border-l-0 md:border-r-2 border-primary/30">
                           {theme.description}
                         </p>
                       </motion.div>
@@ -125,12 +126,11 @@ export default function ManualOfLife() {
 
                   {/* Center Node — hover triggers constellation */}
                   <motion.div
-                    className="hidden md:flex absolute left-1/2 -translate-x-1/2 rounded-full bg-surface z-10 items-center justify-center cursor-pointer"
-                    style={{ width: 20, height: 20, border: "2px solid rgba(212,175,55,0.4)" }}
+                    className={`hidden md:flex absolute left-1/2 -translate-x-1/2 rounded-full bg-surface z-10 items-center justify-center cursor-pointer border-2 transition-colors duration-300 ${isActive ? 'border-primary' : 'border-primary/40'}`}
+                    style={{ width: 20, height: 20 }}
                     animate={{
-                      borderColor: isActive ? "rgba(212,175,55,0.9)" : "rgba(212,175,55,0.4)",
                       boxShadow: isActive
-                        ? "0 0 0 3px rgba(212,175,55,0.15), 0 0 14px 4px rgba(212,175,55,0.3)"
+                        ? "0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent), 0 0 14px 4px color-mix(in srgb, var(--color-primary) 30%, transparent)"
                         : "0 0 0 0 transparent",
                     }}
                     transition={{ duration: 0.3 }}
@@ -138,7 +138,7 @@ export default function ManualOfLife() {
                     onHoverEnd={() => setActiveNode(null)}
                   >
                     <motion.div
-                      className="rounded-full bg-gold"
+                      className="rounded-full bg-primary"
                       animate={{ width: isActive ? 8 : 4, height: isActive ? 8 : 4 }}
                       transition={{ duration: 0.3 }}
                     />
@@ -154,10 +154,10 @@ export default function ManualOfLife() {
                         transition={{ duration: 0.6, delay: idx * 0.1 }}
                         className="text-center md:text-left pt-6 md:pt-0"
                       >
-                        <div className="inline-block bg-gradient-to-r from-gold to-gold/80 text-black rounded-full px-6 py-2 mb-3 shadow-[0_0_15px_rgba(212,175,55,0.2)]">
+                        <div className="inline-block bg-gradient-to-r from-primary to-primary/80 text-primary-foreground rounded-full px-6 py-2 mb-3 shadow-[0_0_15px_rgba(var(--color-primary),0.2)]">
                           <span className="font-semibold">{theme.title}</span> — {theme.subtitle}
                         </div>
-                        <p className="text-muted-foreground/80 text-sm max-w-xs mx-auto md:mx-0 pr-4 border-r-2 md:border-r-0 md:border-l-2 border-gold/30">
+                        <p className="text-muted-foreground/80 text-sm max-w-xs mx-auto md:mx-0 pr-4 border-r-2 md:border-r-0 md:border-l-2 border-primary/30">
                           {theme.description}
                         </p>
                       </motion.div>
@@ -176,13 +176,13 @@ export default function ManualOfLife() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center bg-black/40 border border-gold/10 rounded-3xl p-8 shadow-2xl backdrop-blur-sm"
+          className="text-center bg-surface/50 border border-primary/10 rounded-3xl p-8 shadow-[0_0_40px_rgba(var(--color-primary),0.05)] backdrop-blur-sm"
         >
-          <h3 className="text-gold text-lg font-serif mb-8">Participants receive:</h3>
+          <h3 className="text-primary text-lg font-serif mb-8">Participants receive:</h3>
           <div className="flex flex-wrap justify-center gap-4 md:gap-x-8 gap-y-4">
             {deliverables.map((item, i) => (
               <div key={i} className="flex items-center gap-2">
-                <div className="w-1 h-1 rounded-full bg-gold/50" />
+                <div className="w-1 h-1 rounded-full bg-primary/50" />
                 <span className="text-muted-foreground text-sm tracking-widest lowercase">{item}</span>
               </div>
             ))}

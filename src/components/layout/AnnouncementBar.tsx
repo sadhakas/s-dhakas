@@ -101,15 +101,15 @@ export default function AnnouncementBar() {
 
               {UPCOMING.length > 1 && (
                 <div className="flex gap-1 shrink-0">
-                  <button onClick={prev} aria-label="Previous trip" className="text-muted-foreground/40 hover:text-white transition-colors text-xs px-1">‹</button>
-                  <button onClick={next} aria-label="Next trip"     className="text-muted-foreground/40 hover:text-white transition-colors text-xs px-1">›</button>
+                  <button onClick={prev} aria-label="Previous trip" className="text-muted-foreground/40 hover:text-foreground transition-colors text-xs px-1">‹</button>
+                  <button onClick={next} aria-label="Next trip"     className="text-muted-foreground/40 hover:text-foreground transition-colors text-xs px-1">›</button>
                 </div>
               )}
 
               {/* CTA */}
               <button
                 onClick={handleRegisterClick}
-                className="shrink-0 text-[10px] text-black bg-white hover:bg-gray-200 transition-colors duration-300 px-3 py-1 rounded-full font-medium tracking-wide"
+                className="shrink-0 text-[10px] text-primary-foreground bg-primary hover:bg-primary/90 transition-colors duration-300 px-3 py-1 rounded-full font-medium tracking-wide"
               >
                 Register →
               </button>
@@ -136,13 +136,13 @@ export default function AnnouncementBar() {
             exit={{ y: -52, opacity: 0, x: "-50%" }}
             transition={{ duration: 0.4 }}
             onClick={() => setIsExpanded(true)}
-            className="fixed top-0 left-1/2 z-[9997] w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.2)] border-[1.5px] border-white backdrop-blur-md bg-black/30 group hover:bg-black/60 transition-colors"
+            className="fixed top-0 left-1/2 z-[9997] w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shadow-md border-[1.5px] border-border backdrop-blur-md bg-surface/80 group hover:bg-surface transition-colors"
             style={{ left: "50%" }}
             aria-label="Expand Upcoming Journey"
           >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-80" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-80" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
             </span>
           </motion.button>
         )}

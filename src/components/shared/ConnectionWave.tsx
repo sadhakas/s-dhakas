@@ -40,7 +40,7 @@ export default function ConnectionWave({ onClose }: Props) {
       onClick={onClose}
     >
       {/* Dark backdrop */}
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-background/70 backdrop-blur-sm" />
 
       {/* Wave rings — decorative, positioned at center */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
