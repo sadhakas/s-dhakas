@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Calendar, Clock, BookOpen, Award, Users, Ticket, Upload, CheckCircle2, AlertCircle, Video } from "lucide-react";
+import { X, Calendar, Clock, BookOpen, Award, Users, Ticket, Upload, CheckCircle2, AlertCircle, Video, Smartphone } from "lucide-react";
 import { Loader2 } from "lucide-react";
 
 export const isInternationalUser = () => {
@@ -418,6 +418,44 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
                 Scan the QR code, pay <span className="text-gold">₹300</span>, take a screenshot of the
                 success screen, and upload it in the form →
               </p>
+              {/* Pay Now UPI Options for mobile/all users */}
+              <div className="mt-4 space-y-3">
+                <p className="text-muted-foreground/40 text-[9px] tracking-[0.25em] uppercase">
+                  Pay directly via UPI App
+                </p>
+                
+                {/* Grid of Apps */}
+                <div className="grid grid-cols-2 gap-2 max-w-xs mx-auto">
+                  <a
+                    href="gpay://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration"
+                    className="group relative flex items-center justify-center gap-1.5 rounded-lg border border-gold/25 bg-gold/5 px-2 py-2.5 text-[10px] font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    Google Pay
+                  </a>
+                  <a
+                    href="phonepe://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration"
+                    className="group relative flex items-center justify-center gap-1.5 rounded-lg border border-gold/25 bg-gold/5 px-2 py-2.5 text-[10px] font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    PhonePe
+                  </a>
+                  <a
+                    href="paytmmp://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration"
+                    className="group relative flex items-center justify-center gap-1.5 rounded-lg border border-gold/25 bg-gold/5 px-2 py-2.5 text-[10px] font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    Paytm
+                  </a>
+                  <a
+                    href="upi://pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration"
+                    className="group relative flex items-center justify-center gap-1.5 rounded-lg border border-gold/25 bg-gold/5 px-2 py-2.5 text-[10px] font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    Other App
+                  </a>
+                </div>
+                
+                <p className="text-muted-foreground/30 text-[8px] tracking-wide lowercase">
+                  *Select your app to bypass defaults. Works on phone only.
+                </p>
+              </div>
               {/* UPI ID fallback */}
               <div className="mt-3 flex items-center justify-center gap-2">
                 <span className="text-muted-foreground/40 text-[10px] tracking-widest">or pay to UPI ID</span>
