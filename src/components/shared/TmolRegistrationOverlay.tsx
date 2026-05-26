@@ -423,7 +423,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
                 <p className="text-muted-foreground/40 text-[9px] tracking-[0.25em] uppercase">
                   Pay directly via UPI App
                 </p>
-                
+
                 {/* Grid of Apps */}
                 <div className="grid grid-cols-2 gap-2 max-w-xs mx-auto">
                   <a
@@ -451,9 +451,9 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
                     Other App
                   </a>
                 </div>
-                
+
                 <p className="text-muted-foreground/30 text-[8px] tracking-wide lowercase">
-                  *Select your app to bypass defaults. Works on phone only.
+                  *Select your app.
                 </p>
               </div>
               {/* UPI ID fallback */}

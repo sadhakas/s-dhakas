@@ -196,9 +196,9 @@ function RegisterTmol() {
                 <p className="text-muted-foreground/60 text-xs mt-4 mb-5 leading-relaxed">
                   Secure your spot. Pay securely via DodoPayments, then upload your receipt below.
                 </p>
-                <a 
-                  href="#" 
-                  target="_blank" 
+                <a
+                  href="#"
+                  target="_blank"
                   rel="noreferrer"
                   className="inline-flex w-full items-center justify-center gap-2 bg-gold text-black font-medium py-3 px-4 text-xs tracking-widest uppercase rounded-lg hover:bg-gold/90 transition-all duration-300 mb-2"
                 >
@@ -229,7 +229,7 @@ function RegisterTmol() {
                   <p className="text-muted-foreground/40 text-[9px] tracking-[0.25em] uppercase">
                     Pay directly via UPI App
                   </p>
-                  
+
                   {/* Grid of Apps */}
                   <div className="grid grid-cols-2 gap-2 max-w-xs mx-auto">
                     <a
@@ -257,9 +257,9 @@ function RegisterTmol() {
                       Other App
                     </a>
                   </div>
-                  
+
                   <p className="text-muted-foreground/30 text-[8px] tracking-wide lowercase">
-                    *Select your app to bypass defaults. Works on phone only.
+                    *Select your app.
                   </p>
                 </div>
                 {/* UPI ID fallback */}
