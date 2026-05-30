@@ -53,7 +53,7 @@ export default function AnnouncementBar() {
             animate={{ y: 6, opacity: 1, x: "-50%" }}
             exit={{ y: -52, opacity: 0, x: "-50%" }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed top-0 z-[9997] h-11 flex items-center rounded-full px-5 shadow-[0_0_20px_rgba(0,0,0,0.8)] max-w-[calc(100vw-6rem)] overflow-hidden"
+            className="fixed top-0 z-[9997] h-11 flex items-center rounded-full px-4 sm:px-5 shadow-[0_0_20px_rgba(0,0,0,0.8)] w-[calc(100vw-2rem)] sm:w-auto max-w-[calc(100vw-2rem)] sm:max-w-[calc(100vw-6rem)] overflow-hidden"
             style={{
               left: "50%",
               background: "rgba(10,8,6,0.85)",
@@ -61,7 +61,7 @@ export default function AnnouncementBar() {
               backdropFilter: "blur(12px)",
             }}
           >
-            <div className="w-max flex items-center gap-3">
+            <div className="w-full flex items-center justify-between sm:justify-start gap-2 sm:gap-3 min-w-0">
               {/* Pulsing dot */}
               <span className="relative flex h-2 w-2 shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-60" />

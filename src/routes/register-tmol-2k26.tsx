@@ -15,6 +15,11 @@ import {
 import { TmolRegistrationForm, isInternationalUser } from "@/components/shared/TmolRegistrationOverlay";
 import InteractiveBackground from "@/components/layout/InteractiveBackground";
 
+const GPAY_URL = "gpay://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
+const PHONEPE_URL = "phonepe://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
+const PAYTM_URL = "paytmmp://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
+const GENERIC_UPI_URL = "upi://pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
+
 export const Route = createFileRoute("/register-tmol-2k26")({
   component: RegisterTmol,
   head: () => ({
@@ -223,6 +228,44 @@ function RegisterTmol() {
                   Scan · Pay <span className="text-gold">₹300</span> · Screenshot
                   the success screen · Upload below
                 </p>
+                {/* Pay Now UPI Options for mobile/all users */}
+                <div className="mt-4 space-y-3 md:hidden">
+                  <p className="text-muted-foreground/40 text-[9px] tracking-[0.25em] uppercase">
+                    Pay directly via UPI App
+                  </p>
+                  
+                  {/* Grid of Apps */}
+                  <div className="grid grid-cols-2 gap-2 max-w-xs mx-auto">
+                    <a
+                      href={GPAY_URL}
+                      className="group relative flex items-center justify-center gap-1.5 rounded-lg border border-gold/25 bg-gold/5 px-2 py-2.5 text-[10px] font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      Google Pay
+                    </a>
+                    <a
+                      href={PHONEPE_URL}
+                      className="group relative flex items-center justify-center gap-1.5 rounded-lg border border-gold/25 bg-gold/5 px-2 py-2.5 text-[10px] font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      PhonePe
+                    </a>
+                    <a
+                      href={PAYTM_URL}
+                      className="group relative flex items-center justify-center gap-1.5 rounded-lg border border-gold/25 bg-gold/5 px-2 py-2.5 text-[10px] font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      Paytm
+                    </a>
+                    <a
+                      href={GENERIC_UPI_URL}
+                      className="group relative flex items-center justify-center gap-1.5 rounded-lg border border-gold/25 bg-gold/5 px-2 py-2.5 text-[10px] font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      Other App
+                    </a>
+                  </div>
+                  
+                  <p className="text-muted-foreground/30 text-[8px] tracking-wide lowercase">
+                    *Select your app.
+                  </p>
+                </div>
                 {/* UPI ID fallback */}
                 <div className="mt-3 flex items-center justify-center gap-2">
                   <span className="text-muted-foreground/40 text-[10px] tracking-widest">or pay to UPI ID</span>
