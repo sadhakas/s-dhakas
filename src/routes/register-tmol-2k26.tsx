@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
@@ -11,6 +11,11 @@ import {
   Ticket,
   ArrowLeft,
   Video,
+  Compass,
+  Brain,
+  Zap,
+  Sprout,
+  Search
 } from "lucide-react";
 import { TmolRegistrationForm, isInternationalUser } from "@/components/shared/TmolRegistrationOverlay";
 import InteractiveBackground from "@/components/layout/InteractiveBackground";
@@ -19,6 +24,91 @@ const GPAY_URL = "gpay://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&
 const PHONEPE_URL = "phonepe://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
 const PAYTM_URL = "paytmmp://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
 const GENERIC_UPI_URL = "upi://pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
+
+const MODULES = [
+  {
+    id: "01",
+    title: "Foundations for Meaningful Living",
+    topics: [
+      "IQ, EQ & SQ: Understanding Human Intelligence Beyond Academics",
+      "What Is Real Success? Existing vs Truly Living",
+      "The Theory of Everything",
+      "Finding Peace Amidst Chaos",
+      "Science, Humanity & Spirituality: A Unified Vision",
+      "Breaking Free: Habits, Discipline & Time Management",
+    ],
+  },
+  {
+    id: "02",
+    title: "Discovering Infallible Wisdom",
+    topics: [
+      "Rediscovering Identity & Purpose",
+      "Discovering Divinity: Does God Exist — Myth or Reality?",
+      "Why Do Bad Things Happen to Good People? Understanding Karma",
+      "Understanding the World Around Us: Science & Consciousness",
+      "The Power and Influence of Time",
+    ],
+  },
+  {
+    id: "03",
+    title: "Practical Application of Timeless Wisdom",
+    topics: [
+      "Applying Spiritual Wisdom in Daily Life",
+      "The Search for Real Happiness & How to Attain It",
+      "Mastering the Mind: Overcoming Restlessness & Inner Conflict",
+      "Summary & Reflections",
+    ],
+  },
+];
+
+const OUTCOMES = [
+  {
+    icon: Compass,
+    title: "Clarity & Direction",
+    bullets: [
+      "Understand what truly matters to you",
+      "Make decisions with greater confidence",
+      "Develop a clearer sense of purpose",
+    ],
+  },
+  {
+    icon: Brain,
+    title: "Mastery of Mind & Emotions",
+    bullets: [
+      "Learn practical tools to handle stress and overthinking",
+      "Improve focus and mental resilience",
+      "Build emotional intelligence and self-awareness",
+    ],
+  },
+  {
+    icon: Zap,
+    title: "Discipline & Personal Growth",
+    bullets: [
+      "Break free from unhelpful habits",
+      "Develop sustainable discipline and time management",
+      "Create systems that support long-term success",
+    ],
+  },
+  {
+    icon: Sprout,
+    title: "Inner Peace & Well-Being",
+    bullets: [
+      "Discover how to remain calm amidst uncertainty",
+      "Explore proven practices for lasting happiness",
+      "Learn how to cultivate inner fulfillment rather than chasing temporary satisfaction",
+    ],
+  },
+  {
+    icon: Search,
+    title: "Answers to Life's Bigger Questions",
+    bullets: [
+      "Who am I beyond my roles and achievements?",
+      "What is the purpose of life?",
+      "Does consciousness extend beyond the brain?",
+      "What can timeless wisdom teach us about modern life?",
+    ],
+  },
+];
 
 export const Route = createFileRoute("/register-tmol-2k26")({
   component: RegisterTmol,
@@ -59,9 +149,35 @@ const PERKS = [
 
 function RegisterTmol() {
   const [isInternational, setIsInternational] = useState(false);
+  const leftPanelRef = useRef<HTMLDivElement>(null);
+  const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 });
 
   useEffect(() => {
     setIsInternational(isInternationalUser());
+  }, []);
+
+  useEffect(() => {
+    const el = leftPanelRef.current;
+    if (!el) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      setMousePos({
+        x: e.clientX - rect.left + el.scrollLeft,
+        y: e.clientY - rect.top + el.scrollTop,
+      });
+    };
+
+    const handleMouseLeave = () => {
+      setMousePos({ x: -1000, y: -1000 });
+    };
+
+    el.addEventListener("mousemove", handleMouseMove);
+    el.addEventListener("mouseleave", handleMouseLeave);
+    return () => {
+      el.removeEventListener("mousemove", handleMouseMove);
+      el.removeEventListener("mouseleave", handleMouseLeave);
+    };
   }, []);
 
   return (
@@ -88,11 +204,24 @@ function RegisterTmol() {
         <div className="flex-1 flex flex-col lg:flex-row max-w-6xl mx-auto w-full px-6 py-12 gap-12 lg:gap-16">
           {/* Left — Event Details */}
           <motion.div
+            ref={leftPanelRef}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
-            className="flex-1 lg:sticky lg:top-12 lg:self-start"
+            className="flex-1 lg:sticky lg:top-12 lg:self-start relative overflow-hidden rounded-3xl p-6 md:p-8 bg-black/25 border border-gold/5"
           >
+            {/* Ambient Golden Spotlight Reveal */}
+            <div
+              className="pointer-events-none absolute rounded-full blur-[100px] transition-opacity duration-500"
+              style={{
+                left: mousePos.x - 200,
+                top: mousePos.y - 200,
+                width: 400,
+                height: 400,
+                background: "radial-gradient(circle, rgba(212,175,55,0.22) 0%, rgba(212,175,55,0.05) 60%, transparent 100%)",
+                opacity: mousePos.x === -1000 ? 0 : 1,
+              }}
+            />
             <p className="text-gold-dim text-[10px] tracking-[0.4em] lowercase mb-4">
               21-day live program
             </p>
@@ -106,11 +235,28 @@ function RegisterTmol() {
               TMOL · Sādhakas · 2026
             </p>
 
-            <p className="text-muted-foreground leading-relaxed mb-10 max-w-md">
+            {/* Philosophy Pull-Quote */}
+            <div className="border-l border-gold/30 pl-4 py-1 my-6 max-w-md bg-gold/[0.01] rounded-r-md">
+              <p className="font-serif italic text-base text-gold/90 leading-relaxed">
+                "We are taught how to build a career, but rarely how to build a life."
+              </p>
+            </div>
+
+            <p className="text-muted-foreground leading-relaxed mb-8 max-w-md text-sm font-light">
               Realign your life this summer! A transformative 21-day journey through the fundamental dimensions
               of life. Hosted online on Google Meet, each 30-minute daily session dives deep into The Self, The
               Mind, Action, Nature, and Higher Wisdom.
             </p>
+
+            {/* Why This Program? */}
+            <div className="mb-10 max-w-md">
+              <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-3.5">
+                why this program?
+              </p>
+              <p className="text-xs text-muted-foreground/60 leading-relaxed font-light">
+                In a world where people can achieve success yet still struggle with anxiety, burnout, and lack of fulfillment, TMOL explores the timeless principles that help us understand ourselves, find direction, and live with greater purpose.
+              </p>
+            </div>
 
             {/* Key details */}
             <div className="space-y-5 mb-10">
@@ -165,6 +311,53 @@ function RegisterTmol() {
                     {isInternational ? "$9.99" : "₹300"}
                   </p>
                 </div>
+              </div>
+            </div>
+
+            {/* Curriculum Journey */}
+            <div className="mb-10 max-w-md">
+              <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-4">
+                what you will learn
+              </p>
+              <div className="space-y-4">
+                {MODULES.map((mod) => (
+                  <div key={mod.id} className="space-y-1.5">
+                    <h4 className="font-serif text-xs text-gold/80 tracking-wider">
+                      {mod.id} · {mod.title}
+                    </h4>
+                    <ul className="pl-4 space-y-0.5 list-disc list-inside text-[11px] text-muted-foreground/60 font-light">
+                      {mod.topics.map((topic, idx) => (
+                        <li key={idx} className="leading-relaxed">
+                          {topic}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* What You'll Gain */}
+            <div className="mb-10 max-w-md">
+              <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-4">
+                what you'll gain from tmol
+              </p>
+              <div className="space-y-4">
+                {OUTCOMES.map((out, idx) => (
+                  <div key={idx} className="space-y-1.5">
+                    <h4 className="font-serif text-xs text-foreground/80 font-medium flex items-center gap-2">
+                      <out.icon className="w-3.5 h-3.5 text-gold shrink-0" />
+                      {out.title}
+                    </h4>
+                    <ul className="pl-4 space-y-0.5 list-disc list-inside text-[11px] text-muted-foreground/60 font-light">
+                      {out.bullets.map((bullet, bIdx) => (
+                        <li key={bIdx} className="leading-relaxed">
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
               </div>
             </div>
 
