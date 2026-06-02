@@ -245,10 +245,10 @@ function RegisterTmol() {
                 </div>
                 <div>
                   <p className="text-foreground text-sm font-medium mb-0.5">
-                    Session Duration
+                    Session Timing & Duration
                   </p>
                   <p className="text-muted-foreground text-sm">
-                    30 minutes/day · 21 consecutive days
+                    8:30 PM IST · 30 minutes/day · 21 consecutive days
                   </p>
                 </div>
               </div>

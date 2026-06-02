@@ -150,7 +150,7 @@ export function TmolRegistrationForm({ onSuccess, isInternational }: { onSuccess
   const [couponCode, setCouponCode] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const isFree = couponCode.trim().toUpperCase() === "SAMSONI108";
+  const isFree = ["SAMSONI108", "SATYABITSP100"].includes(couponCode.trim().toUpperCase());
   const requireScreenshot = !isInternational && !isFree;
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -482,8 +482,8 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
                 <Clock className="w-4 h-4" />
               </div>
               <div>
-                <p className="text-foreground text-sm font-medium mb-0.5">Session Duration</p>
-                <p className="text-muted-foreground text-sm">30 minutes/day · 21 consecutive days</p>
+                <p className="text-foreground text-sm font-medium mb-0.5">Session Timing & Duration</p>
+                <p className="text-muted-foreground text-sm">8:30 PM IST · 30 minutes/day · 21 consecutive days</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
