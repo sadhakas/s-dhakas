@@ -17,6 +17,10 @@ import {
   Zap,
   Sprout,
   Search,
+  AlertCircle,
+  Copy,
+  Download,
+  CheckCircle2,
 } from "lucide-react";
 import { TmolRegistrationForm, isInternationalUser } from "@/components/shared/TmolRegistrationOverlay";
 import InteractiveBackground from "@/components/layout/InteractiveBackground";
@@ -151,6 +155,26 @@ const PERKS = [
 function RegisterTmol() {
   const [isInternational, setIsInternational] = useState(false);
   const [activeModule, setActiveModule] = useState<number | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText("yogya@superyes");
+      } else {
+        const textArea = document.createElement("textarea");
+        textArea.value = "yogya@superyes";
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+      }
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
 
   useEffect(() => {
     setIsInternational(isInternationalUser());
@@ -236,6 +260,19 @@ function RegisterTmol() {
                   </p>
                   <p className="text-muted-foreground text-sm">
                     13 June – 5 July, 2026
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="p-2 rounded-full bg-gold/10 text-gold shrink-0">
+                  <AlertCircle className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="text-foreground text-sm font-medium mb-0.5">
+                    Registration Deadline
+                  </p>
+                  <p className="text-muted-foreground text-sm">
+                    10th June, 2026
                   </p>
                 </div>
               </div>
@@ -427,6 +464,16 @@ function RegisterTmol() {
                     className="w-44 h-44 object-contain"
                   />
                 </div>
+                <div className="mt-2 flex justify-center">
+                  <a
+                    href="/assets/images/payment-qr.png"
+                    download="Sadhakas-UPI-QR.png"
+                    className="flex items-center gap-1.5 text-[10px] text-muted-foreground hover:text-gold uppercase tracking-wider transition-colors"
+                  >
+                    <Download className="w-3 h-3" />
+                    <span>Download QR</span>
+                  </a>
+                </div>
                 <p className="text-muted-foreground/60 text-xs mt-4 leading-relaxed">
                   Scan · Pay <span className="text-gold">₹300</span> · Screenshot
                   the success screen · Upload below
@@ -437,43 +484,34 @@ function RegisterTmol() {
                     Pay directly via UPI App
                   </p>
 
-                  {/* Grid of Apps */}
-                  <div className="grid grid-cols-2 gap-2 max-w-xs mx-auto">
-                    <a
-                      href={GPAY_URL}
-                      className="group relative flex items-center justify-center gap-1.5 rounded-lg border border-gold/25 bg-gold/5 px-2 py-2.5 text-[10px] font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
-                    >
-                      Google Pay
-                    </a>
-                    <a
-                      href={PHONEPE_URL}
-                      className="group relative flex items-center justify-center gap-1.5 rounded-lg border border-gold/25 bg-gold/5 px-2 py-2.5 text-[10px] font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
-                    >
-                      PhonePe
-                    </a>
-                    <a
-                      href={PAYTM_URL}
-                      className="group relative flex items-center justify-center gap-1.5 rounded-lg border border-gold/25 bg-gold/5 px-2 py-2.5 text-[10px] font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
-                    >
-                      Paytm
-                    </a>
+                  <div className="flex justify-center">
                     <a
                       href={GENERIC_UPI_URL}
-                      className="group relative flex items-center justify-center gap-1.5 rounded-lg border border-gold/25 bg-gold/5 px-2 py-2.5 text-[10px] font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
+                      className="group relative flex items-center justify-center gap-2 rounded-lg border border-gold/25 bg-gold/5 px-4 py-2.5 text-xs font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
                     >
-                      Other App
+                      Pay Using UPI
                     </a>
                   </div>
 
                   <p className="text-muted-foreground/30 text-[8px] tracking-wide lowercase">
-                    *Select your app.
+                    *Select your installed UPI app.
                   </p>
                 </div>
                 {/* UPI ID fallback */}
                 <div className="mt-3 flex items-center justify-center gap-2">
                   <span className="text-muted-foreground/40 text-[10px] tracking-widest">or pay to UPI ID</span>
                 </div>
-                <p className="mt-1 font-mono text-gold text-sm tracking-wider select-all">yogya@superyes</p>
+                <div className="mt-1 flex items-center justify-center gap-2">
+                  <p className="font-mono text-gold text-sm tracking-wider select-all">yogya@superyes</p>
+                  <button
+                    type="button"
+                    onClick={handleCopy}
+                    className="text-muted-foreground hover:text-gold transition-colors"
+                    title="Copy UPI ID"
+                  >
+                    {copied ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+                  </button>
+                </div>
               </div>
             )}
           </motion.div>
