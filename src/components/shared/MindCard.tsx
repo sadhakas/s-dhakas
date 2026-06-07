@@ -8,31 +8,19 @@ interface MindCardProps {
 }
 
 export default function MindCard({ mind, index }: MindCardProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  // Stagger parallax offset per card
-  const direction = index % 2 === 0 ? 1 : -1;
-  const y = useTransform(scrollYProgress, [0, 1], [direction * 20, direction * -20]);
-
   return (
     <motion.div
-      ref={ref}
-      style={{ y }}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.7, delay: index * 0.15 }}
-      whileHover={{ y: -6 }}
+      whileHover={{ scale: 1.02 }}
       className="group relative bg-surface border border-border rounded-lg p-8 transition-colors duration-500 hover:border-gold/40"
     >
       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-gold/0 to-transparent group-hover:via-gold/50 transition-all duration-700" />
 
       {/* Portrait / Avatar */}
-      <div className="relative w-16 h-16 md:w-20 md:h-20 mb-6 rounded-full overflow-hidden border border-border max-md:border-gold/50 md:group-hover:border-gold/50 transition-all duration-700 max-md:drop-shadow-[0_0_20px_rgba(255,215,0,0.4)] md:group-hover:drop-shadow-[0_0_20px_rgba(255,215,0,0.4)] z-10">
+      <div className="relative w-16 h-16 md:w-20 md:h-20 mb-6 rounded-full overflow-hidden border border-border max-md:border-gold/50 md:group-hover:border-gold/50 transition-all duration-700 max-md:drop-shadow-[0_0_20px_rgba(197,168,128,0.4)] md:group-hover:drop-shadow-[0_0_20px_rgba(197,168,128,0.4)] z-10">
         <img
           src={mind.image}
           alt={mind.name}

@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import JourneyCard from "../shared/JourneyCard";
 import type { JourneyData } from "../shared/JourneyCard";
 import { journeysData } from "../../data/journeys";
@@ -8,80 +7,30 @@ import MemoryOverlay from "../shared/MemoryOverlay";
 import TripInterestOverlay from "../shared/TripInterestOverlay";
 import TmolRegistrationOverlay from "../shared/TmolRegistrationOverlay";
 
-// Custom inner Carousel component 
-function JourneyCarousel({ 
-  title, 
-  journeys, 
-  onSelect 
-}: { 
-  title: string; 
-  journeys: JourneyData[]; 
-  onSelect: (j: JourneyData) => void;
-}) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      // Approximate scroll distance based on typical compact card width + gap
-      const scrollAmount = direction === "left" ? -350 : 350;
-      scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
-    }
-  };
-
-  if (journeys.length === 0) return null;
-
-  return (
-    <div className="flex flex-col w-full overflow-hidden">
-      <div className="relative flex items-center justify-center mb-8">
-        <h3 className="font-serif text-2xl md:text-3xl font-light text-foreground lowercase text-center">
-          {title}
-        </h3>
-        
-        {/* Navigation arrows isolated per carousel, anchored to the right */}
-        {journeys.length > 1 && (
-          <div className="absolute right-0 flex gap-2">
-            <button 
-              onClick={() => scroll("left")} 
-              className="p-2 rounded-full bg-surface border border-border hover:border-gold/50 transition-colors cursor-pointer text-muted-foreground hover:text-foreground"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button 
-              onClick={() => scroll("right")} 
-              className="p-2 rounded-full bg-surface border border-border hover:border-gold/50 transition-colors cursor-pointer text-muted-foreground hover:text-foreground"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        )}
-      </div>
-      
-      {/* Scrollable Container with disabled visual scrollbar */}
-      <div 
-        ref={scrollRef} 
-        className={`flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden ${
-          journeys.length === 1 ? "justify-center" : "justify-start"
-        }`}
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-      >
-        {journeys.map((journey, i) => (
-          <div key={journey.title} className="snap-start flex-none">
-            <JourneyCard 
-              journey={journey} 
-              index={i} 
-              onClick={() => onSelect(journey)}
-              compact={true}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 export default function Journeys() {
   const [selectedJourney, setSelectedJourney] = useState<JourneyData | null>(null);
   const [showTmolOverlay, setShowTmolOverlay] = useState(false);
+  const containerRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
+  // Phase 1: [0, 0.3] Diagonal entry (up and left)
+  // Phase 2: [0.3, 0.85] Horizontal scroll (left)
+  // Phase 3: [0.85, 1] Hold at the end so it doesn't get covered by the next section prematurely
+  const mobileEndX = "-400vw";
+  const desktopEndX = "-150vw";
+  const x = useTransform(
+    scrollYProgress, 
+    [0, 0.3, 0.85, 1], 
+    ["50vw", "0vw", isMobile ? mobileEndX : desktopEndX, isMobile ? mobileEndX : desktopEndX]
+  );
+  const y = useTransform(scrollYProgress, [0, 0.3], ["50vh", "0vh"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
 
   const handleSelect = (j: JourneyData) => {
     if (j.type === "event") {
@@ -100,42 +49,72 @@ export default function Journeys() {
 
   return (
     <>
-      <section id="journeys" className="relative py-32 px-6">
-        <div className="max-w-[90rem] mx-auto 2xl:px-8">
+      <section id="journeys" ref={containerRef} className="relative h-[350vh]">
+        <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
+          
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-20"
+            style={{ opacity }}
+            className="absolute top-[10%] left-6 md:left-24 z-10"
           >
-            <p className="text-gold-dim text-xs tracking-[0.4em] lowercase mb-4">
+            <p className="text-[#1A1A18]/60 text-xs tracking-[0.4em] lowercase mb-4 font-mono">
               where we wander
             </p>
-            <h2 className="font-serif text-4xl md:text-5xl font-light text-foreground">
+            <h2 className="font-serif text-4xl md:text-5xl font-light text-[#1A1A18]">
               The Journeys
             </h2>
-            <div className="gold-line w-24 mx-auto mt-6" />
+            <div className="w-24 h-[1px] bg-[#1A1A18]/30 mt-6" />
           </motion.div>
 
-          {/* Side-by-Side Dual Carousel Layout */}
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
-            <JourneyCarousel 
-              title="Upcoming Events" 
-              journeys={upcomingJourneys} 
-              onSelect={handleSelect} 
-            />
-            
-            <JourneyCarousel 
-              title="Past Memories" 
-              journeys={completedJourneys} 
-              onSelect={handleSelect} 
-            />
-          </div>
+          <motion.div 
+            style={{ x, y }} 
+            className="flex items-center gap-16 md:gap-32 px-[10vw] mt-12 w-max"
+          >
+            {/* Upcoming Section */}
+            <div className="flex flex-col items-center">
+              <h3 className="font-serif text-3xl font-light text-[#1A1A18] lowercase mb-12">
+                Upcoming Events
+              </h3>
+              <div className="flex gap-8">
+                {upcomingJourneys.map((journey, i) => (
+                  <div key={journey.title} className="w-[300px] shrink-0">
+                    <JourneyCard 
+                      journey={journey} 
+                      index={i} 
+                      onClick={() => handleSelect(journey)}
+                      compact={false}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="w-[1px] h-[400px] bg-[#1A1A18]/10" />
+
+            {/* Past Section */}
+            <div className="flex flex-col items-center">
+              <h3 className="font-serif text-3xl font-light text-[#1A1A18] lowercase mb-12">
+                Past Memories
+              </h3>
+              <div className="flex gap-8">
+                {completedJourneys.map((journey, i) => (
+                  <div key={journey.title} className="w-[300px] shrink-0">
+                    <JourneyCard 
+                      journey={journey} 
+                      index={i} 
+                      onClick={() => handleSelect(journey)}
+                      compact={false}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
         </div>
       </section>
 
-      {/* Render the appropriate overlay securely placed at the very top of the DOM */}
+      {/* Overlays */}
       <AnimatePresence>
         {selectedJourney && selectedJourney.status === "Completed" && (
           <MemoryOverlay 

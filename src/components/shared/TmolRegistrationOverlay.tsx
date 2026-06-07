@@ -508,7 +508,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
                 return (
                   <div
                     key={mod.id}
-                    className="border border-gold/15 bg-black/20 rounded-xl overflow-hidden transition-all duration-300"
+                    className="border border-gold/15 bg-foreground/5 rounded-xl overflow-hidden transition-all duration-300"
                   >
                     <button
                       onClick={() => setActiveModule(isOpen ? null : idx)}
@@ -535,7 +535,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.3, ease: "easeInOut" }}
                         >
-                          <div className="px-4 pb-4 pt-2 border-t border-gold/5 bg-black/10 space-y-2">
+                          <div className="px-4 pb-4 pt-2 border-t border-gold/5 bg-foreground/[0.02] space-y-2">
                             {mod.topics.map((topic, tIdx) => (
                               <div key={tIdx} className="flex items-start gap-2.5">
                                 <div className="w-1.5 h-1.5 rounded-full bg-gold/45 mt-1.5 shrink-0" />
@@ -608,7 +608,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
 
           {/* Payment Details / QR */}
           {isInternational ? (
-            <div className="rounded-2xl border border-gold/15 bg-black/40 p-6 text-center">
+            <div className="rounded-2xl border border-gold/15 bg-foreground/5 p-6 text-center">
               <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-4">
                 registration cost
               </p>
@@ -629,7 +629,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
               </p>
             </div>
           ) : (
-            <div className="rounded-2xl border border-gold/15 bg-black/40 p-6 text-center">
+            <div className="rounded-2xl border border-gold/15 bg-foreground/5 p-6 text-center">
               <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-4">
                 step 1 — pay ₹300 via UPI
               </p>

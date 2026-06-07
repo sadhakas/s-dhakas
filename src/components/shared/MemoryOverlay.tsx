@@ -92,7 +92,7 @@ export default function MemoryOverlay({ journey, onClose }: MemoryOverlayProps) 
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-30 p-2 bg-black/40 hover:bg-black/80 backdrop-blur-sm rounded-full text-white/70 hover:text-white transition-colors cursor-pointer"
+          className="absolute top-4 right-4 z-30 p-2 bg-background/50 hover:bg-background/80 backdrop-blur-sm rounded-full text-foreground/70 hover:text-foreground transition-colors cursor-pointer shadow-sm"
         >
           <X className="w-5 h-5" />
         </button>
@@ -134,17 +134,17 @@ export default function MemoryOverlay({ journey, onClose }: MemoryOverlayProps) 
         </div>
 
         {/* Right Side: Slideshow */}
-        <div className="relative w-full md:w-2/3 h-64 md:h-full bg-black flex items-center justify-center overflow-hidden">
+        <div className="relative w-full md:w-2/3 h-64 md:h-full bg-surface-elevated flex items-center justify-center overflow-hidden">
           {images.length > 1 && (
             <>
               <button
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 bg-black/20 hover:bg-black/60 backdrop-blur-sm rounded-full text-white/50 hover:text-white transition-all cursor-pointer"
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 bg-background/50 hover:bg-background/80 backdrop-blur-sm rounded-full text-foreground/50 hover:text-foreground transition-all cursor-pointer shadow-sm"
                 onClick={() => paginate(-1)}
               >
                 <ChevronLeft className="w-6 h-6" />
               </button>
               <button
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 bg-black/20 hover:bg-black/60 backdrop-blur-sm rounded-full text-white/50 hover:text-white transition-all cursor-pointer"
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 bg-background/50 hover:bg-background/80 backdrop-blur-sm rounded-full text-foreground/50 hover:text-foreground transition-all cursor-pointer shadow-sm"
                 onClick={() => paginate(1)}
               >
                 <ChevronRight className="w-6 h-6" />
@@ -170,7 +170,7 @@ export default function MemoryOverlay({ journey, onClose }: MemoryOverlayProps) 
               />
             </AnimatePresence>
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-black">
+            <div className="absolute inset-0 flex items-center justify-center bg-surface-elevated">
               <p className="text-white/40 font-serif text-xl md:text-2xl font-light tracking-wide">
                 Memories are being developed...
               </p>

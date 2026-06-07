@@ -20,6 +20,7 @@ export default function SeekerTrail() {
     let idleTime = 0;
     let lastFrameTime = performance.now();
     let idleDurationMs = 0;
+    let distAccumulator = 0;
 
     // --- Hold Mechanic State ---
     let isHolding = false;
@@ -184,12 +185,24 @@ export default function SeekerTrail() {
         if (isMoving) {
           idleDurationMs = 0;
           idleTime = Math.PI / 2; // When idle starts, the loop must begin EXACTLY at the center (crossover) point
-          const count = Math.min(4, Math.ceil(drawDist / 8));
-          spawnStardust(mouseX, mouseY, count);
           
-          // Smooth tracking engine when moving
-          lastX += (mouseX - lastX) * 0.4;
-          lastY += (mouseY - lastY) * 0.4;
+          // Spawn exactly 1 particle per 8 pixels moved, regardless of framerate
+          distAccumulator += drawDist;
+          let count = 0;
+          while (distAccumulator >= 8) {
+            count++;
+            distAccumulator -= 8;
+          }
+          if (count > 0) {
+            // Cap at a reasonable amount per frame so huge jumps don't lag the browser
+            spawnStardust(mouseX, mouseY, Math.min(count, 4));
+          }
+          
+          // Smooth tracking engine when moving (Frame-rate independent lerp)
+          // 0.4 at 60fps (16.66ms) -> factor = 1 - (1 - 0.4)^(dt / 16.66)
+          const lerpFactor = 1 - Math.pow(0.6, dt / 16.666);
+          lastX += (mouseX - lastX) * lerpFactor;
+          lastY += (mouseY - lastY) * lerpFactor;
         } else {
           idleDurationMs += dt;
           
@@ -213,12 +226,14 @@ export default function SeekerTrail() {
             
             spawnStardust(exactX, exactY, 3);
           } else {
-            // Gentle random twinkle immediately after stopping, before the 2.5s loop kicks in
-            if (Math.random() > 0.6) {
+            // Gentle random twinkle immediately after stopping, before the 10s loop kicks in
+            // Framerate-independent probability (target ~24 particles per second -> 24 / 1000 per ms)
+            if (Math.random() < (24 / 1000) * dt) {
               spawnStardust(lastX, lastY, 1);
             }
-            lastX += (mouseX - lastX) * 0.4;
-            lastY += (mouseY - lastY) * 0.4;
+            const lerpFactor = 1 - Math.pow(0.6, dt / 16.666);
+            lastX += (mouseX - lastX) * lerpFactor;
+            lastY += (mouseY - lastY) * lerpFactor;
           }
         }
       }

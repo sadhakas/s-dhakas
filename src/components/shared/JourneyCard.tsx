@@ -36,7 +36,7 @@ export default function JourneyCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.7, delay: index * 0.15 }}
-      className={`group relative bg-surface border border-border rounded-lg overflow-hidden transition-colors duration-500 hover:border-gold/40 cursor-pointer ${
+      className={`group relative bg-surface border border-border rounded-lg overflow-hidden transition-colors duration-500 hover:border-gold/40 cursor-pointer h-full flex flex-col ${
         compact ? "flex-none w-[300px] md:w-[350px]" : ""
       }`}
     >
@@ -75,20 +75,24 @@ export default function JourneyCard({
       </div>
 
       {/* Content */}
-      <div className={compact ? "p-4 md:p-6" : "p-6 md:p-8"}>
+      <div className={`flex flex-col flex-1 ${compact ? "p-4 md:p-6" : "p-6 md:p-8"}`}>
         <p className="text-gold-dim text-[10px] tracking-[0.3em] lowercase mb-2">
           {journey.location}
         </p>
         <h3 className={`font-serif font-light text-foreground mb-3 lowercase ${compact ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"}`}>
           {journey.title}
         </h3>
-        <p className={`text-muted-foreground text-sm leading-relaxed mb-4 ${compact ? "line-clamp-2" : ""}`}>
+        <p className="text-muted-foreground text-sm leading-relaxed mb-4">
           {journey.description}
         </p>
         <p className="text-muted-foreground/40 text-[10px] tracking-[0.15em]">
           {journey.date}
         </p>
-        <div className="gold-line mt-6 opacity-20 group-hover:opacity-50 transition-opacity duration-500" />
+        <div className="mt-auto pt-6 border-t border-border/50">
+          <button className="w-full flex items-center justify-center gap-2 bg-accent text-accent-foreground py-3 px-4 rounded-md text-xs font-semibold tracking-widest uppercase hover:bg-accent/90 transition-all duration-300">
+            {isCompleted ? "View Memories" : "Explore Journey"}
+          </button>
+        </div>
       </div>
     </motion.div>
   );

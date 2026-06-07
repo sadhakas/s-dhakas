@@ -1,137 +1,89 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-
-// ── The Echo: spawns ghost number ripples imperatively (no React state) ──────
-function spawnEcho(el: HTMLElement, text: string) {
-  const rect = el.getBoundingClientRect();
-  const cx = rect.left + rect.width / 2;
-  const cy = rect.top + rect.height / 2;
-
-  for (let i = 0; i < 3; i++) {
-    const ghost = document.createElement("span");
-    ghost.textContent = text;
-    const fontSize = Math.max(3, 7 - i * 1.2);
-    ghost.style.cssText = `
-      position: fixed;
-      left: ${cx}px;
-      top: ${cy}px;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: ${fontSize}rem;
-      font-weight: 300;
-      color: rgba(212,175,55,${(0.4 - i * 0.1).toFixed(2)});
-      pointer-events: none;
-      z-index: 9985;
-      white-space: nowrap;
-      line-height: 1;
-      animation: echo-ripple ${0.75 + i * 0.22}s ease-out ${i * 0.13}s forwards;
-    `;
-    document.body.appendChild(ghost);
-    const lifespan = (0.75 + i * 0.22 + i * 0.13) * 1000 + 150;
-    setTimeout(() => ghost.remove(), lifespan);
-  }
-}
-
-function AnimatedNumber({
-  value,
-  suffix = "%",
-}: {
-  value: number;
-  suffix?: string;
-}) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-
-  const handleClick = () => {
-    if (ref.current) spawnEcho(ref.current, `${value}${suffix}`);
-  };
-
-  return (
-    <motion.span
-      ref={ref}
-      initial={{ opacity: 0 }}
-      animate={inView ? { opacity: 1 } : {}}
-      className="font-serif text-7xl md:text-8xl font-light cursor-pointer select-none"
-      onClick={handleClick}
-      title="Click to echo"
-      whileTap={{ scale: 0.96 }}
-    >
-      {inView ? (
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          {value}{suffix}
-        </motion.span>
-      ) : (
-        <span className="opacity-0">{value}{suffix}</span>
-      )}
-    </motion.span>
-  );
-}
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 
 export default function Problem() {
+  const [activeStat, setActiveStat] = useState<1 | 2>(1);
+
   return (
-    <section id="problem" className="relative py-32 px-6">
-      <div className="max-w-5xl mx-auto">
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-gold-dim text-xs tracking-[0.4em] lowercase text-center mb-16"
-        >
-          the paradox of our time
-        </motion.p>
+    <section id="problem" className="relative h-auto md:h-[250vh]">
+      <div className="flex w-full">
+        
+        {/* LEFT PANEL - Sticky Visuals */}
+        <div className="w-1/2 sticky top-0 h-screen flex items-center justify-center border-r border-[#1A1A18]/10 overflow-hidden">
+          
+          {/* Faint grid background for texture */}
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(26,26,24,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(26,26,24,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
-        <div className="grid md:grid-cols-2 gap-0">
-          {/* 58% — The Age of Information */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7 }}
-            className="border-r-0 md:border-r border-border p-8 md:p-12 text-center md:text-right"
-          >
-            <AnimatedNumber value={58} />
-            <p className="font-serif text-xs text-muted-foreground/40 tracking-widest lowercase mt-1 mb-4">
-              tap to echo
-            </p>
-            <p className="font-serif text-lg md:text-xl text-foreground mb-3">
-              The Age of Information
-            </p>
-            <p className="text-muted-foreground text-sm leading-relaxed max-w-sm ml-auto">
-              of young adults report feeling overwhelmed by the sheer volume of information available, yet unable to find what truly matters.
-            </p>
-          </motion.div>
-
-          {/* 51% — The Meaning Gap */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="p-8 md:p-12 text-center md:text-left"
-          >
-            <AnimatedNumber value={51} />
-            <p className="font-serif text-xs text-muted-foreground/40 tracking-widest lowercase mt-1 mb-4">
-              tap to echo
-            </p>
-            <p className="font-serif text-lg md:text-xl text-foreground mb-3">
-              The Meaning Gap
-            </p>
-            <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
-              report a persistent sense that their education failed to address the deeper questions of purpose, meaning, and how to live well.
-            </p>
-          </motion.div>
+          <AnimatePresence mode="wait">
+            {activeStat === 1 ? (
+              <motion.div 
+                key="stat1"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.5 }}
+                className="absolute text-center flex flex-col items-center justify-center"
+              >
+                <span className="block font-serif text-[25vw] md:text-[18rem] font-light text-[#1A1A18] leading-none tracking-tighter">
+                  58<span className="text-[12vw] md:text-[10rem]">%</span>
+                </span>
+                <span className="font-mono text-[8px] md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase text-[#1A1A18]/40">
+                  The Age of Information
+                </span>
+              </motion.div>
+            ) : (
+              <motion.div 
+                key="stat2"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.5 }}
+                className="absolute text-center flex flex-col items-center justify-center"
+              >
+                <span className="block font-serif text-[25vw] md:text-[18rem] font-light text-[#1A1A18] leading-none tracking-tighter">
+                  51<span className="text-[12vw] md:text-[10rem]">%</span>
+                </span>
+                <span className="font-mono text-[8px] md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase text-[#1A1A18]/40">
+                  The Meaning Gap
+                </span>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
-        <motion.div
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.4 }}
-          className="gold-line max-w-xs mx-auto mt-16"
-        />
+        {/* RIGHT PANEL - Scrolling Text */}
+        <div className="w-1/2 flex flex-col justify-between py-[30vh] md:py-[50vh] px-4 md:px-24">
+          
+          {/* Text Block 1 */}
+          <motion.div 
+            onViewportEnter={() => setActiveStat(1)}
+            viewport={{ margin: "-40% 0px -40% 0px" }}
+            className="max-w-md mb-[60vh]"
+          >
+            <p className="font-serif text-2xl md:text-4xl text-[#1A1A18] mb-4 md:mb-6 leading-tight">
+              Drowning in noise, starving for wisdom.
+            </p>
+            <p className="text-[#1A1A18]/60 text-sm md:text-lg leading-relaxed font-light">
+              58% of young adults report feeling overwhelmed by the sheer volume of information available, yet feel entirely unable to find what truly matters. We are hyper-connected but fundamentally disconnected from purpose.
+            </p>
+          </motion.div>
+
+          {/* Text Block 2 */}
+          <motion.div 
+            onViewportEnter={() => setActiveStat(2)}
+            viewport={{ margin: "-40% 0px -40% 0px" }}
+            className="max-w-md mb-[30vh] md:mb-[50vh]"
+          >
+            <p className="font-serif text-2xl md:text-4xl text-[#1A1A18] mb-4 md:mb-6 leading-tight">
+              An education that forgot the soul.
+            </p>
+            <p className="text-[#1A1A18]/60 text-sm md:text-lg leading-relaxed font-light">
+              51% report a persistent sense that their education failed to address the deeper questions of meaning, purpose, and how to live well. We learned how to make a living, but forgot how to live.
+            </p>
+            <div className="w-8 md:w-12 h-[1px] bg-[#1A1A18]/30 mt-8 md:mt-12" />
+          </motion.div>
+
+        </div>
       </div>
     </section>
   );

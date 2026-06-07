@@ -291,7 +291,7 @@ function RegisterTmol() {
                   return (
                     <div
                       key={mod.id}
-                      className="border border-gold/15 bg-black/20 rounded-xl overflow-hidden transition-all duration-300"
+                      className="border border-gold/15 bg-foreground/5 rounded-xl overflow-hidden transition-all duration-300"
                     >
                       <button
                         onClick={() => setActiveModule(isOpen ? null : idx)}
@@ -318,7 +318,7 @@ function RegisterTmol() {
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.3, ease: "easeInOut" }}
                           >
-                            <div className="px-4 pb-4 pt-2 border-t border-gold/5 bg-black/10 space-y-2">
+                            <div className="px-4 pb-4 pt-2 border-t border-gold/5 bg-foreground/[0.02] space-y-2">
                               {mod.topics.map((topic, tIdx) => (
                                 <div key={tIdx} className="flex items-start gap-2.5">
                                   <div className="w-1.5 h-1.5 rounded-full bg-gold/45 mt-1.5 shrink-0" />
@@ -349,7 +349,7 @@ function RegisterTmol() {
                     className="group border border-gold/10 hover:border-gold/25 bg-white/[0.01] hover:bg-white/[0.03] p-5 rounded-2xl transition-all duration-500 shadow-lg hover:shadow-gold/[0.02]"
                   >
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="p-2 rounded-xl bg-gold/10 text-gold group-hover:bg-gold group-hover:text-black transition-all duration-500 shrink-0">
+                      <div className="p-2 rounded-xl bg-gold/10 text-gold group-hover:bg-gold group-hover:text-background transition-all duration-500 shrink-0">
                         <out.icon className="w-4 h-4" />
                       </div>
                       <h4 className="font-serif text-sm text-foreground tracking-wide font-light">
@@ -395,7 +395,7 @@ function RegisterTmol() {
 
             {/* Payment Details / QR */}
             {isInternational ? (
-              <div className="rounded-2xl border border-gold/15 bg-black/50 p-6 text-center max-w-sm">
+              <div className="rounded-2xl border border-gold/15 bg-foreground/5 p-6 text-center max-w-sm">
                 <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-4">
                   registration cost
                 </p>
@@ -407,7 +407,7 @@ function RegisterTmol() {
                   href="#"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex w-full items-center justify-center gap-2 bg-gold text-black font-medium py-3 px-4 text-xs tracking-widest uppercase rounded-lg hover:bg-gold/90 transition-all duration-300 mb-2"
+                  className="inline-flex w-full items-center justify-center gap-2 bg-gold text-background font-medium py-3 px-4 text-xs tracking-widest uppercase rounded-lg hover:bg-gold/90 transition-all duration-300 mb-2"
                 >
                   Pay $9.99 (DodoPayments)
                 </a>
@@ -416,7 +416,7 @@ function RegisterTmol() {
                 </p>
               </div>
             ) : (
-              <div className="rounded-2xl border border-gold/15 bg-black/50 p-6 text-center max-w-sm">
+              <div className="rounded-2xl border border-gold/15 bg-foreground/5 p-6 text-center max-w-sm">
                 <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-4">
                   step 1 — pay ₹300 via UPI
                 </p>

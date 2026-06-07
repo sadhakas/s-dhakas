@@ -1,81 +1,69 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { usePerspectiveShift } from "../../hooks/usePerspectiveShift";
 
 export default function Hero() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { engage, disengage } = usePerspectiveShift();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
-    target: ref,
+    target: containerRef,
     offset: ["start start", "end start"],
   });
 
-  const circleScale1 = useTransform(scrollYProgress, [0, 1], [1, 2.5]);
-  const circleScale2 = useTransform(scrollYProgress, [0, 1], [1, 3]);
-  const circleScale3 = useTransform(scrollYProgress, [0, 1], [1, 3.5]);
-  const circleScale4 = useTransform(scrollYProgress, [0, 1], [1, 4]);
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-  const titleY = useTransform(scrollYProgress, [0, 0.5], [0, -60]);
+  // Main text parallax
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, -250]);
+  const titleScale = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
 
-  const circles = [
-    { scale: circleScale4, size: 500, delay: 0 },
-    { scale: circleScale3, size: 380, delay: 0.1 },
-    { scale: circleScale2, size: 260, delay: 0.2 },
-    { scale: circleScale1, size: 140, delay: 0.3 },
-  ];
+  // Clutter parallax elements (moving at different speeds to create depth)
+  const clutterY1 = useTransform(scrollYProgress, [0, 1], [0, -400]);
+  const clutterY2 = useTransform(scrollYProgress, [0, 1], [0, -600]);
+  const clutterY3 = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const clutterOpacity = useTransform(scrollYProgress, [0, 0.5], [0.25, 0]);
 
   return (
-    <section ref={ref} className="relative h-[200vh]">
-      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+    <section id="hero" ref={containerRef} className="relative h-[250vh]">
+      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+        
+        {/* NARRATIVE ARC: "THE CLUTTER" 
+            Abstract, chaotic elements representing the noise of modern life.
+            These elements aggressively parallax and fade away as the user scrolls, 
+            beginning the journey towards clarity. */}
+        <motion.div 
+          style={{ opacity: clutterOpacity }} 
+          className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden"
+        >
+          {/* Chaotic SVG paths */}
+          <motion.svg style={{ y: clutterY1 }} className="absolute top-[5%] left-[0%] w-[50vw] h-[60vh] opacity-30" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M-10,50 Q20,-10 40,60 T70,10 T110,80" fill="none" stroke="#1A1A18" strokeWidth="0.2" />
+            <path d="M-5,80 Q30,100 50,40 T80,-10" fill="none" stroke="#1A1A18" strokeWidth="0.3" />
+            <path d="M10,20 Q40,90 60,10 T100,50" fill="none" stroke="#1A1A18" strokeWidth="0.1" />
+          </motion.svg>
 
-        {/* Concentric circle rings */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          {circles.map((c, i) => (
-            <motion.div
-              key={i}
-              style={{ scale: c.scale }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1.2, delay: c.delay + 0.5 }}
-              className="absolute rounded-full border border-gold/20"
-              aria-hidden
-            >
-              <div style={{ width: c.size, height: c.size }} className="rounded-full" />
-            </motion.div>
-          ))}
-        </div>
+          <motion.svg style={{ y: clutterY2 }} className="absolute top-[20%] right-[-10%] w-[60vw] h-[80vh] opacity-40" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0,90 Q40,10 60,70 T100,20" fill="none" stroke="#1A1A18" strokeWidth="0.4" />
+            <path d="M20,0 Q30,100 70,30 T120,80" fill="none" stroke="#1A1A18" strokeWidth="0.2" />
+          </motion.svg>
 
-        {/* Main title — Perspective Shift trigger #1 */}
+          {/* Typographic Clutter */}
+          <motion.div style={{ y: clutterY3 }} className="absolute top-[25%] left-[10%] text-3xl md:text-5xl font-serif text-[#1A1A18] transform -rotate-6 blur-[1px]">Noise.</motion.div>
+          <motion.div style={{ y: clutterY1 }} className="absolute top-[65%] left-[15%] text-xl md:text-3xl font-sans tracking-widest text-[#1A1A18] transform rotate-12 opacity-80 blur-[2px]">Overload</motion.div>
+          <motion.div style={{ y: clutterY2 }} className="absolute top-[35%] right-[15%] text-5xl md:text-7xl font-serif text-[#1A1A18] transform rotate-6 blur-[1px] opacity-70">Hustle</motion.div>
+          <motion.div style={{ y: clutterY3 }} className="absolute top-[75%] right-[20%] text-lg md:text-2xl font-mono text-[#1A1A18] transform -rotate-12 opacity-90 blur-[3px]">distraction_</motion.div>
+          <motion.div style={{ y: clutterY1 }} className="absolute top-[45%] left-[50%] -translate-x-1/2 text-7xl md:text-9xl font-serif text-[#1A1A18] opacity-30 transform scale-150 blur-[4px]">Anxiety</motion.div>
+          <motion.div style={{ y: clutterY2 }} className="absolute top-[15%] left-[40%] text-2xl font-sans italic text-[#1A1A18] transform rotate-45 opacity-60">more. faster.</motion.div>
+        </motion.div>
+
+        {/* MAIN HERO TEXT (The anchor of clarity amidst the clutter) */}
         <motion.div
-          style={{ opacity: titleOpacity, y: titleY }}
+          style={{ opacity: titleOpacity, y: titleY, scale: titleScale }}
           className="relative z-10 text-center px-4"
         >
-          {/* Perspective shift hint */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 2.2 }}
-            className="mb-4 select-none pt-2"
-          >
-            <span className="hidden md:inline text-gold-dim/40 text-[9px] tracking-[0.4em] uppercase">
-              hover & hold
-            </span>
-            <span className="md:hidden text-gold-dim/40 text-[9px] tracking-[0.4em] uppercase">
-              press & hold
-            </span>
-          </motion.div>
-
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1 }}
-            className="text-6xl md:text-8xl lg:text-9xl font-light tracking-[0.04em] text-foreground cursor-pointer select-none inline-block relative"
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="text-7xl md:text-9xl lg:text-[11rem] font-light tracking-[0.02em] text-[#1A1A18] select-none"
             style={{ fontFamily: "'Gencha', serif" }}
-            onMouseEnter={engage}
-            onMouseLeave={disengage}
-            onTouchStart={engage}
-            onTouchEnd={disengage}
           >
             Sādhakas
           </motion.h1>
@@ -83,32 +71,33 @@ export default function Hero() {
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 1.5 }}
-            className="gold-line w-32 md:w-48 mx-auto my-6"
+            transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
+            className="w-24 md:w-40 h-[1px] bg-[#1A1A18]/40 mx-auto my-8"
           />
 
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.8 }}
-            className="font-serif text-lg md:text-xl text-gold-dim tracking-[0.3em] uppercase font-light"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
+            className="font-serif text-lg md:text-2xl text-[#1A1A18]/60 tracking-[0.4em] uppercase font-light"
           >
             The Missing Curriculum
           </motion.p>
         </motion.div>
 
-        {/* Scroll indicator */}
+        {/* Scroll Indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2.5 }}
+          transition={{ delay: 1.5, duration: 1 }}
           style={{ opacity: titleOpacity }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2"
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
         >
+          <span className="text-xs uppercase tracking-[0.2em] text-[#1A1A18]/40 font-mono">Scroll to begin</span>
           <motion.div
-            animate={{ y: [0, 8, 0] }}
+            animate={{ y: [0, 10, 0], opacity: [0.3, 0.8, 0.3] }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="w-[1px] h-8 bg-gradient-to-b from-gold/60 to-transparent"
+            className="w-[1px] h-12 bg-gradient-to-b from-[#1A1A18]/60 to-transparent"
           />
         </motion.div>
       </div>

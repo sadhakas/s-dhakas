@@ -143,7 +143,7 @@ export default function AnnouncementBar() {
             exit={{ y: -52, opacity: 0, x: "-50%" }}
             transition={{ duration: 0.4 }}
             onClick={() => setIsExpanded(true)}
-            className="fixed top-0 left-1/2 z-[9997] w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shadow-[0_0_20px_rgba(212,175,55,0.2)] border-[1.5px] border-gold backdrop-blur-md bg-black/30 group hover:bg-black/60 transition-colors"
+            className="fixed top-0 left-1/2 z-[9997] w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shadow-[0_0_20px_rgba(212,175,55,0.2)] border-[1.5px] border-gold backdrop-blur-md bg-background/80 group hover:bg-background transition-colors"
             style={{ left: "50%" }}
             aria-label="Expand Upcoming Journey"
           >

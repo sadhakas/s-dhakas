@@ -20,7 +20,8 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <LenisProvider>
-      <div className="grain-overlay">
+      <div className="grain-overlay relative">
+        
         {/* Navigation is outside error boundaries — it must always be visible */}
         <Navigation />
 

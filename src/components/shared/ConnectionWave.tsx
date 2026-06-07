@@ -40,7 +40,7 @@ export default function ConnectionWave({ onClose }: Props) {
       onClick={onClose}
     >
       {/* Dark backdrop */}
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-background/70 backdrop-blur-sm" />
 
       {/* Wave rings — decorative, positioned at center */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -95,7 +95,7 @@ export default function ConnectionWave({ onClose }: Props) {
           {/* Primary — Register */}
           <button
             onClick={handleRegister}
-            className="w-full py-3 px-6 rounded-full bg-gold text-black text-sm font-medium tracking-wide hover:bg-gold-bright transition-colors duration-300"
+            className="w-full py-3 px-6 rounded-full bg-gold text-background text-sm font-medium tracking-wide hover:bg-gold-bright transition-colors duration-300"
           >
             Register →
           </button>

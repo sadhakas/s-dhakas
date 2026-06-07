@@ -15,8 +15,8 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="relative py-16 px-6">
-        <div className="gold-line max-w-xs mx-auto mb-12 opacity-30" />
+      <footer id="footer" className="relative pb-16 pt-8 px-6">
+        {/* Footer content */}
         <div className="max-w-5xl mx-auto text-center">
 
           {/* Feature 8 — Long-hover triggers Connection Wave */}

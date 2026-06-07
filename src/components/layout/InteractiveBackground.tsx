@@ -47,7 +47,7 @@ export default function InteractiveBackground({ children }: InteractiveBackgroun
   return (
     <div id="site-content" className="relative min-h-screen w-full">
       {/* Background Container for Z-Index management and pointer isolation */}
-      <div className="pointer-events-none fixed inset-0 -z-10 bg-[#0a0a0a] overflow-hidden">
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-background overflow-hidden">
         {/* Particle Layer (Site wide) */}
         <ParticleField count={45} />
 

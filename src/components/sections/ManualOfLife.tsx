@@ -134,7 +134,7 @@ export default function ManualOfLife() {
                         transition={{ duration: 0.6, delay: idx * 0.1 }}
                         className="text-center md:text-right"
                       >
-                        <div className="inline-block bg-gradient-to-r from-gold/80 to-gold text-black rounded-full px-6 py-2 mb-3 shadow-[0_0_15px_rgba(212,175,55,0.2)]">
+                        <div className="inline-block bg-gradient-to-r from-gold/80 to-gold text-background rounded-full px-6 py-2 mb-3 shadow-[0_0_15px_rgba(212,175,55,0.2)]">
                           <span className="font-semibold">{theme.title}</span> — {theme.subtitle}
                         </div>
                         <p className="text-muted-foreground/80 text-sm max-w-xs ml-auto mr-auto md:mr-0 pl-4 border-l-2 md:border-l-0 md:border-r-2 border-gold/30">
@@ -175,7 +175,7 @@ export default function ManualOfLife() {
                         transition={{ duration: 0.6, delay: idx * 0.1 }}
                         className="text-center md:text-left pt-6 md:pt-0"
                       >
-                        <div className="inline-block bg-gradient-to-r from-gold to-gold/80 text-black rounded-full px-6 py-2 mb-3 shadow-[0_0_15px_rgba(212,175,55,0.2)]">
+                        <div className="inline-block bg-gradient-to-r from-gold to-gold/80 text-background rounded-full px-6 py-2 mb-3 shadow-[0_0_15px_rgba(212,175,55,0.2)]">
                           <span className="font-semibold">{theme.title}</span> — {theme.subtitle}
                         </div>
                         <p className="text-muted-foreground/80 text-sm max-w-xs mx-auto md:mx-0 pr-4 border-r-2 md:border-r-0 md:border-l-2 border-gold/30">
@@ -197,7 +197,7 @@ export default function ManualOfLife() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center bg-black/40 border border-gold/10 rounded-3xl p-8 shadow-2xl backdrop-blur-sm"
+          className="text-center bg-surface/40 border border-gold/10 rounded-3xl p-8 shadow-2xl backdrop-blur-sm"
         >
           <h3 className="text-gold text-lg font-serif mb-8">Participants receive:</h3>
           <div className="flex flex-wrap justify-center gap-4 md:gap-x-8 gap-y-4 mb-10">
@@ -214,7 +214,7 @@ export default function ManualOfLife() {
             onClick={() => setShowRegistration(true)}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-3 bg-gold text-black font-medium text-sm px-8 py-4 rounded-full shadow-[0_0_30px_rgba(212,175,55,0.25)] hover:shadow-[0_0_40px_rgba(212,175,55,0.4)] transition-all duration-500 cursor-pointer"
+            className="inline-flex items-center gap-3 bg-gold text-background font-medium text-sm px-8 py-4 rounded-full shadow-[0_0_30px_rgba(212,175,55,0.25)] hover:shadow-[0_0_40px_rgba(212,175,55,0.4)] transition-all duration-500 cursor-pointer"
           >
             <BookOpen className="w-4 h-4" />
             Register Now — ₹300
