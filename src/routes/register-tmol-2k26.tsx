@@ -272,7 +272,7 @@ function RegisterTmol() {
                     Registration Deadline
                   </p>
                   <p className="text-muted-foreground text-sm">
-                    10th June, 2026
+                    12th June, 2026
                   </p>
                 </div>
               </div>
@@ -441,7 +441,7 @@ function RegisterTmol() {
                   <p className="font-serif text-3xl text-gold">Free</p>
                 </div>
                 <p className="text-gold text-[10px] tracking-widest uppercase mb-4">By Invite Only</p>
-                
+
                 <div className="bg-gold/5 border border-gold/10 rounded-xl p-4">
                   <p className="text-muted-foreground/80 text-xs leading-relaxed">
                     To promote global unity and inclusiveness, we are currently waiving the fee for international attendees. ✦

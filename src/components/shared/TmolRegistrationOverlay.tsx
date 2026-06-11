@@ -505,7 +505,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
               </div>
               <div>
                 <p className="text-foreground text-sm font-medium mb-0.5">Registration Deadline</p>
-                <p className="text-muted-foreground text-sm">10th June, 2026</p>
+                <p className="text-muted-foreground text-sm">12th June, 2026</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
