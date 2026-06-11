@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { journeysData } from "../../data/journeys";
 import TripInterestOverlay from "../shared/TripInterestOverlay";
-import TmolRegistrationOverlay from "../shared/TmolRegistrationOverlay";
+import TmolRegistrationOverlay, { isInternationalUser } from "../shared/TmolRegistrationOverlay";
 
 // Pull all upcoming trips directly from journeys data
 const UPCOMING = journeysData.filter((j) => j.status === "Upcoming");
@@ -13,6 +13,11 @@ export default function AnnouncementBar() {
   const [showOverlay, setShowOverlay] = useState(false);
   const [showTmolOverlay, setShowTmolOverlay] = useState(false);
   const [isAlarming, setIsAlarming] = useState(false);
+  const [isInternational, setIsInternational] = useState(false);
+
+  useEffect(() => {
+    setIsInternational(isInternationalUser());
+  }, []);
 
   // Collapse after 7s (reduced threshold)
   useEffect(() => {
@@ -99,7 +104,7 @@ export default function AnnouncementBar() {
                   </span>
                   {trip.cost && (
                     <span className="text-gold/60 text-[10px] shrink-0 hidden lg:inline">
-                      · {trip.cost}
+                      · {trip.type === "event" && isInternational ? "Free (Invite Only)" : trip.cost}
                     </span>
                   )}
                 </motion.div>

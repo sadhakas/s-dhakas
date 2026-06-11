@@ -643,21 +643,20 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
               <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-4">
                 registration cost
               </p>
-              <p className="font-serif text-3xl text-gold mb-2">$9.99</p>
-              <p className="text-muted-foreground/60 text-xs mt-4 mb-5 leading-relaxed">
-                Secure your spot. Pay securely via DodoPayments, then upload your receipt below.
-              </p>
-              <a
-                href="#"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 bg-gold text-black font-medium py-3 px-4 text-xs tracking-widest uppercase rounded-lg hover:bg-gold/90 transition-all duration-300 mb-2"
-              >
-                Pay $9.99 (DodoPayments)
-              </a>
-              <p className="text-muted-foreground/40 text-[10px] tracking-widest uppercase">
-                Free with coupon code
-              </p>
+              <div className="flex items-center justify-center gap-3 mb-2">
+                <p className="font-serif text-2xl text-gold/40 line-through decoration-gold/30 decoration-2">$9.99</p>
+                <p className="font-serif text-3xl text-gold">Free</p>
+              </div>
+              <p className="text-gold text-[10px] tracking-widest uppercase mb-4">By Invite Only</p>
+
+              <div className="bg-gold/5 border border-gold/10 rounded-xl p-4">
+                <p className="text-muted-foreground/80 text-xs leading-relaxed">
+                  To promote global unity and inclusiveness, we are currently waiving the fee for international attendees. ✦
+                </p>
+                <p className="text-gold/80 text-[11px] mt-3 tracking-wide">
+                  Please enter your exclusive invite code in the form to secure your spot.
+                </p>
+              </div>
             </div>
           ) : (
             <div className="rounded-2xl border border-gold/15 bg-black/40 p-6 text-center">
