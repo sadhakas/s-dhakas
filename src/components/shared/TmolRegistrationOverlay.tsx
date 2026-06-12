@@ -20,7 +20,8 @@ import {
   Sprout,
   Search,
   Copy,
-  Download
+  Download,
+  Globe
 } from "lucide-react";
 
 const GPAY_URL = "gpay://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
@@ -42,7 +43,6 @@ interface TmolRegistrationOverlayProps {
 }
 
 const PERKS = [
-  { icon: BookOpen, label: "Physical self-help book", sub: "Shipped to your address" },
   { icon: Ticket, label: "Trip perks — Detox & Discover", sub: "Exclusive discounts on North & South India trips for 100% TMOL attendees" },
   { icon: Award, label: "Completion certificate", sub: "Issued upon finishing all 21 days" },
   { icon: Users, label: "Lifetime community access", sub: "Sādhakas community & resources" },
@@ -143,17 +143,31 @@ function fileToBase64(file: File): Promise<string> {
 }
 
 // ─── Reusable form body (used in both overlay and direct page) ───────────────
-export function TmolRegistrationForm({ onSuccess, isInternational }: { onSuccess?: () => void, isInternational: boolean }) {
+export function TmolRegistrationForm({
+  onSuccess,
+  isInternational,
+  initialCouponCode = "",
+  onCouponChange,
+}: {
+  onSuccess?: () => void;
+  isInternational: boolean;
+  initialCouponCode?: string;
+  onCouponChange?: (code: string) => void;
+}) {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [screenshot, setScreenshot] = useState<string | null>(null);
   const [screenshotName, setScreenshotName] = useState<string | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
-  const [couponCode, setCouponCode] = useState("");
+  const [couponCode, setCouponCode] = useState(initialCouponCode);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const isFree = ["SAMSONI108", "SATYABITSP100"].includes(couponCode.trim().toUpperCase());
   const requireScreenshot = !isInternational && !isFree;
+
+  useEffect(() => {
+    onCouponChange?.(couponCode);
+  }, [couponCode, onCouponChange]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -496,7 +510,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
               </div>
               <div>
                 <p className="text-foreground text-sm font-medium mb-0.5">Dates</p>
-                <p className="text-muted-foreground text-sm">13 June – 5 July, 2026</p>
+                <p className="text-muted-foreground text-sm">20th June onwards</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
@@ -505,7 +519,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
               </div>
               <div>
                 <p className="text-foreground text-sm font-medium mb-0.5">Registration Deadline</p>
-                <p className="text-muted-foreground text-sm">12th June, 2026</p>
+                <p className="text-muted-foreground text-sm">19th June, 2026 (EOD)</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
@@ -524,6 +538,15 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
               <div>
                 <p className="text-foreground text-sm font-medium mb-0.5">Format</p>
                 <p className="text-muted-foreground text-sm">Online on Google Meet</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="p-2 rounded-full bg-gold/10 text-gold shrink-0">
+                <Globe className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-foreground text-sm font-medium mb-0.5">Language</p>
+                <p className="text-muted-foreground text-sm">English Only</p>
               </div>
             </div>
           </div>

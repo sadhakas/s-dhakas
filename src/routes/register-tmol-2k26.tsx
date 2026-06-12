@@ -21,9 +21,11 @@ import {
   Copy,
   Download,
   CheckCircle2,
+  Globe
 } from "lucide-react";
 import { TmolRegistrationForm, isInternationalUser } from "@/components/shared/TmolRegistrationOverlay";
 import InteractiveBackground from "@/components/layout/InteractiveBackground";
+import confetti from "canvas-confetti";
 
 const GPAY_URL = "gpay://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
 const PHONEPE_URL = "phonepe://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
@@ -123,18 +125,13 @@ export const Route = createFileRoute("/register-tmol-2k26")({
       {
         name: "description",
         content:
-          "Register for The Manual of Life — a 21-day live program by Sādhakas. 13 June – 5 July 2026. 30 min/day. ₹300 registration.",
+          "Register for The Manual of Life — a 21-day live program by Sādhakas. Starts 20th June 2026. 30 min/day. ₹300 registration.",
       },
     ],
   }),
 });
 
 const PERKS = [
-  {
-    icon: BookOpen,
-    label: "Physical self-help book",
-    sub: "Shipped to your address",
-  },
   {
     icon: Ticket,
     label: "Trip perks — Detox & Discover",
@@ -156,6 +153,9 @@ function RegisterTmol() {
   const [isInternational, setIsInternational] = useState(false);
   const [activeModule, setActiveModule] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
+  const [activeCoupon, setActiveCoupon] = useState("SAMSONI108");
+
+  const isFree = ["SAMSONI108", "SATYABITSP100"].includes(activeCoupon.trim().toUpperCase());
 
   const handleCopy = async () => {
     try {
@@ -178,6 +178,32 @@ function RegisterTmol() {
 
   useEffect(() => {
     setIsInternational(isInternationalUser());
+    
+    // Fire confetti for the special auto-applied coupon
+    const duration = 2000;
+    const end = Date.now() + duration;
+
+    const frame = () => {
+      confetti({
+        particleCount: 5,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: ["#D4AF37", "#FFDF00", "#FFFFFF"]
+      });
+      confetti({
+        particleCount: 5,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: ["#D4AF37", "#FFDF00", "#FFFFFF"]
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    };
+    frame();
   }, []);
 
   return (
@@ -259,7 +285,7 @@ function RegisterTmol() {
                     Dates
                   </p>
                   <p className="text-muted-foreground text-sm">
-                    13 June – 5 July, 2026
+                    20th June onwards
                   </p>
                 </div>
               </div>
@@ -272,7 +298,7 @@ function RegisterTmol() {
                     Registration Deadline
                   </p>
                   <p className="text-muted-foreground text-sm">
-                    12th June, 2026
+                    19th June, 2026 (EOD)
                   </p>
                 </div>
               </div>
@@ -299,6 +325,19 @@ function RegisterTmol() {
                   </p>
                   <p className="text-muted-foreground text-sm">
                     Online on Google Meet
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="p-2 rounded-full bg-gold/10 text-gold shrink-0">
+                  <Globe className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="text-foreground text-sm font-medium mb-0.5">
+                    Language
+                  </p>
+                  <p className="text-muted-foreground text-sm">
+                    English Only
                   </p>
                 </div>
               </div>
@@ -431,7 +470,28 @@ function RegisterTmol() {
             </div>
 
             {/* Payment Details / QR */}
-            {isInternational ? (
+            {isFree ? (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="rounded-2xl border border-gold/40 bg-gold/5 p-8 text-center max-w-sm relative overflow-hidden shadow-[0_0_30px_rgba(212,175,55,0.15)]"
+              >
+                <div className="absolute inset-0 bg-gradient-to-tr from-gold/0 via-gold/10 to-gold/0 opacity-50" />
+                <p className="text-gold text-[10px] tracking-[0.3em] lowercase mb-5 relative z-10">
+                  special access
+                </p>
+                <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-5 border border-gold/20 relative z-10">
+                   <Ticket className="w-8 h-8 text-gold" />
+                </div>
+                <h3 className="font-serif text-3xl text-gold mb-3 relative z-10">Workshop Unlocked!</h3>
+                <p className="text-muted-foreground/90 text-sm leading-relaxed mb-6 relative z-10">
+                  Your exclusive invite code <strong className="text-gold">{activeCoupon.toUpperCase()}</strong> has been applied. The ₹300 registration fee is entirely waived for you.
+                </p>
+                <p className="text-gold/60 text-[10px] tracking-widest uppercase relative z-10 animate-pulse">
+                  Proceed to Step 2 →
+                </p>
+              </motion.div>
+            ) : isInternational ? (
               <div className="rounded-2xl border border-gold/15 bg-black/50 p-6 text-center max-w-sm">
                 <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-4">
                   registration cost
@@ -528,7 +588,11 @@ function RegisterTmol() {
             <h2 className="font-serif text-3xl text-foreground mb-8">
               Complete Your Registration
             </h2>
-            <TmolRegistrationForm isInternational={isInternational} />
+            <TmolRegistrationForm 
+              isInternational={isInternational} 
+              initialCouponCode="SAMSONI108" 
+              onCouponChange={setActiveCoupon}
+            />
           </motion.div>
         </div>
 

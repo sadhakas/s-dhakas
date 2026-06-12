@@ -17,7 +17,6 @@ const deliverables = [
   "reflection workbook",
   "life-design exercises",
   "completion certificate",
-  "physical self-help book",
   "lifetime community access",
   "detox & discover trip perk",
 ];
@@ -53,7 +52,7 @@ export default function ManualOfLife() {
           <div className="flex flex-wrap gap-4 mb-8">
             <div className="flex items-center gap-2 bg-gold/8 border border-gold/15 rounded-full px-4 py-2">
               <Calendar className="w-3.5 h-3.5 text-gold" />
-              <span className="text-gold text-xs tracking-wide">13 June – 5 July, 2026</span>
+              <span className="text-gold text-xs tracking-wide">20th June onwards</span>
             </div>
             <div className="flex items-center gap-2 bg-gold/8 border border-gold/15 rounded-full px-4 py-2">
               <Clock className="w-3.5 h-3.5 text-gold" />

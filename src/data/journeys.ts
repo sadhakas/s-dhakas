@@ -87,10 +87,10 @@ export const journeysData: JourneyData[] = [
     title: "TMOL — The Manual of Life",
     location: "Online · 21-Day Live Sessions",
     description:
-      "Realign your life this summer! A transformative 21-day journey through the fundamental dimensions of life. Hosted online on Google Meet, each 30-minute daily session dives deep into The Self, The Mind, Action, Nature, and Higher Wisdom. Includes a physical self-help book, lifetime community access, a completion certificate, and exclusive trip perks.",
+      "Realign your life this summer! A transformative 21-day journey through the fundamental dimensions of life. Hosted online on Google Meet, each 30-minute daily session dives deep into The Self, The Mind, Action, Nature, and Higher Wisdom. Includes lifetime community access, a completion certificate, and exclusive trip perks.",
     status: "Upcoming",
     date: "June–July 2026",
-    exactDates: "13 June – 5 July, 2026",
+    exactDates: "20th June onwards",
     duration: "21 Days · 30 min/session",
     cost: "₹300 (Registration)",
     type: "event",
