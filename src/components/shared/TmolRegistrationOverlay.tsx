@@ -322,53 +322,62 @@ export function TmolRegistrationForm({
       </div>
 
       {/* Payment Screenshot Upload */}
-      <motion.div animate={{ opacity: requireScreenshot ? 1 : 0.5 }}>
-        <label className="block text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-3">
-          payment screenshot {requireScreenshot ? <span className="text-gold/70">*</span> : <span className="text-muted-foreground/40">(optional)</span>}
-        </label>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleFileChange}
-        />
-        <button
-          type="button"
-          onClick={() => fileInputRef.current?.click()}
-          className={`w-full flex items-center justify-center gap-3 border rounded-lg py-4 px-4 transition-all duration-300 cursor-pointer ${screenshot
-            ? "border-gold/60 bg-gold/5 text-gold"
-            : "border-border text-muted-foreground hover:border-gold/40 hover:text-foreground"
-            }`}
-        >
-          {screenshot ? (
-            <>
-              <CheckCircle2 className="w-4 h-4 shrink-0" />
-              <span className="text-sm truncate">{screenshotName}</span>
-            </>
-          ) : (
-            <>
-              <Upload className="w-4 h-4 shrink-0" />
-              <span className="text-sm">Upload payment screenshot</span>
-            </>
-          )}
-        </button>
-
-        {fileError && (
+      <AnimatePresence>
+        {requireScreenshot && (
           <motion.div
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-2 mt-2 text-red-400 text-xs"
+            initial={{ opacity: 0, height: 0, overflow: 'hidden' }}
+            animate={{ opacity: 1, height: 'auto', overflow: 'visible' }}
+            exit={{ opacity: 0, height: 0, overflow: 'hidden' }}
+            transition={{ duration: 0.3 }}
           >
-            <AlertCircle className="w-3 h-3 shrink-0" />
-            {fileError}
+            <label className="block text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-3">
+              payment screenshot <span className="text-gold/70">*</span>
+            </label>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleFileChange}
+            />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className={`w-full flex items-center justify-center gap-3 border rounded-lg py-4 px-4 transition-all duration-300 cursor-pointer ${screenshot
+                ? "border-gold/60 bg-gold/5 text-gold"
+                : "border-border text-muted-foreground hover:border-gold/40 hover:text-foreground"
+                }`}
+            >
+              {screenshot ? (
+                <>
+                  <CheckCircle2 className="w-4 h-4 shrink-0" />
+                  <span className="text-sm truncate">{screenshotName}</span>
+                </>
+              ) : (
+                <>
+                  <Upload className="w-4 h-4 shrink-0" />
+                  <span className="text-sm">Upload payment screenshot</span>
+                </>
+              )}
+            </button>
+
+            {fileError && (
+              <motion.div
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 mt-2 text-red-400 text-xs"
+              >
+                <AlertCircle className="w-3 h-3 shrink-0" />
+                {fileError}
+              </motion.div>
+            )}
+
+            <p className="text-muted-foreground/50 text-[10px] mt-2 tracking-wide">
+              Max 2 MB · JPG / PNG accepted
+            </p>
           </motion.div>
         )}
-
-        <p className="text-muted-foreground/50 text-[10px] mt-2 tracking-wide">
-          Max 2 MB · JPG / PNG accepted
-        </p>
-      </motion.div>
+      </AnimatePresence>
 
       {/* Optional message */}
       <div>

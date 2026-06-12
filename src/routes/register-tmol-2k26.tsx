@@ -180,7 +180,7 @@ function RegisterTmol() {
     setIsInternational(isInternationalUser());
     
     // Fire confetti for the special auto-applied coupon
-    const duration = 2000;
+    const duration = 400;
     const end = Date.now() + duration;
 
     const frame = () => {

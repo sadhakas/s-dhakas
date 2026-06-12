@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "@tanstack/react-router";
 import { journeysData } from "../../data/journeys";
 import TripInterestOverlay from "../shared/TripInterestOverlay";
 import TmolRegistrationOverlay, { isInternationalUser } from "../shared/TmolRegistrationOverlay";
@@ -14,10 +15,24 @@ export default function AnnouncementBar() {
   const [showTmolOverlay, setShowTmolOverlay] = useState(false);
   const [isAlarming, setIsAlarming] = useState(false);
   const [isInternational, setIsInternational] = useState(false);
+  const [btnTranslucent, setBtnTranslucent] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsInternational(isInternationalUser());
   }, []);
+
+  // Translucency timer for the ball
+  useEffect(() => {
+    if (isExpanded) {
+      setBtnTranslucent(false);
+      return;
+    }
+    const timer = setTimeout(() => {
+      setBtnTranslucent(true);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [isExpanded]);
 
   // Collapse after 7s (reduced threshold)
   useEffect(() => {
@@ -44,7 +59,7 @@ export default function AnnouncementBar() {
 
   const handleRegisterClick = () => {
     if (trip.type === "event") {
-      setShowTmolOverlay(true);
+      navigate({ to: "/register-tmol-2k26" });
     } else {
       setShowOverlay(true);
     }
@@ -104,7 +119,7 @@ export default function AnnouncementBar() {
                   </span>
                   {trip.cost && (
                     <span className="text-gold/60 text-[10px] shrink-0 hidden lg:inline">
-                      · {trip.type === "event" && isInternational ? "Free (Invite Only)" : trip.cost}
+                      · {trip.type === "event" ? "Special Offer: 100% OFF (Invite)" : trip.cost}
                     </span>
                   )}
                 </motion.div>
@@ -143,12 +158,13 @@ export default function AnnouncementBar() {
             animate={
               isAlarming 
                 ? { y: 24, opacity: 1, x: "-50%", rotate: [-8, 8, -8, 8, 0], scale: 1.1 } 
-                : { y: 24, opacity: 1, x: "-50%", rotate: 0, scale: 1 }
+                : { y: 24, opacity: btnTranslucent ? 0.3 : 1, x: "-50%", rotate: 0, scale: 1 }
             }
+            whileHover={{ opacity: 1, scale: 1.05 }}
             exit={{ y: -52, opacity: 0, x: "-50%" }}
             transition={{ duration: 0.4 }}
             onClick={() => setIsExpanded(true)}
-            className="fixed top-0 left-1/2 z-[9997] w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shadow-[0_0_20px_rgba(212,175,55,0.2)] border-[1.5px] border-gold backdrop-blur-md bg-black/30 group hover:bg-black/60 transition-colors"
+            className="fixed top-0 left-1/2 z-[9997] w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shadow-[0_0_20px_rgba(212,175,55,0.2)] border-[1.5px] border-gold backdrop-blur-md bg-black/30 group transition-colors"
             style={{ left: "50%" }}
             aria-label="Expand Upcoming Journey"
           >
