@@ -660,9 +660,16 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
             </div>
           </div>
 
+        </div>
+
+        {/* Right — Registration Form & Payment Details */}
+        <div
+          data-lenis-prevent="true"
+          className="w-full md:w-1/2 p-8 md:p-12 overflow-visible md:overflow-y-auto bg-background/50 custom-scrollbar flex flex-col gap-10 justify-start"
+        >
           {/* Payment Details / QR */}
           {isInternational ? (
-            <div className="rounded-2xl border border-gold/15 bg-black/40 p-6 text-center">
+            <div className="rounded-2xl border border-gold/15 bg-black/40 p-6 text-center w-full max-w-md mx-auto">
               <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-4">
                 registration cost
               </p>
@@ -677,12 +684,12 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
                   To promote global unity and inclusiveness, we are currently waiving the fee for international attendees. ✦
                 </p>
                 <p className="text-gold/80 text-[11px] mt-3 tracking-wide">
-                  Please enter your exclusive invite code in the form to secure your spot.
+                  Please enter your exclusive invite code in the form below to secure your spot.
                 </p>
               </div>
             </div>
           ) : (
-            <div className="rounded-2xl border border-gold/15 bg-black/40 p-6 text-center">
+            <div className="rounded-2xl border border-gold/15 bg-black/40 p-6 text-center w-full max-w-md mx-auto">
               <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-4">
                 step 1 — pay ₹300 via UPI
               </p>
@@ -705,7 +712,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
               </div>
               <p className="text-muted-foreground/60 text-xs mt-4 leading-relaxed">
                 Scan the QR code, pay <span className="text-gold">₹300</span>, take a screenshot of the
-                success screen, and upload it in the form →
+                success screen, and upload it in the form ↓
               </p>
               {/* Pay Now UPI Options for mobile/all users */}
               <div className="mt-4 space-y-3 md:hidden">
@@ -743,13 +750,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
               </div>
             </div>
           )}
-        </div>
 
-        {/* Right — Registration Form */}
-        <div
-          data-lenis-prevent="true"
-          className="w-full md:w-1/2 p-8 md:p-12 overflow-visible md:overflow-y-auto bg-background/50 custom-scrollbar flex flex-col justify-center"
-        >
           <div className="max-w-md mx-auto w-full">
             <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-2">step 2 — register</p>
             <h3 className="font-serif text-2xl text-foreground mb-8">Complete Your Registration</h3>

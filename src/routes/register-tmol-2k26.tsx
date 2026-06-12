@@ -469,12 +469,21 @@ function RegisterTmol() {
               </div>
             </div>
 
+          </motion.div>
+
+          {/* Right — Form & Payment Details */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="flex-1 max-w-lg flex flex-col gap-10"
+          >
             {/* Payment Details / QR */}
             {isFree ? (
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="rounded-2xl border border-gold/40 bg-gold/5 p-8 text-center max-w-sm relative overflow-hidden shadow-[0_0_30px_rgba(212,175,55,0.15)]"
+                className="rounded-2xl border border-gold/40 bg-gold/5 p-8 text-center w-full relative overflow-hidden shadow-[0_0_30px_rgba(212,175,55,0.15)]"
               >
                 <div className="absolute inset-0 bg-gradient-to-tr from-gold/0 via-gold/10 to-gold/0 opacity-50" />
                 <p className="text-gold text-[10px] tracking-[0.3em] lowercase mb-5 relative z-10">
@@ -488,11 +497,11 @@ function RegisterTmol() {
                   Your exclusive invite code <strong className="text-gold">{activeCoupon.toUpperCase()}</strong> has been applied. The ₹300 registration fee is entirely waived for you.
                 </p>
                 <p className="text-gold/60 text-[10px] tracking-widest uppercase relative z-10 animate-pulse">
-                  Proceed to Step 2 →
+                  Proceed to Step 2 ↓
                 </p>
               </motion.div>
             ) : isInternational ? (
-              <div className="rounded-2xl border border-gold/15 bg-black/50 p-6 text-center max-w-sm">
+              <div className="rounded-2xl border border-gold/15 bg-black/50 p-6 text-center w-full">
                 <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-4">
                   registration cost
                 </p>
@@ -507,12 +516,12 @@ function RegisterTmol() {
                     To promote global unity and inclusiveness, we are currently waiving the fee for international attendees. ✦
                   </p>
                   <p className="text-gold/80 text-[11px] mt-3 tracking-wide">
-                    Please enter your exclusive invite code in the form to secure your spot.
+                    Please enter your exclusive invite code in the form below to secure your spot.
                   </p>
                 </div>
               </div>
             ) : (
-              <div className="rounded-2xl border border-gold/15 bg-black/50 p-6 text-center max-w-sm">
+              <div className="rounded-2xl border border-gold/15 bg-black/50 p-6 text-center w-full">
                 <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-4">
                   step 1 — pay ₹300 via UPI
                 </p>
@@ -573,26 +582,20 @@ function RegisterTmol() {
                 </div>
               </div>
             )}
-          </motion.div>
 
-          {/* Right — Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="flex-1 max-w-lg lg:sticky lg:top-12 lg:self-start"
-          >
-            <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-2">
-              step 2 — register
-            </p>
-            <h2 className="font-serif text-3xl text-foreground mb-8">
-              Complete Your Registration
-            </h2>
-            <TmolRegistrationForm 
-              isInternational={isInternational} 
-              initialCouponCode="SAMSONI108" 
-              onCouponChange={setActiveCoupon}
-            />
+            <div className="w-full">
+              <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-2">
+                step 2 — register
+              </p>
+              <h2 className="font-serif text-3xl text-foreground mb-8">
+                Complete Your Registration
+              </h2>
+              <TmolRegistrationForm 
+                isInternational={isInternational} 
+                initialCouponCode="SAMSONI108" 
+                onCouponChange={setActiveCoupon}
+              />
+            </div>
           </motion.div>
         </div>
 
