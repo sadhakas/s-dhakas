@@ -23,14 +23,19 @@ import {
   CheckCircle2,
   Globe
 } from "lucide-react";
-import { TmolRegistrationForm, isInternationalUser } from "@/components/shared/TmolRegistrationOverlay";
+import {
+  TmolRegistrationForm,
+  isInternationalUser,
+  isDiscountCoupon,
+  priceForCoupon,
+  genericUpiUrl,
+  DISCOUNT_COUPON,
+  ORIGINAL_PRICE_INR,
+  DISCOUNTED_PRICE_INR,
+} from "@/components/shared/TmolRegistrationOverlay";
 import InteractiveBackground from "@/components/layout/InteractiveBackground";
 import confetti from "canvas-confetti";
 
-const GPAY_URL = "gpay://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
-const PHONEPE_URL = "phonepe://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
-const PAYTM_URL = "paytmmp://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
-const GENERIC_UPI_URL = "upi://pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
 
 const MODULES = [
   {
@@ -125,7 +130,7 @@ export const Route = createFileRoute("/register-tmol-2k26")({
       {
         name: "description",
         content:
-          "Register for The Manual of Life — a 21-day live program by Sādhakas. Starts 20th June 2026. 30 min/day. ₹300 registration.",
+          "Register for The Manual of Life — a 21-day live program by Sādhakas. Starts 20th June 2026. 30 min/day. ₹1000 ₹200 registration for the first 100 sādhakas.",
       },
     ],
   }),
@@ -140,7 +145,7 @@ const PERKS = [
   {
     icon: Award,
     label: "Completion certificate",
-    sub: "Issued upon finishing all 21 days",
+    sub: "Issued upon finishing all 7 days",
   },
   {
     icon: Users,
@@ -153,9 +158,10 @@ function RegisterTmol() {
   const [isInternational, setIsInternational] = useState(false);
   const [activeModule, setActiveModule] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
-  const [activeCoupon, setActiveCoupon] = useState("SAMSONI108");
+  const [activeCoupon, setActiveCoupon] = useState(DISCOUNT_COUPON);
 
-  const isFree = ["SAMSONI108", "SATYABITSP100"].includes(activeCoupon.trim().toUpperCase());
+  const amount = priceForCoupon(activeCoupon);
+  const isDiscounted = isDiscountCoupon(activeCoupon);
 
   const handleCopy = async () => {
     try {
@@ -259,9 +265,7 @@ function RegisterTmol() {
             </div>
 
             <p className="text-muted-foreground leading-relaxed mb-8 max-w-md">
-              Realign your life this summer! A transformative 21-day journey through the fundamental dimensions
-              of life. Hosted online on Google Meet, each 30-minute daily session dives deep into The Self, The
-              Mind, Action, Nature, and Higher Wisdom.
+            Begin your college journey with clarity and purpose. A transformative 7-day experience blending online and offline sessions, where accomplished speakers from IITs, MIT, and beyond explore timeless wisdom on the self, success, relationships, and purposeful living—all in engaging 45-minute sessions.
             </p>
 
             {/* Why This Program? */}
@@ -285,7 +289,7 @@ function RegisterTmol() {
                     Dates
                   </p>
                   <p className="text-muted-foreground text-sm">
-                    20th June onwards
+                    8th August to 14th August
                   </p>
                 </div>
               </div>
@@ -298,7 +302,7 @@ function RegisterTmol() {
                     Registration Deadline
                   </p>
                   <p className="text-muted-foreground text-sm">
-                    19th June, 2026 (EOD)
+                    5th August 2026 (EOD)
                   </p>
                 </div>
               </div>
@@ -311,7 +315,7 @@ function RegisterTmol() {
                     Session Timing & Duration
                   </p>
                   <p className="text-muted-foreground text-sm">
-                    8:30 PM IST · 30 minutes/day · 21 consecutive days
+                    6:30 PM IST · 45 minutes/day · 7 consecutive days
                   </p>
                 </div>
               </div>
@@ -324,7 +328,7 @@ function RegisterTmol() {
                     Format
                   </p>
                   <p className="text-muted-foreground text-sm">
-                    Online on Google Meet
+                    Online as well as offline.
                   </p>
                 </div>
               </div>
@@ -350,7 +354,18 @@ function RegisterTmol() {
                     Registration Cost
                   </p>
                   <p className="text-muted-foreground text-sm">
-                    {isInternational ? "$9.99" : "₹300"}
+                    {isInternational ? (
+                      "$9.99"
+                    ) : isDiscounted ? (
+                      <>
+                        <span className="line-through text-muted-foreground/50 mr-2">
+                          ₹{ORIGINAL_PRICE_INR}
+                        </span>
+                        <span className="text-gold">₹{DISCOUNTED_PRICE_INR}</span>
+                      </>
+                    ) : (
+                      `₹${ORIGINAL_PRICE_INR}`
+                    )}
                   </p>
                 </div>
               </div>
@@ -479,28 +494,7 @@ function RegisterTmol() {
             className="flex-1 max-w-lg flex flex-col gap-10"
           >
             {/* Payment Details / QR */}
-            {isFree ? (
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="rounded-2xl border border-gold/40 bg-gold/5 p-8 text-center w-full relative overflow-hidden shadow-[0_0_30px_rgba(212,175,55,0.15)]"
-              >
-                <div className="absolute inset-0 bg-gradient-to-tr from-gold/0 via-gold/10 to-gold/0 opacity-50" />
-                <p className="text-gold text-[10px] tracking-[0.3em] lowercase mb-5 relative z-10">
-                  special access
-                </p>
-                <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-5 border border-gold/20 relative z-10">
-                   <Ticket className="w-8 h-8 text-gold" />
-                </div>
-                <h3 className="font-serif text-3xl text-gold mb-3 relative z-10">Workshop Unlocked!</h3>
-                <p className="text-muted-foreground/90 text-sm leading-relaxed mb-6 relative z-10">
-                  Your exclusive invite code <strong className="text-gold">{activeCoupon.toUpperCase()}</strong> has been applied. The ₹300 registration fee is entirely waived for you.
-                </p>
-                <p className="text-gold/60 text-[10px] tracking-widest uppercase relative z-10 animate-pulse">
-                  Proceed to Step 2 ↓
-                </p>
-              </motion.div>
-            ) : isInternational ? (
+            {isInternational ? (
               <div className="rounded-2xl border border-gold/15 bg-black/50 p-6 text-center w-full">
                 <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-4">
                   registration cost
@@ -523,8 +517,21 @@ function RegisterTmol() {
             ) : (
               <div className="rounded-2xl border border-gold/15 bg-black/50 p-6 text-center w-full">
                 <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-4">
-                  step 1 — pay ₹300 via UPI
+                  step 1 — pay ₹{amount} via UPI
                 </p>
+                {isDiscounted && (
+                  <div className="flex flex-col items-center gap-1 mb-4">
+                    <div className="flex items-center justify-center gap-3">
+                      <p className="font-serif text-xl text-gold/40 line-through decoration-gold/30 decoration-2">
+                        ₹{ORIGINAL_PRICE_INR}
+                      </p>
+                      <p className="font-serif text-2xl text-gold">₹{DISCOUNTED_PRICE_INR}</p>
+                    </div>
+                    <p className="text-gold/70 text-[9px] tracking-widest uppercase">
+                      {DISCOUNT_COUPON} applied · first 100 registrations
+                    </p>
+                  </div>
+                )}
                 <div className="inline-block rounded-xl overflow-hidden border border-gold/20 shadow-lg bg-white p-2">
                   <img
                     src="/assets/images/payment-qr.png"
@@ -543,7 +550,7 @@ function RegisterTmol() {
                   </a>
                 </div>
                 <p className="text-muted-foreground/60 text-xs mt-4 leading-relaxed">
-                  Scan · Pay <span className="text-gold">₹300</span> · Screenshot
+                  Scan · Pay <span className="text-gold">₹{amount}</span> · Screenshot
                   the success screen · Upload below
                 </p>
                 {/* Pay Now UPI Options for mobile/all users */}
@@ -554,7 +561,7 @@ function RegisterTmol() {
 
                   <div className="flex justify-center">
                     <a
-                      href={GENERIC_UPI_URL}
+                      href={genericUpiUrl(amount)}
                       className="group relative flex items-center justify-center gap-2 rounded-lg border border-gold/25 bg-gold/5 px-4 py-2.5 text-xs font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
                     >
                       Pay Using UPI
@@ -592,7 +599,7 @@ function RegisterTmol() {
               </h2>
               <TmolRegistrationForm 
                 isInternational={isInternational} 
-                initialCouponCode="SAMSONI108" 
+                initialCouponCode={DISCOUNT_COUPON}
                 onCouponChange={setActiveCoupon}
               />
             </div>

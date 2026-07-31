@@ -24,10 +24,18 @@ import {
   Globe
 } from "lucide-react";
 
-const GPAY_URL = "gpay://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
-const PHONEPE_URL = "phonepe://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
-const PAYTM_URL = "paytmmp://upi/pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
-const GENERIC_UPI_URL = "upi://pay?pa=yogya@superyes&pn=Sadhakas&am=300.00&cu=INR&tn=TMOL%20Registration";
+export const DISCOUNT_COUPON = "AUG-2026-100";
+export const ORIGINAL_PRICE_INR = 1000;
+export const DISCOUNTED_PRICE_INR = 200;
+
+export const isDiscountCoupon = (code: string) =>
+  code.trim().toUpperCase() === DISCOUNT_COUPON;
+
+export const priceForCoupon = (code: string) =>
+  isDiscountCoupon(code) ? DISCOUNTED_PRICE_INR : ORIGINAL_PRICE_INR;
+
+export const genericUpiUrl = (amount: number) =>
+  `upi://pay?pa=yogya@superyes&pn=Sadhakas&am=${amount}.00&cu=INR&tn=TMOL%20Registration`;
 
 export const isInternationalUser = () => {
   try {
@@ -146,7 +154,7 @@ function fileToBase64(file: File): Promise<string> {
 export function TmolRegistrationForm({
   onSuccess,
   isInternational,
-  initialCouponCode = "",
+  initialCouponCode = DISCOUNT_COUPON,
   onCouponChange,
 }: {
   onSuccess?: () => void;
@@ -162,8 +170,8 @@ export function TmolRegistrationForm({
   const [couponCode, setCouponCode] = useState(initialCouponCode);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const isFree = ["SAMSONI108", "SATYABITSP100"].includes(couponCode.trim().toUpperCase());
-  const requireScreenshot = !isInternational && !isFree;
+  const isDiscounted = isDiscountCoupon(couponCode);
+  const requireScreenshot = !isInternational;
 
   useEffect(() => {
     onCouponChange?.(couponCode);
@@ -310,13 +318,13 @@ export function TmolRegistrationForm({
           className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-base focus:outline-none focus:border-gold transition-colors duration-300 placeholder:text-muted-foreground/30 uppercase tracking-widest"
           placeholder="ENTER CODE"
         />
-        {isFree && (
+        {isDiscounted && (
           <motion.p
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-gold text-xs mt-2"
           >
-            Valid code applied. Registration is free.
+            Code applied — ₹{ORIGINAL_PRICE_INR} reduced to ₹{DISCOUNTED_PRICE_INR}.
           </motion.p>
         )}
       </div>
@@ -418,6 +426,10 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
   const [isInternational, setIsInternational] = useState(false);
   const [activeModule, setActiveModule] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
+  const [activeCoupon, setActiveCoupon] = useState(DISCOUNT_COUPON);
+
+  const amount = priceForCoupon(activeCoupon);
+  const isDiscounted = isDiscountCoupon(activeCoupon);
 
   const handleCopy = async () => {
     try {
@@ -496,9 +508,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
           </div>
 
           <p className="text-muted-foreground leading-relaxed mb-8 max-w-md">
-            Realign your life this summer! A transformative 21-day journey through the fundamental dimensions
-            of life. Hosted online on Google Meet, each 30-minute daily session dives deep into The Self, The
-            Mind, Action, Nature, and Higher Wisdom.
+          Begin your college journey with clarity and purpose. A transformative 7-day experience blending online and offline sessions, where accomplished speakers from IITs, MIT, and beyond explore timeless wisdom on the self, success, relationships, and purposeful living—all in engaging 45-minute sessions.
           </p>
 
           {/* Why This Program? */}
@@ -700,8 +710,19 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
           ) : (
             <div className="rounded-2xl border border-gold/15 bg-black/40 p-6 text-center w-full max-w-md mx-auto">
               <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-4">
-                step 1 — pay ₹300 via UPI
+                step 1 — pay ₹{amount} via UPI
               </p>
+              {isDiscounted && (
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <p className="font-serif text-xl text-gold/40 line-through decoration-gold/30 decoration-2">
+                    ₹{ORIGINAL_PRICE_INR}
+                  </p>
+                  <p className="font-serif text-2xl text-gold">₹{DISCOUNTED_PRICE_INR}</p>
+                  <span className="text-gold/70 text-[9px] tracking-widest uppercase">
+                    {DISCOUNT_COUPON} applied
+                  </span>
+                </div>
+              )}
               <div className="inline-block rounded-xl overflow-hidden border border-gold/20 shadow-lg shadow-black/40 bg-white p-2">
                 <img
                   src="/assets/images/payment-qr.png"
@@ -720,7 +741,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
                 </a>
               </div>
               <p className="text-muted-foreground/60 text-xs mt-4 leading-relaxed">
-                Scan the QR code, pay <span className="text-gold">₹300</span>, take a screenshot of the
+                Scan the QR code, pay <span className="text-gold">₹{amount}</span>, take a screenshot of the
                 success screen, and upload it in the form ↓
               </p>
               {/* Pay Now UPI Options for mobile/all users */}
@@ -731,7 +752,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
 
                 <div className="flex justify-center">
                   <a
-                    href={GENERIC_UPI_URL}
+                    href={genericUpiUrl(amount)}
                     className="group relative flex items-center justify-center gap-2 rounded-lg border border-gold/25 bg-gold/5 px-4 py-2.5 text-xs font-medium tracking-wider text-gold-dim hover:text-gold uppercase transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:scale-[1.02] active:scale-[0.98]"
                   >
                     Pay Using UPI
@@ -763,7 +784,11 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
           <div className="max-w-md mx-auto w-full">
             <p className="text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-2">step 2 — register</p>
             <h3 className="font-serif text-2xl text-foreground mb-8">Complete Your Registration</h3>
-            <TmolRegistrationForm isInternational={isInternational} />
+            <TmolRegistrationForm
+              isInternational={isInternational}
+              initialCouponCode={DISCOUNT_COUPON}
+              onCouponChange={setActiveCoupon}
+            />
           </div>
         </div>
       </motion.div>

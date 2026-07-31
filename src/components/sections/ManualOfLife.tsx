@@ -60,7 +60,9 @@ export default function ManualOfLife() {
             </div>
             <div className="flex items-center gap-2 bg-gold/8 border border-gold/15 rounded-full px-4 py-2">
               <CreditCard className="w-3.5 h-3.5 text-gold" />
-              <span className="text-gold text-xs tracking-wide">₹300 registration</span>
+              <span className="text-gold text-xs tracking-wide">
+                <span className="text-gold/40 line-through mr-1.5">₹1000</span>₹200 registration
+              </span>
             </div>
           </div>
         </motion.div>
@@ -216,7 +218,7 @@ export default function ManualOfLife() {
             className="inline-flex items-center gap-3 bg-gold text-black font-medium text-sm px-8 py-4 rounded-full shadow-[0_0_30px_rgba(212,175,55,0.25)] hover:shadow-[0_0_40px_rgba(212,175,55,0.4)] transition-all duration-500 cursor-pointer"
           >
             <BookOpen className="w-4 h-4" />
-            Register Now — ₹300
+            Register Now — ₹200
           </motion.button>
           <p className="text-muted-foreground/40 text-xs mt-4 tracking-wide">
             Pay via UPI · Upload screenshot · Done
