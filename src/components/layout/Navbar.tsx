@@ -95,18 +95,33 @@ export default function Navbar() {
             </span>
           </div>
 
-          {/* WhatsApp Join Button */}
-          <a
-            href="https://chat.whatsapp.com/EjTFqNEk2dEKySTooqr2Ak?mode=gi_t"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative px-5 py-2 rounded-full border border-gold/30 hover:border-gold/80 transition-colors duration-500 overflow-hidden whitespace-nowrap divine-spark"
-          >
-            <div className="absolute inset-0 bg-gold/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
-            <span className="relative z-10 text-[10px] md:text-xs tracking-[0.2em] uppercase text-gold-dim group-hover:text-gold transition-colors duration-500">
-              Join Community
-            </span>
-          </a>
+          <div className="flex items-center gap-3">
+            {/* WhatsApp Us Button */}
+            <a
+              href="https://wa.me/919024003180?text=Hello%2C%20I%20wish%20to%20know%20more."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative px-5 py-2 rounded-full border border-gold/30 hover:border-gold/80 transition-colors duration-500 overflow-hidden whitespace-nowrap divine-spark"
+            >
+              <div className="absolute inset-0 bg-gold/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
+              <span className="relative z-10 text-[10px] md:text-xs tracking-[0.2em] uppercase text-gold-dim group-hover:text-gold transition-colors duration-500">
+                WhatsApp Us
+              </span>
+            </a>
+
+            {/* WhatsApp Join Button */}
+            <a
+              href="https://chat.whatsapp.com/EjTFqNEk2dEKySTooqr2Ak?mode=gi_t"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative px-5 py-2 rounded-full border border-gold/30 hover:border-gold/80 transition-colors duration-500 overflow-hidden whitespace-nowrap divine-spark hidden sm:block"
+            >
+              <div className="absolute inset-0 bg-gold/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
+              <span className="relative z-10 text-[10px] md:text-xs tracking-[0.2em] uppercase text-gold-dim group-hover:text-gold transition-colors duration-500">
+                Join Community
+              </span>
+            </a>
+          </div>
         </div>
       </motion.nav>
 

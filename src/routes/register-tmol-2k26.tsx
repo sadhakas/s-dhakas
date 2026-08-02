@@ -130,7 +130,7 @@ export const Route = createFileRoute("/register-tmol-2k26")({
       {
         name: "description",
         content:
-          "Register for The Manual of Life — a 21-day live program by Sādhakas. Starts 20th June 2026. 30 min/day. ₹1000 ₹200 registration for the first 100 sādhakas.",
+          "Register for The Manual of Life — a 7-day live program by Sādhakas. Starts 20th June 2026. 30 min/day. ₹300 registration.",
       },
     ],
   }),
@@ -139,13 +139,13 @@ export const Route = createFileRoute("/register-tmol-2k26")({
 const PERKS = [
   {
     icon: Ticket,
-    label: "Trip perks — Detox & Discover",
-    sub: "Exclusive discounts on North & South India trips for 100% TMOL attendees",
+    label: "Trip perks — Inception Camp to Pink City",
+    sub: "12th–14th Sept. ₹1000 for 100% TMOL attendees (reach out for details). Amer, Jal Mahal, Earthvilas, World's Largest Cow-Rehab.",
   },
   {
     icon: Award,
     label: "Completion certificate",
-    sub: "Issued upon finishing all 7 days",
+    sub: "Issued upon finishing all sessions",
   },
   {
     icon: Users,
@@ -184,7 +184,7 @@ function RegisterTmol() {
 
   useEffect(() => {
     setIsInternational(isInternationalUser());
-    
+
     // Fire confetti for the special auto-applied coupon
     const duration = 400;
     const end = Date.now() + duration;
@@ -242,7 +242,7 @@ function RegisterTmol() {
             className="flex-1 max-w-3xl"
           >
             <p className="text-gold-dim text-[10px] tracking-[0.4em] lowercase mb-4">
-              21-day live program
+              7-day live program
             </p>
             <h1
               className="font-serif text-4xl md:text-5xl font-light text-foreground mb-3"
@@ -265,7 +265,9 @@ function RegisterTmol() {
             </div>
 
             <p className="text-muted-foreground leading-relaxed mb-8 max-w-md">
-            Begin your college journey with clarity and purpose. A transformative 7-day experience blending online and offline sessions, where accomplished speakers from IITs, MIT, and beyond explore timeless wisdom on the self, success, relationships, and purposeful living—all in engaging 45-minute sessions.
+              Realign your life this summer! A transformative 7-day journey through the fundamental dimensions
+              of life. Hosted online on Google Meet, each 30-minute daily session dives deep into The Self, The
+              Mind, Action, Nature, and Higher Wisdom.
             </p>
 
             {/* Why This Program? */}
@@ -289,7 +291,7 @@ function RegisterTmol() {
                     Dates
                   </p>
                   <p className="text-muted-foreground text-sm">
-                    8th August to 14th August
+                    14th - 20th August, Evening
                   </p>
                 </div>
               </div>
@@ -302,7 +304,7 @@ function RegisterTmol() {
                     Registration Deadline
                   </p>
                   <p className="text-muted-foreground text-sm">
-                    5th August 2026 (EOD)
+                    12th August (EOD)
                   </p>
                 </div>
               </div>
@@ -315,7 +317,7 @@ function RegisterTmol() {
                     Session Timing & Duration
                   </p>
                   <p className="text-muted-foreground text-sm">
-                    6:30 PM IST · 45 minutes/day · 7 consecutive days
+                    8:30 PM IST · 30 minutes/day
                   </p>
                 </div>
               </div>
@@ -328,7 +330,20 @@ function RegisterTmol() {
                     Format
                   </p>
                   <p className="text-muted-foreground text-sm">
-                    Online as well as offline.
+                    Blend of offline and online
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="p-2 rounded-full bg-gold/10 text-gold shrink-0">
+                  <Ticket className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="text-foreground text-sm font-medium mb-0.5 text-gold">
+                    Sacred Symphony
+                  </p>
+                  <p className="text-muted-foreground text-sm">
+                    21st August: A meditative musical night to make you truly happy.
                   </p>
                 </div>
               </div>
@@ -597,8 +612,8 @@ function RegisterTmol() {
               <h2 className="font-serif text-3xl text-foreground mb-8">
                 Complete Your Registration
               </h2>
-              <TmolRegistrationForm 
-                isInternational={isInternational} 
+              <TmolRegistrationForm
+                isInternational={isInternational}
                 initialCouponCode={DISCOUNT_COUPON}
                 onCouponChange={setActiveCoupon}
               />

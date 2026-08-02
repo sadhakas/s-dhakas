@@ -51,8 +51,8 @@ interface TmolRegistrationOverlayProps {
 }
 
 const PERKS = [
-  { icon: Ticket, label: "Trip perks — Detox & Discover", sub: "Exclusive discounts on North & South India trips for 100% TMOL attendees" },
-  { icon: Award, label: "Completion certificate", sub: "Issued upon finishing all 21 days" },
+  { icon: Ticket, label: "Trip perks — Inception Camp to Pink City", sub: "12th–14th Sept. ₹1000 for 100% TMOL attendees (reach out for details). Amer, Jal Mahal, Earthvilas, World's Largest Cow-Rehab." },
+  { icon: Award, label: "Completion certificate", sub: "Issued upon finishing all sessions" },
   { icon: Users, label: "Lifetime community access", sub: "Sādhakas community & resources" },
 ];
 
@@ -254,9 +254,18 @@ export function TmolRegistrationForm({
           </motion.div>
         </div>
         <p className="font-serif text-2xl text-foreground mb-3">Registration Received.</p>
-        <p className="text-muted-foreground text-sm max-w-xs leading-relaxed">
+        <p className="text-muted-foreground text-sm max-w-xs leading-relaxed mb-8">
           Welcome to the journey, Sādhaka. We'll verify your payment and be in touch within 24 hours. ✦
         </p>
+
+        <a
+          href="https://chat.whatsapp.com/EjTFqNEk2dEKySTooqr2Ak?mode=gi_t"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-2 bg-gold/10 border border-gold/50 text-gold py-3 px-6 text-xs tracking-[0.2em] uppercase rounded-lg hover:bg-gold/20 hover:border-gold transition-all duration-300"
+        >
+          Join TMOL Community →
+        </a>
       </motion.div>
     );
   }
@@ -491,7 +500,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
           data-lenis-prevent="true"
           className="w-full md:w-1/2 p-8 md:p-12 overflow-visible md:overflow-y-auto border-b md:border-b-0 md:border-r border-border custom-scrollbar"
         >
-          <p className="text-gold-dim text-[10px] tracking-[0.4em] lowercase mb-4">21-day live program</p>
+          <p className="text-gold-dim text-[10px] tracking-[0.4em] lowercase mb-4">7-day live program</p>
           <h2 className="font-serif text-3xl md:text-4xl font-light text-foreground mb-2">
             The Manual of Life
           </h2>
@@ -508,7 +517,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
           </div>
 
           <p className="text-muted-foreground leading-relaxed mb-8 max-w-md">
-          Begin your college journey with clarity and purpose. A transformative 7-day experience blending online and offline sessions, where accomplished speakers from IITs, MIT, and beyond explore timeless wisdom on the self, success, relationships, and purposeful living—all in engaging 45-minute sessions.
+            Begin your college journey with clarity and purpose. A transformative 7-day experience blending online and offline sessions, where accomplished speakers from IITs, MIT, and beyond explore timeless wisdom on the self, success, relationships, and purposeful living—all in engaging 45-minute sessions.
           </p>
 
           {/* Why This Program? */}
@@ -529,7 +538,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
               </div>
               <div>
                 <p className="text-foreground text-sm font-medium mb-0.5">Dates</p>
-                <p className="text-muted-foreground text-sm">20th June onwards</p>
+                <p className="text-muted-foreground text-sm">14th - 20th August, Evening</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
@@ -538,7 +547,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
               </div>
               <div>
                 <p className="text-foreground text-sm font-medium mb-0.5">Registration Deadline</p>
-                <p className="text-muted-foreground text-sm">19th June, 2026 (EOD)</p>
+                <p className="text-muted-foreground text-sm">12th August (EOD)</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
@@ -547,7 +556,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
               </div>
               <div>
                 <p className="text-foreground text-sm font-medium mb-0.5">Session Timing & Duration</p>
-                <p className="text-muted-foreground text-sm">8:30 PM IST · 30 minutes/day · 21 consecutive days</p>
+                <p className="text-muted-foreground text-sm">8:30 PM IST · 30 minutes/day</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
@@ -556,7 +565,16 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
               </div>
               <div>
                 <p className="text-foreground text-sm font-medium mb-0.5">Format</p>
-                <p className="text-muted-foreground text-sm">Online on Google Meet</p>
+                <p className="text-muted-foreground text-sm">Blend of offline and online</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="p-2 rounded-full bg-gold/10 text-gold shrink-0">
+                <Ticket className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-foreground text-sm font-medium mb-0.5 text-gold">Sacred Symphony</p>
+                <p className="text-muted-foreground text-sm">21st August: A meditative musical night to make you truly happy.</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
