@@ -95,6 +95,23 @@ export default function Hero() {
           >
             The Missing Curriculum
           </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 2.2 }}
+            className="mt-12 md:mt-16"
+          >
+            <motion.button
+              onClick={() => document.getElementById("manual")?.scrollIntoView({ behavior: "smooth" })}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative inline-flex items-center gap-3 bg-gradient-to-r from-gold to-[#FFE58F] text-black font-semibold text-xs md:text-sm px-8 py-3 rounded-full shadow-[0_0_30px_rgba(212,175,55,0.3)] hover:shadow-[0_0_50px_rgba(212,175,55,0.5)] transition-all duration-500 cursor-pointer overflow-hidden group border border-gold"
+            >
+              <div className="absolute inset-0 bg-white/30 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out skew-x-12" />
+              <span className="relative z-10 uppercase tracking-widest">Explore TMOL</span>
+            </motion.button>
+          </motion.div>
         </motion.div>
 
         {/* Scroll indicator */}
