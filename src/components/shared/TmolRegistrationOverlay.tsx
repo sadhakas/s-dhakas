@@ -556,7 +556,7 @@ export default function TmolRegistrationOverlay({ onClose }: TmolRegistrationOve
               </div>
               <div>
                 <p className="text-foreground text-sm font-medium mb-0.5">Session Timing & Duration</p>
-                <p className="text-muted-foreground text-sm">8:30 PM IST · 30 minutes/day</p>
+                <p className="text-muted-foreground text-sm">Evening · 30 minutes/day</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
