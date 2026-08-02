@@ -87,21 +87,12 @@ export const journeysData: JourneyData[] = [
     title: "TMOL — The Manual of Life",
     location: "Blend of offline and online",
     description:
-<<<<<<< HEAD
       "Begin your college journey with clarity and purpose. A transformative 7-day experience blending online and offline sessions, where accomplished speakers from IITs, MIT, and beyond explore timeless wisdom on the self, success, relationships, and purposeful living—all in engaging 45-minute sessions.",
-    status: "Upcoming",
-    date: "June–July 2026",
-    exactDates: "20th June onwards",
-    duration: "21 Days · 30 min/session",
-    cost: "₹200 for the first 100 registrations (₹1000 thereafter)",
-=======
-      "Realign your life this summer! A transformative journey through the fundamental dimensions of life. Each daily session dives deep into The Self, The Mind, Action, Nature, and Higher Wisdom. Includes lifetime community access, a completion certificate, and exclusive trip perks.",
     status: "Upcoming",
     date: "August 2026",
     exactDates: "14th - 20th August",
-    duration: "7 Days · 30 min/session",
-    cost: "₹300 (Registration)",
->>>>>>> 7fd7a0b (relevant changes for TMOL-August-2026-main-branch)
+    duration: "7 Days · 45 min/session",
+    cost: "₹200 for the first 100 registrations (₹1000 thereafter)",
     type: "event",
     image: "/assets/images/journeys/tmol2k26/poster.jpeg",
   },
