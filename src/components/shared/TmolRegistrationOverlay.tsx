@@ -340,7 +340,7 @@ export function TmolRegistrationForm({
           name="hostelRoom"
           type="text"
           className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-base focus:outline-none focus:border-gold transition-colors duration-300 placeholder:text-muted-foreground/30"
-          placeholder="e.g. Vishwakarma Bhawan, C-214"
+          placeholder="e.g. KR 2124"
         />
         <p className="text-muted-foreground/50 text-xs mt-2 leading-relaxed">
           So we can deliver your event pass to you in person.
