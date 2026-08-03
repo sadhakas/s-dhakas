@@ -50,6 +50,10 @@ interface TmolRegistrationOverlayProps {
   onClose: () => void;
 }
 
+const WHATSAPP_COMMUNITY_URL = "https://chat.whatsapp.com/EjTFqNEk2dEKySTooqr2Ak?mode=gi_t";
+// How long the success animation plays before we send them to the community
+const REDIRECT_DELAY_MS = 2600;
+
 const PERKS = [
   { icon: Ticket, label: "Trip perks — Inception Camp to Pink City", sub: "12th–14th Sept. ₹1000 for 100% TMOL attendees (reach out for details). Amer, Jal Mahal, Earthvilas, World's Largest Cow-Rehab." },
   { icon: Award, label: "Completion certificate", sub: "Issued upon finishing all sessions" },
@@ -177,6 +181,15 @@ export function TmolRegistrationForm({
     onCouponChange?.(couponCode);
   }, [couponCode, onCouponChange]);
 
+  // Once registered, send them straight to the WhatsApp community
+  useEffect(() => {
+    if (!submitted) return;
+    const timer = setTimeout(() => {
+      window.location.href = WHATSAPP_COMMUNITY_URL;
+    }, REDIRECT_DELAY_MS);
+    return () => clearTimeout(timer);
+  }, [submitted]);
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     setFileError(null);
@@ -208,6 +221,7 @@ export function TmolRegistrationForm({
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
+      hostelRoom: formData.get("hostelRoom") as string,
       couponCode: (formData.get("couponCode") as string) || "",
       message: (formData.get("message") as string) || "",
       paymentScreenshot: screenshot || "",
@@ -216,9 +230,9 @@ export function TmolRegistrationForm({
     const scriptURL = import.meta.env.VITE_INTEREST_URL;
 
     try {
-      // Fire-and-forget: The browser handles the upload in the background
-      // so the user sees the success state instantly without waiting for GAS.
-      fetch(scriptURL, {
+      // Awaited: we redirect to the WhatsApp community right after the success
+      // animation, and navigating away would cancel an in-flight upload.
+      await fetch(scriptURL, {
         method: "POST",
         body: JSON.stringify(data),
         mode: "no-cors",
@@ -254,13 +268,15 @@ export function TmolRegistrationForm({
           </motion.div>
         </div>
         <p className="font-serif text-2xl text-foreground mb-3">Registration Received.</p>
-        <p className="text-muted-foreground text-sm max-w-xs leading-relaxed mb-8">
+        <p className="text-muted-foreground text-sm max-w-xs leading-relaxed mb-3">
           Welcome to the journey, Sādhaka. We'll verify your payment and be in touch within 24 hours. ✦
+        </p>
+        <p className="text-muted-foreground/50 text-xs mb-8">
+          Taking you to the TMOL community…
         </p>
 
         <a
-          href="https://chat.whatsapp.com/EjTFqNEk2dEKySTooqr2Ak?mode=gi_t"
-          target="_blank"
+          href={WHATSAPP_COMMUNITY_URL}
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center gap-2 bg-gold/10 border border-gold/50 text-gold py-3 px-6 text-xs tracking-[0.2em] uppercase rounded-lg hover:bg-gold/20 hover:border-gold transition-all duration-300"
         >
@@ -312,6 +328,23 @@ export function TmolRegistrationForm({
           className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-base focus:outline-none focus:border-gold transition-colors duration-300 placeholder:text-muted-foreground/30"
           placeholder="+91 99999 99999"
         />
+      </div>
+
+      {/* Hostel Room Number */}
+      <div>
+        <label className="block text-muted-foreground text-[10px] tracking-[0.3em] lowercase mb-2">
+          hostel room number <span className="text-gold/70">*</span>
+        </label>
+        <input
+          required
+          name="hostelRoom"
+          type="text"
+          className="w-full bg-transparent border-b border-border py-3 text-foreground font-serif text-base focus:outline-none focus:border-gold transition-colors duration-300 placeholder:text-muted-foreground/30"
+          placeholder="e.g. Vishwakarma Bhawan, C-214"
+        />
+        <p className="text-muted-foreground/50 text-xs mt-2 leading-relaxed">
+          So we can deliver your event pass to you in person.
+        </p>
       </div>
 
       {/* Coupon Code */}

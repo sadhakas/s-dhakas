@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { journeysData } from "../../data/journeys";
 import TripInterestOverlay from "../shared/TripInterestOverlay";
 import TmolRegistrationOverlay, { isInternationalUser } from "../shared/TmolRegistrationOverlay";
 
 // Pull all upcoming trips directly from journeys data
 const UPCOMING = journeysData.filter((j) => j.status === "Upcoming");
+
+// Routes where the bar is redundant (they already are the destination)
+const HIDDEN_ON = ["/register-tmol-2k26"];
 
 export default function AnnouncementBar() {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -17,6 +20,7 @@ export default function AnnouncementBar() {
   const [isInternational, setIsInternational] = useState(false);
   const [btnTranslucent, setBtnTranslucent] = useState(false);
   const navigate = useNavigate();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
     setIsInternational(isInternationalUser());
@@ -54,6 +58,7 @@ export default function AnnouncementBar() {
   }, [isExpanded]);
 
   if (UPCOMING.length === 0) return null;
+  if (HIDDEN_ON.some((p) => pathname.replace(/\/+$/, "") === p)) return null;
 
   const trip = UPCOMING[idx % UPCOMING.length];
 
