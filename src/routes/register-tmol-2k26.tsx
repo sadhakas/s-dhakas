@@ -124,6 +124,9 @@ const OUTCOMES = [
 
 export const Route = createFileRoute("/register-tmol-2k26")({
   component: RegisterTmol,
+  validateSearch: (search: Record<string, unknown>): { code?: string } => ({
+    code: typeof search.code === "string" ? search.code : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Register for TMOL — The Manual of Life · Sādhakas" },
@@ -155,6 +158,7 @@ const PERKS = [
 ];
 
 function RegisterTmol() {
+  const { code } = Route.useSearch();
   const [isInternational, setIsInternational] = useState(false);
   const [activeModule, setActiveModule] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
@@ -616,6 +620,7 @@ function RegisterTmol() {
                 isInternational={isInternational}
                 initialCouponCode={DISCOUNT_COUPON}
                 onCouponChange={setActiveCoupon}
+                initialQrCode={code}
               />
             </div>
           </motion.div>

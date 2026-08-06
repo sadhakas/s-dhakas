@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RegisterTmol2k26RouteImport } from './routes/register-tmol-2k26'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PCodeRouteImport } from './routes/p.$code'
 
 const RegisterTmol2k26Route = RegisterTmol2k26RouteImport.update({
   id: '/register-tmol-2k26',
@@ -22,31 +23,40 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PCodeRoute = PCodeRouteImport.update({
+  id: '/p/$code',
+  path: '/p/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/register-tmol-2k26': typeof RegisterTmol2k26Route
+  '/p/$code': typeof PCodeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/register-tmol-2k26': typeof RegisterTmol2k26Route
+  '/p/$code': typeof PCodeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/register-tmol-2k26': typeof RegisterTmol2k26Route
+  '/p/$code': typeof PCodeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/register-tmol-2k26'
+  fullPaths: '/' | '/register-tmol-2k26' | '/p/$code'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/register-tmol-2k26'
-  id: '__root__' | '/' | '/register-tmol-2k26'
+  to: '/' | '/register-tmol-2k26' | '/p/$code'
+  id: '__root__' | '/' | '/register-tmol-2k26' | '/p/$code'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   RegisterTmol2k26Route: typeof RegisterTmol2k26Route
+  PCodeRoute: typeof PCodeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/p/$code': {
+      id: '/p/$code'
+      path: '/p/$code'
+      fullPath: '/p/$code'
+      preLoaderRoute: typeof PCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   RegisterTmol2k26Route: RegisterTmol2k26Route,
+  PCodeRoute: PCodeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
